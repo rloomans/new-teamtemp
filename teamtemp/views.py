@@ -754,8 +754,7 @@ def populate_chart_data_structures(survey_type_title, teams, team_history, tz='U
     return historical_options, json_history_chart_table, team_index
 
 
-def populate_bvc_data(survey_id_list, team_name, archive_id, num_iterations, dept_name='', region_name='', site_name='',
-                      survey_type='TEAMTEMP'):
+def populate_bvc_data(survey, team_name, archive_id, num_iterations, dept_name='', region_name='', site_name=''):
     # in: survey_id, team_name and archive_id
     # out:
     #    populate bvc_data['archived_dates']       For Drop Down List
@@ -769,37 +768,24 @@ def populate_bvc_data(survey_id_list, team_name, archive_id, num_iterations, dep
     #    populate bvc_data['pretty_team_name']     no spaces in team name above
     #    populate bvc_data['survey_type_title']    survey type Team Temperature or Customer Feedback
 
-    survey_filter = {'request__in': survey_id_list}
-    team_objects = Teams.objects.filter(**survey_filter)
+    survey_filter = {'request': survey.id}
 
     bvc_data = {
         'stats_date': '',
-        'survey_teams': team_objects,
+        'survey_teams': survey.teams.all(),
         'archived': False,
         'archive_date': None,
         'archive_id': archive_id,
         'word_cloudurl': '',
-        'team_filter': team_objects,
         'team_name': team_name,
         'pretty_team_name': team_name.replace("_", " "),
         'dept_names': dept_name,
         'region_names': region_name,
         'site_names': site_name,
-        'survey_type': survey_type
     }
-    # print >>sys.stderr,"dept_names",bvc_data['dept_names'],"end"
 
-    bvc_teams_list = [team_name]
-
-    # if any survey's are customer feedback surveys display customer BVC
-    num_teamtemp_surveys = TeamTemperature.objects.filter(pk__in=survey_id_list,
-                                                          survey_type__in=['TEAMTEMP', 'DEPT-REGION-SITE']).count()
-    num_cust_surveys = TeamTemperature.objects.filter(pk__in=survey_id_list, survey_type='CUSTOMERFEEDBACK').count()
-    # Bug here
-    # what does count return for an empty set?
-    # is None greater than 0?
     bvc_data['survey_type_title'] = 'Team Temperature'
-    if num_teamtemp_surveys == 0 and num_cust_surveys > 0:
+    if survey.survey_type == 'CUSTOMERFEEDBACK':
         bvc_data['survey_type_title'] = 'Customer Feedback'
 
     if team_name != '':
@@ -862,7 +848,7 @@ def populate_bvc_data(survey_id_list, team_name, archive_id, num_iterations, dep
                                                                                               'id').distinct(
         'archive_date').order_by('-archive_date')
 
-    bvc_data['stats'] = generate_bvc_stats(survey_id_list, bvc_teams_list, bvc_data['stats_date'], num_iterations)
+    bvc_data['stats'] = generate_bvc_stats(survey, bvc_teams_list, bvc_data['stats_date'], num_iterations)
 
     return bvc_data
 
@@ -910,38 +896,33 @@ def cached_word_cloud(word_list):
     return word_cloudurl
 
 
-def generate_bvc_stats(survey_id_list, team_name_list, archive_date, num_iterations):
+def generate_bvc_stats(survey, team_name_list, archive_date, num_iterations):
     # Generate Stats for Team Temp Average for gauge and wordcloud - look here for Gauge and Word Cloud
     # BVC.html uses stats.count and stats.average.score__avg and cached word cloud uses stats.words below
 
-    survey_count = 0
     agg_stats = {'count': 0, 'average': 0.00, 'words': []}
 
-    survey_filter = {'id__in': survey_id_list}
+    if team_name_list != [''] and archive_date == '':
+        stats, _ = survey.team_stats(team_name_list=team_name_list)
+    elif team_name_list == [''] and archive_date != '':
+        stats, _ = survey.archive_stats(archive_date=archive_date)
+    elif team_name_list != [''] and archive_date != '':
+        stats, _ = survey.archive_team_stats(team_name_list=team_name_list, archive_date=archive_date)
+    else:
+        stats, _ = survey.stats()
 
-    for survey in TeamTemperature.objects.filter(**survey_filter):
-        if team_name_list != [''] and archive_date == '':
-            stats, _ = survey.team_stats(team_name_list=team_name_list)
-        elif team_name_list == [''] and archive_date != '':
-            stats, _ = survey.archive_stats(archive_date=archive_date)
-        elif team_name_list != [''] and archive_date != '':
-            stats, _ = survey.archive_team_stats(team_name_list=team_name_list, archive_date=archive_date)
-        else:
-            stats, _ = survey.stats()
+    # Calculate and average and word cloud over multiple iterations (changes date range but same survey id):
+    if int(float(num_iterations)) > 0:
+        multi_stats = calc_multi_iteration_average(team_name_list, survey, int(float(num_iterations)),
+                                                   survey.default_tz)
+        if multi_stats:
+            stats = multi_stats
 
-        # Calculate and average and word cloud over multiple iterations (changes date range but same survey id):
-        if int(float(num_iterations)) > 0:
-            multi_stats = calc_multi_iteration_average(team_name_list, survey, int(float(num_iterations)),
-                                                       survey.default_tz)
-            if multi_stats:
-                stats = multi_stats
+    agg_stats['count'] = stats['count']
 
-        survey_count += 1
-        agg_stats['count'] = agg_stats['count'] + stats['count']
-
-        if stats['average']['score__avg']:
-            agg_stats['average'] = (agg_stats['average'] + stats['average']['score__avg']) / survey_count
-        agg_stats['words'] += list(stats['words'])
+    if stats['average']['score__avg']:
+        agg_stats['average'] = stats['average']['score__avg']
+    agg_stats['words'] = list(stats['words'])
 
     return agg_stats
 
@@ -976,25 +957,22 @@ def calc_multi_iteration_average(team_name, survey, num_iterations=2, tz='UTC'):
 
 
 @ie_edge()
-def bvc_view(request, survey_id, team_name='', archive_id='', num_iterations='0', add_survey_ids=None,
-             region_names='', site_names='', dept_names=''):
-    survey_ids = request.GET.get('add_survey_ids', add_survey_ids)
-
-    survey_id_list = [survey_id]
-    if survey_ids:
-        survey_id_list += survey_ids.split(',')
-
+def bvc_view(request, survey_id, team_name='', archive_id='', num_iterations='0',region_names='', site_names='', dept_names=''):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
+
     timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
+
+    # ensure team exists
+    team = get_object_or_404(Teams, request_id=survey_id, team_name=team_name) if team_name != '' else None
 
     json_history_chart_table = None
     historical_options = {}
-    team_index = 0
 
     # Populate data for BVC including previously archived BVC
-    bvc_data = populate_bvc_data(survey_id_list, team_name, archive_id, num_iterations, dept_names, region_names,
-                                 site_names, survey.survey_type)
-    bvc_data['survey_id'] = survey_id
+    bvc_data = populate_bvc_data(survey, team_name, archive_id, num_iterations, dept_names, region_names,
+                                 site_names)
+
+    print >> sys.stderr, "bvc_data = %s" % str(bvc_data)
 
     print >> sys.stderr, "bvc_data = %s" % str(bvc_data)
 
@@ -1011,16 +989,10 @@ def bvc_view(request, survey_id, team_name='', archive_id='', num_iterations='0'
     all_region_names = set()
     all_site_names = set()
 
-    filter_dept_names = ''
-    filter_region_names = ''
-    filter_site_names = ''
-
-    for survey_team in bvc_data['survey_teams']:
-        teams = survey.teams.filter(team_name=survey_team.team_name).values('dept_name', 'region_name', 'site_name')
-        for team in teams:
-            all_dept_names.add(team['dept_name'])
-            all_region_names.add(team['region_name'])
-            all_site_names.add(team['site_name'])
+    for team in bvc_data['survey_teams']:
+        all_dept_names.add(team.dept_name)
+        all_region_names.add(team.region_name)
+        all_site_names.add(team.site_name)
 
     if len(all_dept_names) < 2:
         all_dept_names = []
@@ -1065,9 +1037,10 @@ def bvc_view(request, survey_id, team_name='', archive_id='', num_iterations='0'
         return render(request, 'bvc.html',
                       {
                           'bvc_data': bvc_data,
+                          'survey': survey,
+                          'archive_id': archive_id,
                           'json_historical_data': json_history_chart_table,
                           'historical_options': historical_options,
-                          'team_count': team_index,
                           'num_iterations': num_iterations,
                           'dept_names': dept_names, 'region_names': region_names, 'site_names': site_names,
                           'form': FilteredBvcForm(dept_names_list=sorted(all_dept_names),
