@@ -768,6 +768,7 @@ def populate_bvc_data(survey, team_name, archive_id, num_iterations, dept_name='
     #    populate bvc_data['pretty_team_name']     no spaces in team name above
     #    populate bvc_data['survey_type_title']    survey type Team Temperature or Customer Feedback
 
+    bvc_teams_list = [team_name]
     survey_filter = {'request': survey.id}
 
     bvc_data = {
@@ -971,10 +972,6 @@ def bvc_view(request, survey_id, team_name='', archive_id='', num_iterations='0'
     # Populate data for BVC including previously archived BVC
     bvc_data = populate_bvc_data(survey, team_name, archive_id, num_iterations, dept_names, region_names,
                                  site_names)
-
-    print >> sys.stderr, "bvc_data = %s" % str(bvc_data)
-
-    print >> sys.stderr, "bvc_data = %s" % str(bvc_data)
 
     # If there is history to chart generate all data required for historical charts
     if bvc_data['num_rows'] > 0:
