@@ -157,46 +157,38 @@
 
           <select class="btn btn-default" id="ArchivedBVCSelector">
             {% if bvc_data.team_name != '' %}
-              <option value="{% url 'bvc' survey_id=bvc_data.survey_id team_name=bvc_data.team_name %}">
+              <option {% if bvc_data.archive_id == '' %}selected{% endif %}
+                value="{% url 'bvc' survey_id=bvc_data.survey_id team_name=bvc_data.team_name %}">
                 Current Survey
               </option>
             {% else %}
               {% if bvc_data.dept_names != '' or bvc_data.region_names != '' or bvc_data.site_names != '' %}
-                <option
+                <option {% if bvc_data.archive_id == '' %}selected{% endif %}
                   value="{% url 'bvc' survey_id=bvc_data.survey_id dept_names=bvc_data.dept_names region_names=bvc_data.region_names site_names=bvc_data.site_names %}">
                   Current Survey
                 </option>
               {% else %}
-                <option value="{% url 'bvc' survey_id=bvc_data.survey_id %}">Current Survey</option>
+                <option {% if bvc_data.archive_id == '' %}selected{% endif %}
+                  value="{% url 'bvc' survey_id=bvc_data.survey_id %}">Current Survey</option>
               {% endif %}
             {% endif %}
-
-            <script>
-              document.getElementById("ArchivedBVCSelector").selectedIndex = document.getElementById("ArchivedBVCSelector").length - 1;
-            </script>
 
             {% for date in bvc_data.archived_dates %}
               {% if bvc_data.team_name == '' %}
                 {% if bvc_data.dept_names != '' or bvc_data.region_names != '' or bvc_data.site_names != '' %}
-                  <option
+                  <option {% if date.id|slugify == bvc_data.archive_id %}selected{% endif %}
                     value="{% url 'bvc' survey_id=bvc_data.survey_id archive_id=date.id dept_names=bvc_data.dept_names region_names=bvc_data.region_names site_names=bvc_data.site_names %}">
                     {{ date.archive_date|date:"M. d, Y" }}</option>
                 {% else %}
-                  <option value="{% url 'bvc' survey_id=bvc_data.survey_id archive_id=date.id %}">
+                  <option {% if date.id|slugify == bvc_data.archive_id %}selected{% endif %}
+                    value="{% url 'bvc' survey_id=bvc_data.survey_id archive_id=date.id %}">
                     {{ date.archive_date|date:"M. d, Y" }}</option>
                 {% endif %}
               {% else %}
-                <option
+                <option {% if date.id|slugify == bvc_data.archive_id %}selected{% endif %}
                   value="{% url 'bvc' survey_id=bvc_data.survey_id team_name=bvc_data.team_name archive_id=date.id %}">
                   {{ date.archive_date|date:"M. d, Y" }}</option>
               {% endif %}
-
-              {% if date.id|slugify == bvc_data.archive_id %}
-                <script>
-                  document.getElementById("ArchivedBVCSelector").selectedIndex = document.getElementById("ArchivedBVCSelector").length - 1;
-                </script>
-              {% endif %}
-
             {% endfor %}
 
           </select>

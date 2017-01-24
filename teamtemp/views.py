@@ -996,6 +996,8 @@ def bvc_view(request, survey_id, team_name='', archive_id='', num_iterations='0'
                                  site_names, survey.survey_type)
     bvc_data['survey_id'] = survey_id
 
+    print >> sys.stderr, "bvc_data = %s" % str(bvc_data)
+
     # If there is history to chart generate all data required for historical charts
     if bvc_data['num_rows'] > 0:
         historical_options, json_history_chart_table, team_index = populate_chart_data_structures(
