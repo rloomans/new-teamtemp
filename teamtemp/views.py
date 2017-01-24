@@ -768,7 +768,6 @@ def populate_bvc_data(survey, team_name, archive_id, num_iterations, dept_name='
     #    populate bvc_data['pretty_team_name']     no spaces in team name above
     #    populate bvc_data['survey_type_title']    survey type Team Temperature or Customer Feedback
 
-    bvc_teams_list = [team_name]
     survey_filter = {'request': survey.id}
 
     bvc_data = {
@@ -784,6 +783,8 @@ def populate_bvc_data(survey, team_name, archive_id, num_iterations, dept_name='
         'region_names': region_name,
         'site_names': site_name,
     }
+
+    bvc_teams_list = [team_name]
 
     bvc_data['survey_type_title'] = 'Team Temperature'
     if survey.survey_type == 'CUSTOMERFEEDBACK':
