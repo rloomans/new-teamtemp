@@ -63,6 +63,7 @@ urlpatterns = [
     url(r'^cron/(?P<pin>[0-9]{4,16})$', cron_view, name='cron'),
     url(r'^team/(?P<survey_id>[0-9a-zA-Z]{8})/(?P<team_name>[-\w]{1,64})$', team_view, name='team'),
     url(r'^team/(?P<survey_id>[0-9a-zA-Z]{8})$', team_view, name='team'),
+    url(r'^wordcloud/(?P<word_list>[a-z -]{,1800})$', wordcloud_view, name='wordcloud'),
     url(r'^static/(.*)$', serve_static, {'document_root': settings.STATIC_ROOT}, name='static'),
     url(r'^media/(.*)$', media_view, {'document_root': settings.MEDIA_ROOT}, name='media'),
     url(r'^healthcheck/?$', health_check_view, name='healthcheck'),

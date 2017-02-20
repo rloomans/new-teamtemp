@@ -1,5 +1,6 @@
 from __future__ import division, print_function
 
+from django.http import HttpResponsePermanentRedirect
 from future import standard_library
 
 standard_library.install_aliases()
@@ -975,6 +976,17 @@ def calc_multi_iteration_average(team_name, survey, num_iterations=2, tz='UTC'):
 
 
 @ie_edge()
+def wordcloud_view(request, word_list=''):
+    # Cached word cloud
+    if word_list:
+        word_cloud_url = cached_word_cloud(word_list)
+
+        return HttpResponsePermanentRedirect(word_cloud_url)
+    else:
+        return HttpResponseRedirect('/media/blank.png')
+
+
+@ie_edge()
 def bvc_view(request, survey_id, team_name='', archive_id='', num_iterations='0', region_names='', site_names='',
              dept_names=''):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
@@ -998,7 +1010,7 @@ def bvc_view(request, survey_id, team_name='', archive_id='', num_iterations='0'
 
     # Cached word cloud
     if bvc_data['word_list']:
-        bvc_data['word_cloud_url'] = cached_word_cloud(bvc_data['word_list'])
+        bvc_data['word_cloud_url'] = reverse('wordcloud', {'word_list': cached_word_cloud(bvc_data['word_list'])})
         bvc_data['word_cloud_width'] = settings.WORDCLOUD_WIDTH
         bvc_data['word_cloud_height'] = settings.WORDCLOUD_HEIGHT
 
