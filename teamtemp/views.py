@@ -892,7 +892,7 @@ def cached_word_cloud(word_list=None, word_hash=None, generate=True):
         word_cloud_image, _ = WordCloudImage.objects.get_or_create(word_hash=word_hash, word_list=word_list)
     elif word_hash:
         try:
-            word_cloud_image = WordCloudImage.objects.get(word_hash=word_hash, word_list=word_list)
+            word_cloud_image = WordCloudImage.objects.get(word_hash=word_hash)
             word_list = word_cloud_image.word_list
         except WordCloudImage.DoesNotExist:
             return None
@@ -984,6 +984,8 @@ def wordcloud_view(request, word_hash=''):
 
         if word_cloud_image and word_cloud_image.image_url:
             return HttpResponsePermanentRedirect(word_cloud_image.image_url)
+
+        print("Word Cloud: '%s' not found" % word_hash, file=sys.stderr)
 
     return HttpResponseRedirect('/media/blank.png')
 
