@@ -885,36 +885,37 @@ def populate_bvc_data(survey, team_name, archive_id, num_iterations=0, dept_name
     return bvc_data
 
 
-def cached_word_cloud(word_list):
-    if not word_list:
+def cached_word_cloud(word_list=None, word_hash=None, generate=True):
+    word_cloud_image = None
+    if word_list:
+        word_hash = hashlib.sha1(word_list.encode('utf-8')).hexdigest()
+        word_cloud_image, _ = WordCloudImage.objects.get_or_create(word_hash=word_hash, word_list=word_list)
+    elif word_hash:
+        try:
+            word_cloud_image = WordCloudImage.objects.get(word_hash=word_hash, word_list=word_list)
+            word_list = word_cloud_image.word_list
+        except WordCloudImage.DoesNotExist:
+            return None
+    else:
         return None
 
-    word_hash = hashlib.sha1(word_list.encode('utf-8')).hexdigest()
-
-    # most recent word cloud first
-    word_cloud_objects = WordCloudImage.objects.filter(word_hash=word_hash).order_by('-id')
-
-    if word_cloud_objects:
-        word_cloud_image = word_cloud_objects[0]
+    if word_cloud_image.image_url:
         filename = media_file(word_cloud_image.image_url, 'wordcloud_images')
 
         if os.path.isfile(filename):
             print("Cached Word Cloud: " + filename + " found", file=sys.stderr)
-            return word_cloud_image.image_url
+            return word_cloud_image
         else:
             print("Cached Word Cloud: " + filename + " not found", file=sys.stderr)
-            # Most recent word cloud has been deleted: remove all for this word list from db and then regenerate
-            word_cloud_objects.delete()
+            word_cloud_image.image_url = None
 
-    word_cloudurl = generate_wordcloud(word_list, word_hash)
+    if generate and not word_cloud_image.image_url:
+        word_cloud_image.image_url = generate_wordcloud(word_list, word_hash)
 
-    if word_cloudurl:
-        word_cloud = WordCloudImage(word_list=word_list, word_hash=word_hash,
-                                    image_url=word_cloudurl)
-        word_cloud.full_clean()
-        word_cloud.save()
+    word_cloud_image.full_clean()
+    word_cloud_image.save()
 
-    return word_cloudurl
+    return word_cloud_image
 
 
 def generate_bvc_stats(survey, team_name_list, archive_date, num_iterations=0):
@@ -976,14 +977,15 @@ def calc_multi_iteration_average(team_name, survey, num_iterations=2, tz='UTC'):
 
 
 @ie_edge()
-def wordcloud_view(request, word_list=''):
+def wordcloud_view(request, word_hash=''):
     # Cached word cloud
-    if word_list:
-        word_cloud_url = cached_word_cloud(word_list)
+    if word_hash:
+        word_cloud_image = cached_word_cloud(word_hash=word_hash, generate=True)
 
-        return HttpResponsePermanentRedirect(word_cloud_url)
-    else:
-        return HttpResponseRedirect('/media/blank.png')
+        if word_cloud_image and word_cloud_image.image_url:
+            return HttpResponsePermanentRedirect(word_cloud_image.image_url)
+
+    return HttpResponseRedirect('/media/blank.png')
 
 
 @ie_edge()
@@ -1010,7 +1012,8 @@ def bvc_view(request, survey_id, team_name='', archive_id='', num_iterations='0'
 
     # Cached word cloud
     if bvc_data['word_list']:
-        bvc_data['word_cloud_url'] = reverse('wordcloud', kwargs={'word_list': bvc_data['word_list']})
+        word_cloud_image = cached_word_cloud(bvc_data['word_list'], generate=False)
+        bvc_data['word_cloud_url'] = word_cloud_image.image_url or reverse('wordcloud', kwargs={'word_hash': word_cloud_image.word_hash})
         bvc_data['word_cloud_width'] = settings.WORDCLOUD_WIDTH
         bvc_data['word_cloud_height'] = settings.WORDCLOUD_HEIGHT
 

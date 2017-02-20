@@ -21,9 +21,9 @@ _responder_id.short_description = 'Responder ID'
 
 
 class WordCloudImageAdmin(admin.ModelAdmin):
-    list_display = ("id", "word_hash", "image_url", "creation_date")
+    list_display = ("id", "word_hash", "image_url", "creation_date", "modified_date")
     list_display_links = ("id", "word_hash", "image_url")
-    readonly_fields = ("id", "creation_date", "image_url", "word_list", "word_hash")
+    readonly_fields = ("id", "creation_date", "modified_date", "word_list", "word_hash")
     search_fields = ("id", "word_hash")
 
     def view_on_site(self, obj):
