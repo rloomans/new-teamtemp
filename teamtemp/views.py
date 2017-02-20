@@ -1010,7 +1010,7 @@ def bvc_view(request, survey_id, team_name='', archive_id='', num_iterations='0'
 
     # Cached word cloud
     if bvc_data['word_list']:
-        bvc_data['word_cloud_url'] = reverse('wordcloud', {'word_list': bvc_data['word_list']})
+        bvc_data['word_cloud_url'] = reverse('wordcloud', kwargs={'word_list': bvc_data['word_list']})
         bvc_data['word_cloud_width'] = settings.WORDCLOUD_WIDTH
         bvc_data['word_cloud_height'] = settings.WORDCLOUD_HEIGHT
 
