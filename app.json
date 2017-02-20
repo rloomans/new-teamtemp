@@ -9,6 +9,7 @@
       "value": "True"
     },
     "DJANGO_SETTINGS_MODULE": {
+      "value": "teamtemp.settings.secure",
       "required": true
     },
     "TEAM_TEMP_CRON_PIN": {
