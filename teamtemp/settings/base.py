@@ -191,11 +191,11 @@ SECURE_FRAME_DENY = True
 X_FRAME_OPTIONS = 'DENY'
 
 CSP_DEFAULT_SRC = ("'none'",)
-CSP_SCRIPT_SRC = ('code.jquery.com', 'maxcdn.bootstrapcdn.com', "'self'",)
+CSP_SCRIPT_SRC = ( "'self'", 'code.jquery.com', 'maxcdn.bootstrapcdn.com',)
 CSP_CONNECT_SRC = ("'self'",)
-CSP_STYLE_SRC = ('code.jquery.com', 'maxcdn.bootstrapcdn.com', "'self'",)
+CSP_STYLE_SRC = ("'self'", 'code.jquery.com', 'maxcdn.bootstrapcdn.com',)
 CSP_IMG_SRC = ("'self'", 'data:', 'blob:',)
-CSP_FONT_SRC = ('maxcdn.bootstrapcdn.com', "'self'",)
+CSP_FONT_SRC = ("'self'", 'maxcdn.bootstrapcdn.com',)
 CSP_EXCLUDE_URL_PREFIXES = ("/djadmin",)
 CSP_REPORT_URI = reverse_lazy('report_csp')
 

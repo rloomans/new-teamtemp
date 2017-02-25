@@ -165,6 +165,7 @@ def authenticated_user(request, survey):
 
 
 @ie_edge()
+@csp_update(SCRIPT_SRC=["'unsafe-inline'", ])
 def set_view(request, survey_id):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
