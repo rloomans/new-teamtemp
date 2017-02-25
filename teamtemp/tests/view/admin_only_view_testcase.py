@@ -22,8 +22,11 @@ class AdminOnlyViewTestCase(TestCase):
         else:
             return reverse('admin', kwargs={'survey_id': self.teamtemp.id})
 
-    def login_url(self):
-        return reverse('login', kwargs={'survey_id': self.teamtemp.id})
+    def login_url(self, redirect_to=None):
+        if not redirect_to:
+            redirect_to = self.admin_url()
+
+        return reverse('login', kwargs={'survey_id': self.teamtemp.id, 'redirect_to': redirect_to})
 
     def assertIsPasswordForm(self, response):
         self.assertContains(response, 'Enter the admin password')
@@ -42,7 +45,7 @@ class AdminOnlyViewTestCase(TestCase):
 
     def assertDoesLoginRedirect(self, response, expected_url=None, redirect_to=None):
         if not expected_url:
-            expected_url = self.login_url() + '?' + urlencode({'redirect_to': (redirect_to or self.admin_url())})
+            expected_url = self.login_url(redirect_to=redirect_to)
 
         self.assertRedirects(response, expected_url=expected_url, status_code=status.HTTP_302_FOUND)
         self.assertIsPasswordForm(response)

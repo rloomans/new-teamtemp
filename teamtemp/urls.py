@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^user/?$', user_view, name='user'),
     url(r'^admin/(?P<survey_id>[0-9a-zA-Z]{8})$', admin_view, name='admin'),
     url(r'^login/(?P<survey_id>[0-9a-zA-Z]{8})$', login_view, name='login'),
+    url(r'^login/(?P<survey_id>[0-9a-zA-Z]{8})(?P<redirect_to>/.+)$', login_view, name='login'),
     url(r'^set/(?P<survey_id>[0-9a-zA-Z]{8})$', set_view, name='set'),
     url(r'^admin/(?P<survey_id>[0-9a-zA-Z]{8})/(?P<team_name>[-\w]{1,64})$', admin_view, name='admin'),
     url(r'^(?P<survey_id>[0-9a-zA-Z]{8})/(?P<team_name>[-\w]{1,64})$', submit_view, name='submit'),

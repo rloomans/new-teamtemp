@@ -1,9 +1,8 @@
 from __future__ import division, print_function
 
-from django.http import HttpResponsePermanentRedirect
 from future import standard_library
-
 standard_library.install_aliases()
+
 from builtins import range, str
 from past.utils import old_div
 import errno
@@ -20,7 +19,7 @@ from django.contrib import messages
 from django.contrib.auth.hashers import check_password, make_password
 from django.db import transaction
 from django.http import Http404, HttpResponse
-from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.static import serve as serve_static
 from django_filters.rest_framework import DjangoFilterBackend
@@ -34,10 +33,9 @@ from teamtemp import responses, utils
 from teamtemp.headers import cache_control, no_cache, ie_edge
 from teamtemp.responses.models import *
 
-from urllib import urlencode
 from urllib.request import urlretrieve
 from urllib.error import ContentTooShortError
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlencode
 
 
 class WordCloudImageViewSet(viewsets.ModelViewSet):
@@ -143,7 +141,7 @@ def home_view(request, survey_type='TEAMTEMP'):
 
             messages.success(request, 'Survey %s created.' % survey.id)
 
-            return HttpResponseRedirect(reverse('team', kwargs={'survey_id': survey_id}))
+            return redirect('team', survey_id=survey_id)
     else:
         form = CreateSurveyForm()
 
@@ -173,7 +171,7 @@ def set_view(request, survey_id):
     timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
 
     if not authenticated_user(request, survey):
-        return HttpResponseRedirect(reverse('login', kwargs={'survey_id': survey_id}) + '?' + urlencode({'redirect_to': request.get_full_path()}))
+        return redirect('login', survey_id=survey_id, redirect_to=request.get_full_path())
 
     survey_teams = survey.teams.all().order_by('team_name')
 
@@ -236,7 +234,7 @@ def set_view(request, survey_id):
             survey.full_clean()
             survey.save()
 
-            return HttpResponseRedirect(reverse('admin', kwargs={'survey_id': survey_id}))
+            return redirect('admin', survey_id=survey_id)
     else:
         form = SurveySettingsForm(instance=survey)
 
@@ -379,12 +377,12 @@ def login_view(request, survey_id, redirect_to=None):
             if check_password(password, survey.password):
                 responses.add_admin_for_survey(request, survey.id)
                 assert responses.is_admin_for_survey(request, survey_id)
-                return HttpResponseRedirect(redirect_to)
+                return redirect(redirect_to)
             else:
                 form.add_error('password', 'Incorrect password')
 
     if authenticated_user(request, survey):
-        return HttpResponseRedirect(redirect_to)
+        return redirect(redirect_to)
 
     return render(request, 'password.html', { 'form': form })
 
@@ -396,7 +394,7 @@ def admin_view(request, survey_id, team_name=''):
     timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
 
     if not authenticated_user(request, survey):
-        return HttpResponseRedirect(reverse('login', kwargs={'survey_id': survey_id}) + '?' + urlencode({'redirect_to': request.get_full_path()}))
+        return redirect('login', survey_id=survey_id, redirect_to=request.get_full_path())
 
     if team_name != '':
         team = get_object_or_404(Teams, request_id=survey_id, team_name=team_name)
@@ -517,9 +515,9 @@ def reset_view(request, survey_id):
         else:
             messages.error(request, 'Survey archive failed.')
     else:
-        return HttpResponseRedirect(reverse('login', kwargs={'survey_id': survey_id}) + '?' + urlencode({'redirect_to': request.get_full_path()}))
+        return redirect('login', survey_id=survey_id, redirect_to=request.get_full_path())
 
-    return HttpResponseRedirect(reverse('admin', kwargs={'survey_id': survey_id}))
+    return redirect('admin', survey_id=survey_id)
 
 
 @no_cache()
@@ -638,7 +636,7 @@ def team_view(request, survey_id, team_name=None):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
     if not authenticated_user(request, survey):
-        return HttpResponseRedirect(reverse('login', kwargs={'survey_id': survey_id}) + '?' + urlencode({'redirect_to': request.get_full_path()}))
+        return redirect('login', survey_id=survey_id, redirect_to=request.get_full_path())
 
     team = None
     if team_name is not None:
@@ -694,7 +692,7 @@ def team_view(request, survey_id, team_name=None):
 
                         messages.success(request, 'Team created.')
 
-                return HttpResponseRedirect(reverse('admin', kwargs={'survey_id': survey_id}))
+                return redirect('admin', survey_id=survey_id)
     else:
         form = AddTeamForm(instance=team, dept_names_list=dept_names_list, region_names_list=region_names_list,
                            site_names_list=site_names_list)
@@ -1003,11 +1001,11 @@ def wordcloud_view(request, word_hash=''):
         word_cloud_image = cached_word_cloud(word_hash=word_hash, generate=True)
 
         if word_cloud_image and word_cloud_image.image_url:
-            return HttpResponsePermanentRedirect(word_cloud_image.image_url)
+            return redirect(word_cloud_image.image_url, permanent=True)
 
         print("Word Cloud: '%s' not found" % word_hash, file=sys.stderr)
 
-    return HttpResponseRedirect('/media/blank.png')
+    return redirect('/media/blank.png')
 
 
 @ie_edge()
@@ -1084,12 +1082,11 @@ def bvc_view(request, survey_id, team_name='', archive_id='', num_iterations='0'
             filter_site_names = ','.join(csf['filter_site_names'])
 
             print("Filter this bvc:", filter_this_bvc, file=sys.stderr)
-
-            return HttpResponseRedirect(reverse('bvc', kwargs={'survey_id': survey_id,
-                                                               'dept_names': filter_dept_names,
-                                                               'region_names': filter_region_names,
-                                                               'site_names': filter_site_names}))
         else:
+            return redirect('bvc', survey_id=survey_id,
+                            dept_names=filter_dept_names,
+                            region_names=filter_region_names,
+                            site_names=filter_site_names)
             raise Exception('Form Is Not Valid:', form)
     else:
         return render(request, 'bvc.html',
