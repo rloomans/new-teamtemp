@@ -11,7 +11,7 @@ import cspreports.urls
 
 from teamtemp.views import TeamResponseHistoryViewSet, TeamTemperatureViewSet, TeamsViewSet, TemperatureResponseViewSet, \
     UserViewSet, WordCloudImageViewSet, admin_view, bvc_view, cron_view, health_check_view, home_view, \
-    media_view, reset_view, robots_txt_view, set_view, submit_view, team_view, user_view, wordcloud_view
+    media_view, reset_view, robots_txt_view, set_view, submit_view, team_view, user_view, wordcloud_view, login_view
 
 router = routers.DefaultRouter()
 router.register(r'word_cloud_images', WordCloudImageViewSet)
@@ -29,6 +29,7 @@ urlpatterns = [
         name='about'),
     url(r'^user/?$', user_view, name='user'),
     url(r'^admin/(?P<survey_id>[0-9a-zA-Z]{8})$', admin_view, name='admin'),
+    url(r'^login/(?P<survey_id>[0-9a-zA-Z]{8})$', login_view, name='login'),
     url(r'^set/(?P<survey_id>[0-9a-zA-Z]{8})$', set_view, name='set'),
     url(r'^admin/(?P<survey_id>[0-9a-zA-Z]{8})/(?P<team_name>[-\w]{1,64})$', admin_view, name='admin'),
     url(r'^(?P<survey_id>[0-9a-zA-Z]{8})/(?P<team_name>[-\w]{1,64})$', submit_view, name='submit'),

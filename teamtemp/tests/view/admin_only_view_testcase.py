@@ -1,5 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from rest_framework import status
+
+from urllib import urlencode
 
 from teamtemp import responses
 from teamtemp.tests.factories import TeamTemperatureFactory, TeamFactory
@@ -16,6 +19,9 @@ class AdminOnlyViewTestCase(TestCase):
         else:
             return reverse('admin', kwargs={'survey_id': self.teamtemp.id})
 
+    def login_url(self):
+        return reverse('login', kwargs={'survey_id': self.teamtemp.id})
+
     def assertIsPasswordForm(self, response):
         self.assertContains(response, 'Enter the admin password')
         self.assertTemplateUsed(response, 'password.html')
@@ -31,8 +37,11 @@ class AdminOnlyViewTestCase(TestCase):
             self.assertContains(response, "Admin %s" % self.teamtemp.id)
         self.assertTemplateUsed(response, 'results.html')
 
-    def assertDoesAdminRedirect(self, response):
-        self.assertRedirects(response, self.admin_url())
+    def assertDoesLoginRedirect(self, response, expected_url=None, redirect_to=None):
+        if not expected_url:
+            expected_url = self.login_url() + '?' + urlencode({'redirect_to': (redirect_to or self.admin_url())})
+
+        self.assertRedirects(response, expected_url=expected_url, status_code=status.HTTP_302_FOUND)
         self.assertIsPasswordForm(response)
 
     def setUpAdmin(self):

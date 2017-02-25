@@ -34,6 +34,7 @@ from teamtemp import responses, utils
 from teamtemp.headers import cache_control, no_cache, ie_edge
 from teamtemp.responses.models import *
 
+from urllib import urlencode
 from urllib.request import urlretrieve
 from urllib.error import ContentTooShortError
 from urllib.parse import urlparse
@@ -172,7 +173,7 @@ def set_view(request, survey_id):
     timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
 
     if not authenticated_user(request, survey):
-        return HttpResponseRedirect(reverse('admin', kwargs={'survey_id': survey_id}))
+        return HttpResponseRedirect(reverse('login', kwargs={'survey_id': survey_id}) + '?' + urlencode({'redirect_to': request.get_full_path()}))
 
     survey_teams = survey.teams.all().order_by('team_name')
 
@@ -361,10 +362,13 @@ def user_view(request):
 
 
 @ie_edge()
-def admin_view(request, survey_id, team_name=''):
+def login_view(request, survey_id, redirect_to=None):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
     timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
+
+    if not redirect_to:
+        redirect_to = request.GET.get('redirect_to', reverse('admin', kwargs={'survey_id': survey_id}))
 
     form = ResultsPasswordForm()
     if request.method == 'POST':
@@ -375,12 +379,24 @@ def admin_view(request, survey_id, team_name=''):
             if check_password(password, survey.password):
                 responses.add_admin_for_survey(request, survey.id)
                 assert responses.is_admin_for_survey(request, survey_id)
-                return HttpResponseRedirect(reverse('admin', kwargs={'survey_id': survey_id}))
+                return HttpResponseRedirect(redirect_to)
             else:
                 form.add_error('password', 'Incorrect password')
 
+    if authenticated_user(request, survey):
+        return HttpResponseRedirect(redirect_to)
+
+    return render(request, 'password.html', { 'form': form })
+
+
+@ie_edge()
+def admin_view(request, survey_id, team_name=''):
+    survey = get_object_or_404(TeamTemperature, pk=survey_id)
+
+    timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
+
     if not authenticated_user(request, survey):
-        return render(request, 'password.html', {'form': form})
+        return HttpResponseRedirect(reverse('login', kwargs={'survey_id': survey_id}) + '?' + urlencode({'redirect_to': request.get_full_path()}))
 
     if team_name != '':
         team = get_object_or_404(Teams, request_id=survey_id, team_name=team_name)
@@ -500,6 +516,8 @@ def reset_view(request, survey_id):
             messages.success(request, 'Survey archived successfully.')
         else:
             messages.error(request, 'Survey archive failed.')
+    else:
+        return HttpResponseRedirect(reverse('login', kwargs={'survey_id': survey_id}) + '?' + urlencode({'redirect_to': request.get_full_path()}))
 
     return HttpResponseRedirect(reverse('admin', kwargs={'survey_id': survey_id}))
 
@@ -620,7 +638,7 @@ def team_view(request, survey_id, team_name=None):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
     if not authenticated_user(request, survey):
-        return HttpResponseRedirect(reverse('admin', kwargs={'survey_id': survey_id}))
+        return HttpResponseRedirect(reverse('login', kwargs={'survey_id': survey_id}) + '?' + urlencode({'redirect_to': request.get_full_path()}))
 
     team = None
     if team_name is not None:
