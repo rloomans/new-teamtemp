@@ -5,8 +5,6 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from rest_framework import status
 
-from urllib.parse import urlencode
-
 from teamtemp import responses
 from teamtemp.tests.factories import TeamTemperatureFactory, TeamFactory
 

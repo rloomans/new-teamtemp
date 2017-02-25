@@ -35,7 +35,7 @@ from teamtemp.responses.models import *
 
 from urllib.request import urlretrieve
 from urllib.error import ContentTooShortError
-from urllib.parse import urlparse, urlencode
+from urllib.parse import urlparse
 
 
 class WordCloudImageViewSet(viewsets.ModelViewSet):

@@ -1,3 +1,4 @@
+import cspreports.urls
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin as djadmin
@@ -6,8 +7,6 @@ from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from django.views.static import serve as serve_static
 from rest_framework import routers
-
-import cspreports.urls
 
 from teamtemp.views import TeamResponseHistoryViewSet, TeamTemperatureViewSet, TeamsViewSet, TemperatureResponseViewSet, \
     UserViewSet, WordCloudImageViewSet, admin_view, bvc_view, cron_view, health_check_view, home_view, \

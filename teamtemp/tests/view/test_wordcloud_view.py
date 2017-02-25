@@ -18,7 +18,8 @@ class WordcloudViewTestCases(TestCase):
         self.assertWordCloudImage(response, '/media/blank.png')
 
     def test_wordcloud_view_missing(self):
-        response = self.client.get(reverse('wordcloud', kwargs={'word_hash': '0123456789abcdef0123456789abcdef01234567'}), follow=True)
+        response = self.client.get(
+            reverse('wordcloud', kwargs={'word_hash': '0123456789abcdef0123456789abcdef01234567'}), follow=True)
         self.assertWordCloudImage(response, '/media/blank.png')
 
     def test_wordcloud_view_found(self):
