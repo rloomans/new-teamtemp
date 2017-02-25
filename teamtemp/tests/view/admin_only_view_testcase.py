@@ -48,7 +48,6 @@ class AdminOnlyViewTestCase(TestCase):
             expected_url = self.login_url(redirect_to=redirect_to)
 
         self.assertRedirects(response, expected_url=expected_url, status_code=status.HTTP_302_FOUND)
-        self.assertIsPasswordForm(response)
 
     def setUpAdmin(self):
         session = self.client.session

@@ -9,6 +9,6 @@ class LoginViewTestCases(AdminOnlyViewTestCase):
     def test_loggedin_view(self):
         self.setUpAdmin()
         response = self.client.get(self.login_url(), follow=True)
-        self.assertDoesLoginRedirect(response, redirect_to=self.admin_url())
+        self.assertDoesLoginRedirect(response, expected_url=self.admin_url())
         self.assertIsNotPasswordForm(response)
         self.assertIsAdminForm(response)

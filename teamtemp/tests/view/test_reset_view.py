@@ -8,6 +8,7 @@ class AdminViewTestCases(AdminOnlyViewTestCase):
         reset_url = reverse('reset', kwargs={'survey_id': self.teamtemp.id})
         response = self.client.get(reset_url, follow=True)
         self.assertDoesLoginRedirect(response, redirect_to=reset_url)
+        self.assertIsPasswordForm(response)
 
     def test_admin_reset_team_view(self):
         self.setUpAdmin()
