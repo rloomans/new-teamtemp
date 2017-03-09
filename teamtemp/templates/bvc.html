@@ -6,8 +6,8 @@
 {% block title %}Results {{ survey.id }} {{ bvc_data.team_name }}{% endblock %}
 
 {% block bootstrap3_extra_script %}
-  <script type='text/javascript' src="//www.google.com/jsapi"></script>
-  <script type='text/javascript'>
+  <script type="text/javascript" src="//www.google.com/jsapi"></script>
+  <script type="text/javascript" async>
 
     google.load('visualization', '1', {packages: ['gauge', 'annotationchart', 'corechart']});
     google.setOnLoadCallback(drawGaugeChart);
