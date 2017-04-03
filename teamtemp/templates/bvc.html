@@ -46,7 +46,6 @@
       ]);
 
       var gauge_options = {
-<!--        width: 400, height: 400, -->
         redFrom: 0, redTo: 2.5,
         yellowFrom: 2.5, yellowTo: 5,
         greenFrom: 7.5, greenTo: 10,
@@ -263,7 +262,7 @@
         {% endif %}
 
         <!-- Display Team Temp Gauge -->
-        <div class="centregauge" id='gauge_average'> </div>
+	<div class="centregauge"><div class="center" id='gauge_average'> </div></div>
         {% if bvc_data.stats.minimum %}
         <div class="row">
           <div class="col-md-4">
