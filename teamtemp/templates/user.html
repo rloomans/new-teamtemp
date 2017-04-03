@@ -6,7 +6,7 @@
 
 <div class="container">
     {% if user %}
-    <h1 align="center">User{% if user %} {{ user.id }}{% endif %}</h1>
+    <h1 class="center">User{% if user %} {{ user.id }}{% endif %}</h1>
     <br><br>
 
     <table class="table table-striped">
@@ -23,18 +23,18 @@
     {% endif %}
 
     {% if admin_surveys %}
-    <h1 align="center">Survey Admin</h1>
+    <h1 class="center">Survey Admin</h1>
     <br><br>
 
     <table class="table table-striped">
         <tr>
-            <th nowrap colspan="2">Survey</th>
+            <th class="nowrap" colspan="2">Survey</th>
             <th>Teams</th>
         </tr>
         {% for survey in admin_surveys %}
         <tr>
             <th>{{ survey.id }}</th>
-            <td nowrap>
+            <td class="nowrap">
                 <div class="btn-group" role="group" aria-label="nav">
                     <a href="{% url 'admin' survey_id=survey.id %}" class="btn btn-info" role="button">ADMIN</a>
                     <a href="{% url 'bvc' survey_id=survey.id %}" class="btn btn-primary" role="button">BVC</a>

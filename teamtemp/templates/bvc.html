@@ -96,7 +96,7 @@
 
 {% block body %}
 
-  <div class="container" align="center">
+  <div class="container">
     <div class="row">
       <div class="no-print">
         <BR>
@@ -137,9 +137,9 @@
           {% csrf_token %}
           <div class="no-print">
             <BR>
-            <table cellpadding="2">
+            <table class="filters">
               <tr>
-                <td valign="top">
+                <td class="top">
                   {% if form.filter_dept_names.value %}
                     {{ form.filter_dept_names.errors }}
                     <div class="btn btn-default text-left">
@@ -147,7 +147,7 @@
                     </div>
                   {% endif %}
                 </td>
-                <td valign="top">
+                <td class="top">
                   {% if form.filter_region_names.value %}
                     {{ form.filter_region_names.errors }}
                     <div class="btn btn-default text-left">
@@ -155,7 +155,7 @@
                     </div>
                   {% endif %}
                 </td>
-                <td valign="top">
+                <td class="top">
                   {% if form.filter_site_names.value %}
                     {{ form.filter_site_names.errors }}
                     <div class="btn btn-default text-left">
@@ -164,11 +164,11 @@
                   {% endif %}
                 </td>
 
-                <td valign="top">
+                <td class="top">
                   {% if form.filter_site_names.value or form.filter_region_names.value or form.filter_dept_names.value %}
                     {% buttons %}
                       <button type="submit" class="btn btn-default">
-                        {% bootstrap_icon "glyphicon glyphicon-filter" %} <b>FILTER BVC</b>
+                        {% bootstrap_icon "glyphicon glyphicon-filter" %} <strong>FILTER BVC</strong>
                       </button>
                     {% endbuttons %}
                   {% endif %}
@@ -235,30 +235,30 @@
       {% endif %}
     </div>
     <div class="row">
-      <h1 align="center">{{ bvc_data.pretty_team_name }} {{ bvc_data.survey_type_title }}</h1>
+      <h1 class="center">{{ bvc_data.pretty_team_name }} {{ bvc_data.survey_type_title }}</h1>
 
       <div class="col-md-6">
         {% if bvc_data.archived %}
-          <h2 align="center">{{ bvc_data.archive_date|date:"M. d, Y" }}</h2>
+          <h2 class="center">{{ bvc_data.archive_date|date:"M. d, Y" }}</h2>
         {% else %}
-          <h2 align="center">{% now () %}</h2>
+          <h2 class="center">{% now () %}</h2>
 
           <div class="no-print">
             {% if num_iterations != '0' %}
               {% if bvc_data.team_name == '' %}
-                <h6 align="center"><a href="{% url 'bvc' survey_id=survey.id %}">Current Results
+                <h6 class="center"><a href="{% url 'bvc' survey_id=survey.id %}">Current Results
                   + {{ num_iterations }} Previous Iterations</a></h6>
               {% else %}
-                <h6 align="center"><a href="{% url 'bvc' survey_id=survey.id team_name=bvc_data.team_name %}">Current
+                <h6 class="center"><a href="{% url 'bvc' survey_id=survey.id team_name=bvc_data.team_name %}">Current
                   Results + {{ num_iterations }} Previous Iterations</a></h6>
               {% endif %}
             {% else %}
               {% if bvc_data.team_name == '' %}
-                <h6 align="center"><a
+                <h6 class="center"><a
                   href="{% url 'bvc' survey_id=survey.id num_iterations='2' %}">Current
                   Results</a></h6>
               {% else %}
-                <h6 align="center"><a
+                <h6 class="center"><a
                   href="{% url 'bvc' survey_id=survey.id team_name=bvc_data.team_name num_iterations='2' %}">Current
                   Results</a></h6>
               {% endif %}
@@ -280,7 +280,7 @@
       {% endif %}
       </div>
       <div class="col-md-6">
-        <h3 align="center">{{ bvc_data.stats.count }} Response{% if bvc_data.stats.count != 1 %}s{% endif %}:</h3>
+        <h3 class="center">{{ bvc_data.stats.count }} Response{% if bvc_data.stats.count != 1 %}s{% endif %}:</h3>
 
         <div class="wordcloud">
           {% if bvc_data.word_cloud_url %}
@@ -297,10 +297,10 @@
     <div class="row">
       <br><br>
       <!-- History Trend Graphs -->
-      <h1 align="center">{{ bvc_data.pretty_team_name }}</h1>
+      <h1 class="center">{{ bvc_data.pretty_team_name }}</h1>
       <p>
-      <h1 align="center">Historical {{ bvc_data.survey_type_title }}</h1>
-      <h2 align="center">{% now () %}</h2>
+      <h1 class="center">Historical {{ bvc_data.survey_type_title }}</h1>
+      <h2 class="center">{% now () %}</h2>
       <p>
       <div class="centregauge" id="table_div_jscode"></div>
       <br><br>
