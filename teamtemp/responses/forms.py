@@ -278,9 +278,8 @@ class SurveySettingsForm(forms.ModelForm):
 
     def clean_next_archive_date(self):
         next_archive_date = self.cleaned_data['next_archive_date']
-        if next_archive_date is not None:
-            if next_archive_date < timezone.now().date():
-                raise forms.ValidationError('Next Archive Date must not be past')
+        if next_archive_date is not None and next_archive_date < timezone.now().date():
+            raise forms.ValidationError('Next Archive Date must not be past')
         return next_archive_date
 
     def clean_survey_type(self):

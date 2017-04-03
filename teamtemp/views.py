@@ -575,10 +575,9 @@ def prune_word_cloud_cache(_):
     rows_deleted += rows
 
     for word_cloud_image in WordCloudImage.objects.all():
-        if word_cloud_image.image_url:
-            if not os.path.isfile(media_file(word_cloud_image.image_url)):
-                rows, _ = word_cloud_image.delete()
-                rows_deleted += rows
+        if word_cloud_image.image_url and not os.path.isfile(media_file(word_cloud_image.image_url)):
+            rows, _ = word_cloud_image.delete()
+            rows_deleted += rows
 
     print("prune_word_cloud_cache: %d rows deleted" % rows_deleted, file=sys.stderr)
     print("prune_word_cloud_cache: Stop at %s" % utc_timestamp(), file=sys.stderr)
