@@ -107,6 +107,6 @@ ul {
   white-space: nowrap;
 }
 
-.filters>tbody>tr>td {
+.filters td {
   padding: 2px;
 }
