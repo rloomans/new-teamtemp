@@ -89,7 +89,7 @@ class TeamsViewSet(viewsets.ModelViewSet):
     order_fields = ('team_name',)
 
 
-@no_cache
+@no_cache()
 @csp_exempt
 def health_check_view(_):
     return HttpResponse('ok', content_type='text/plain')
@@ -111,7 +111,7 @@ def utc_timestamp():
     return "[%s UTC]" % str(timezone.localtime(timezone.now(), timezone=timezone.utc))
 
 
-@ie_edge
+@ie_edge()
 @csp_update(SCRIPT_SRC=["'unsafe-inline'", ])
 def home_view(request, survey_type='TEAMTEMP'):
     timezone.activate(timezone.utc)
@@ -165,7 +165,7 @@ def authenticated_user(request, survey):
     return False
 
 
-@ie_edge
+@ie_edge()
 @csp_update(SCRIPT_SRC=["'unsafe-inline'", ])
 def set_view(request, survey_id):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
@@ -279,7 +279,7 @@ def change_team_name(team_name, new_team_name, survey_id):
     return num_rows
 
 
-@ie_edge
+@ie_edge()
 def submit_view(request, survey_id, team_name=''):
     user = get_or_create_user(request)
 
@@ -347,8 +347,8 @@ def submit_view(request, survey_id, team_name=''):
                                          'id': survey_id})
 
 
-@no_cache
-@ie_edge
+@no_cache()
+@ie_edge()
 def user_view(request):
     user = get_or_create_user(request)
 
@@ -361,7 +361,7 @@ def user_view(request):
     return render(request, 'user.html', {'user': user, 'admin_surveys': admin_surveys})
 
 
-@no_cache
+@no_cache()
 @login_required
 def super_view(request, survey_id):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
@@ -374,8 +374,8 @@ def super_view(request, survey_id):
     return redirect('login', survey_id=survey_id, redirect_to=redirect_to)
 
 
-@no_cache
-@ie_edge
+@no_cache()
+@ie_edge()
 def login_view(request, survey_id, redirect_to=None):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
@@ -402,7 +402,7 @@ def login_view(request, survey_id, redirect_to=None):
 
     return render(request, 'password.html', { 'form': form })
 
-@ie_edge
+@ie_edge()
 @csp_update(SCRIPT_SRC=["'unsafe-inline'",],)
 def admin_view(request, survey_id, team_name=''):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
@@ -518,8 +518,8 @@ def save_url(url, basename):
     return return_url
 
 
-@no_cache
-@ie_edge
+@no_cache()
+@ie_edge()
 def reset_view(request, survey_id):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
@@ -536,7 +536,7 @@ def reset_view(request, survey_id):
     return redirect('admin', survey_id=survey_id)
 
 
-@no_cache
+@no_cache()
 def cron_view(request, pin):
     cron_pin = '0000'
     if settings.CRON_PIN:
@@ -673,7 +673,7 @@ def archive_survey(_, survey, archive_date=timezone.now()):
     return True
 
 
-@ie_edge
+@ie_edge()
 def team_view(request, survey_id, team_name=None):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
@@ -1051,7 +1051,7 @@ def calc_multi_iteration_average(team_name, survey, num_iterations=2, tz='UTC'):
     return None
 
 
-@no_cache
+@no_cache()
 @csp_exempt
 def wordcloud_view(request, word_hash=''):
     # Cached word cloud
@@ -1066,7 +1066,7 @@ def wordcloud_view(request, word_hash=''):
     return redirect('/media/blank.png')
 
 
-@ie_edge
+@ie_edge()
 @csp_update(SCRIPT_SRC=['*.google.com', '*.googleapis.com', "'unsafe-eval'", "'unsafe-inline'",],
     STYLE_SRC=['*.google.com', '*.googleapis.com',],
     IMG_SRC = ['blob:', 'gg.google.com',])
