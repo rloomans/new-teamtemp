@@ -771,8 +771,8 @@ def populate_chart_data_structures(survey_type_title, teams, team_history, tz='U
                 if num_scores > 0:
                     average_score = float(old_div(score_sum, num_scores))
                     row['Average'] = (average_score,
-                            "%.2f %s (%d Response%s)" % (average_score,
-                                                        "Min: %d Max: %d" % (score_min, score_max) if score_min else '',
+                            "%.2f (%s%d Response%s)" % (average_score,
+                                                        "Min: %.2f, Max: %.2f, " % (score_min, score_max) if score_min else '',
                                                         responder_sum, 's' if responder_sum > 1 else ''))
                     score_sum = 0
                     score_min = None
@@ -795,13 +795,13 @@ def populate_chart_data_structures(survey_type_title, teams, team_history, tz='U
             responder_sum += responder_count
 
             row[survey_summary.team_name] = (average_score,
-                                             "%.2f %s (%d Response%s)" % (average_score,
-                                                        "Min: %d Max: %d" % (survey_summary.minimum_score, survey_summary.maximum_score) if survey_summary.minimum_score else '',
+                                             "%.2f (%s%d Response%s)" % (average_score,
+                                                        "Min: %.2f, Max: %.2f, " % (survey_summary.minimum_score, survey_summary.maximum_score) if survey_summary.minimum_score else '',
                                                          responder_count, 's' if responder_count > 1 else ''))
 
     average_score = float(old_div(score_sum, num_scores))
-    row['Average'] = (average_score, "%.2f %s (%d Response%s)" % (average_score,
-                                                        "Min: %d Max: %d" % (score_min, score_max) if score_min else '',
+    row['Average'] = (average_score, "%.2f (%s%d Response%s)" % (average_score,
+                                                        "Min: %.2f, Max: %.2f " % (score_min, score_max) if score_min else '',
                                                         responder_sum, 's' if responder_sum > 1 else ''))
 
     history_chart_data.append(row)
