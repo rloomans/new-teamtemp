@@ -815,7 +815,7 @@ def populate_chart_data_structures(survey_type_title, teams, team_history, tz='U
 
     average_score = float(old_div(score_sum, num_scores))
     row['Average'] = (average_score, "%.2f (%s%d Response%s)" % (average_score,
-                                                        "Min: %.2f, Max: %.2f " % (score_min, score_max) if score_min else '',
+                                                        "Min: %.2f, Max: %.2f, " % (score_min, score_max) if score_min else '',
                                                         responder_sum, 's' if responder_sum > 1 else ''))
 
     history_chart_data.append(row)
