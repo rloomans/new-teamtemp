@@ -12,7 +12,8 @@ from rest_framework.documentation import include_docs_urls
 
 from teamtemp.views import TeamResponseHistoryViewSet, TeamTemperatureViewSet, TeamsViewSet, TemperatureResponseViewSet, \
     UserViewSet, WordCloudImageViewSet, admin_view, bvc_view, cron_view, health_check_view, home_view, \
-    media_view, reset_view, robots_txt_view, set_view, submit_view, team_view, user_view, wordcloud_view, login_view
+    media_view, reset_view, robots_txt_view, set_view, submit_view, team_view, user_view, wordcloud_view, login_view, \
+    super_view
 
 router = routers.DefaultRouter()
 router.register(r'word_cloud_images', WordCloudImageViewSet)
