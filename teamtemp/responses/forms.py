@@ -155,14 +155,20 @@ class AddTeamForm(forms.ModelForm):
     region_name = forms.CharField(max_length=64)
 
     def __init__(self, *args, **kwargs):
-        dept_name_choices = [(x, x) for x in kwargs.pop('dept_names_list')]
-        dept_name_choices.append(('', '-'))
+        dept_name_choices = []
+        if 'dept_names_list' in kwargs:
+            dept_name_choices = [(x, x) for x in kwargs.pop('dept_names_list')]
+            dept_name_choices.append(('', '-'))
 
-        region_name_choices = [(x, x) for x in kwargs.pop('region_names_list')]
-        region_name_choices.append(('', '-'))
+        region_name_choices = []
+        if 'region_name_choices' in kwargs:
+            region_name_choices = [(x, x) for x in kwargs.pop('region_names_list')]
+            region_name_choices.append(('', '-'))
 
-        site_name_choices = [(x, x) for x in kwargs.pop('site_names_list')]
-        site_name_choices.append(('', '-'))
+        site_name_choices = []
+        if 'site_name_choices' in kwargs:
+            site_name_choices = [(x, x) for x in kwargs.pop('site_names_list')]
+            site_name_choices.append(('', '-'))
 
         super(AddTeamForm, self).__init__(*args, **kwargs)
 
