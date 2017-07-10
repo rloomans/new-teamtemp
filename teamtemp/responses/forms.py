@@ -161,12 +161,12 @@ class AddTeamForm(forms.ModelForm):
             dept_name_choices.append(('', '-'))
 
         region_name_choices = []
-        if 'region_name_choices' in kwargs:
+        if 'region_names_list' in kwargs:
             region_name_choices = [(x, x) for x in kwargs.pop('region_names_list')]
             region_name_choices.append(('', '-'))
 
         site_name_choices = []
-        if 'site_name_choices' in kwargs:
+        if 'site_names_list' in kwargs:
             site_name_choices = [(x, x) for x in kwargs.pop('site_names_list')]
             site_name_choices.append(('', '-'))
 
