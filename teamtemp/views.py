@@ -34,8 +34,6 @@ from teamtemp import responses, utils
 from teamtemp.headers import cache_control, no_cache, ie_edge
 from teamtemp.responses.models import *
 
-from urllib.request import urlretrieve
-from urllib.error import ContentTooShortError
 from urllib.parse import urlparse
 
 
@@ -561,8 +559,9 @@ def generate_wordcloud(word_list, word_hash):
                 "s_fit": "TRUE",
                 "fixed_asp": fixed_asp,
                 "rotate": rotate},
-            timeout=timeout)
-        if response.status_code == 200:
+            timeout=timeout,
+            verify=False)
+        if response.status_code == requests.codes.ok:
             print(
                 "Finish Word Cloud Generation: [%s]" %
                 (word_hash), file=sys.stderr)
@@ -614,15 +613,17 @@ def save_url(url, basename):
 
     if not os.path.exists(filename):
         try:
-            urlretrieve(url, filename)
+            r = requests.get(url, stream=True, verify=False)
+            if r.status_code != requests.codes.ok:
+                print("Failed Saving Word Cloud: [%s] status_code=%d response=%s" % (
+                    url, r.status_code, str(r.__dict__)), file=sys.stderr)
+                return None
+            with open(filename, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=128):
+                    f.write(chunk)
         except IOError as exc:
             print("Failed Saving Word Cloud: IOError:%s %s as %s" %
                   (str(exc), url, filename), file=sys.stderr)
-            return None
-        except ContentTooShortError as exc:
-            print(
-                "Failed Saving Word Cloud: ContentTooShortError:%s %s as %s" %
-                (str(exc), url, filename), file=sys.stderr)
             return None
 
     return return_url
