@@ -9,6 +9,8 @@ engines:
       - ruby
       - javascript
       - python
+    exclude_paths:
+      - teamtemp/tests/**.py
   eslint:
     enabled: true
   fixme:

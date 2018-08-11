@@ -29,3 +29,6 @@ venv*
 # project files
 staticfiles
 mediafiles
+
+# shell environments
+*_env.sh

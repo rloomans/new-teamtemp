@@ -1,1 +1,1 @@
--r requirements/opbeat.txt
+-r requirements/base.txt
