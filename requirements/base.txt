@@ -1,9 +1,9 @@
-Django==2.0.7
+Django==2.1.1
 django-bootstrap4==0.0.6
 dj-database-url==0.5.0
 dj-static==0.0.6
 django-csp==3.4
-django-csp-reports==1.1
+django-csp-reports==1.2
 django-crispy-forms==1.7.2
 django-filter==2.0.0
 djangorestframework==3.8.2
@@ -17,7 +17,7 @@ psycopg2==2.7.5
 pytz==2018.5
 requests==2.19.1
 static==1.1.1
-whitenoise==3.3.1
+whitenoise[brotli]==4.0
 urllib3[secure]==1.23
 future==0.16.0
 coreapi==2.3.3
