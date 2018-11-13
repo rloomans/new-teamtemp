@@ -16,7 +16,7 @@ psycopg2==2.7.6
 pytz==2018.7
 requests==2.20.1
 static==1.1.1
-whitenoise[brotli]==4.1
+whitenoise[brotli]==4.1.1
 urllib3[secure]==1.24.1
 future==0.17.1
 coreapi==2.3.3
