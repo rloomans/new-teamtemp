@@ -67,7 +67,7 @@ urlpatterns = [
         name='bvc'),
 
     re_path(r'^reset/(?P<survey_id>[0-9a-zA-Z]{8})/?$', reset_view, name='reset'),
-    re_path(r'^cron/(?P<pin>[0-9]{4,16})$', cron_view, name='cron'),
+    re_path(r'^cron/(?P<pin>.{4,100})$', cron_view, name='cron'),
     re_path(r'^team/(?P<survey_id>[0-9a-zA-Z]{8})/(?P<team_name>[-\w]{1,64})$', team_view, name='team'),
     re_path(r'^team/(?P<survey_id>[0-9a-zA-Z]{8})/?$', team_view, name='team'),
     re_path(r'^wordcloud/(?P<word_hash>[a-f0-9]{40})?$', wordcloud_view, name='wordcloud'),

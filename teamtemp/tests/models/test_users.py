@@ -1,5 +1,4 @@
 from builtins import str
-from django.forms import ValidationError
 from django.test import TestCase
 
 from teamtemp.tests.factories import UserFactory
@@ -16,6 +15,6 @@ class UserTestCases(TestCase):
         self.assertNotEqual(UserFactory().id, UserFactory().id)
 
     def test_duplicate_user_ids(self):
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(RuntimeError):
             UserFactory(id='bob')
             UserFactory(id='bob')

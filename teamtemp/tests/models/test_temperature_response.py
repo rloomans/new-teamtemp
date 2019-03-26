@@ -1,10 +1,10 @@
 from __future__ import division
-from builtins import str
-from past.utils import old_div
+
 import itertools
+from builtins import str
 
 from django.test import TestCase
-from django.core.exceptions import ValidationError
+from past.utils import old_div
 
 from teamtemp.tests.factories import TeamTemperatureFactory, TemperatureResponseFactory, UserFactory
 
@@ -78,7 +78,7 @@ class TemperatureResponseTestCases(TestCase):
         self.assertEqual(response.pretty_team_name(), 'bob and his friends')
 
     def test_invalid_score(self):
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(RuntimeError):
             TemperatureResponseFactory(score=0)
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(RuntimeError):
             TemperatureResponseFactory(score=11)
