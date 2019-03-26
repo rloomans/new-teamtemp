@@ -9,7 +9,7 @@ django-filter==2.1.0
 djangorestframework==3.9.2
 django-secure==1.0.1
 django-toolbelt==0.0.1
-django-user-sessions==1.5.3
+django-user-sessions==1.6.0
 gunicorn==19.9.0
 gviz_api==1.9.0
 py-bcrypt==0.4
