@@ -1,5 +1,4 @@
 from builtins import str
-from django.forms import ValidationError
 from django.test import TestCase
 
 from teamtemp.tests.factories import TeamTemperatureFactory, TeamFactory
@@ -32,7 +31,7 @@ class TeamTestCases(TestCase):
 
     def test_duplicate_team_names(self):
         teamtemp = TeamTemperatureFactory()
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(RuntimeError):
             TeamFactory(team_name='bob', request=teamtemp)
             TeamFactory(team_name='bob', request=teamtemp)
 
