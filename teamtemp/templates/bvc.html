@@ -6,7 +6,10 @@
 {% block title %}Results {{ survey.id }} {{ bvc_data.team_name }}{% endblock %}
 
 {% block form_extra_head %}
-  <script type='text/javascript' src="{% static "spin.min.js" %}"></script><script type='text/javascript' src="{% static "jquery.spin.min.js" %}"></script>
+  <script type='text/javascript' src="{% static "spin.min.js" %}"></script>
+  <script type='text/javascript' src="{% static "jquery.spin.min.js" %}"></script>
+  <script type='text/javascript' src="{% static "d3.v5.min.js" %}"></script>
+  <script type='text/javascript' src="{% static "d3.layout.cloud.js" %}"></script>
 {% endblock %}
 
 {% block bootstrap3_extra_script %}
@@ -23,6 +26,63 @@
     setTimeout(function () {
       $('.wordcloud').spin(false);
     }, 3000);
+  </script>
+  <script>
+    {
+      'use strict';
+      var wordcloud = {
+        init: function() {
+          wordcloud.chart = d3.select('.wordcloud-text');
+          wordcloud.wordlist = wordcloud.chart.text().split(' ');
+          wordcloud.words = [];
+          wordcloud.wordlist.forEach(function(d) {
+            if(wordcloud.words[d]) {
+              wordcloud.words[d] = { text: d, size: d.size + 1};
+            } else {
+              wordcloud.words[d] = { text: d, size: 1 };
+            }
+          });
+          wordcloud.chart.selectAll().remove();
+          wordcloud.layout = d3.layout.cloud()
+            .size([400, 400])
+            .words(wordcloud.words)
+            .padding(5)
+            .rotate(function() { return ~~(Math.random() * 2) * 90; })
+            .font('impact')
+            .fontSize(function(d) { return d.size; })
+            .on('end', wordcloud.draw);
+          wordcloud.layout.start();
+        },
+        draw: function(words) {
+          console.log(wordcloud.words);
+          var w = wordcloud.layout.size()[0];
+          var h = wordcloud.layout.size()[1];
+          wordcloud.chart.append('svg')
+              .attr('width', w)
+              .attr('height', h)
+            .append('g')
+              .attr('transform', 'translate(' + w / 2 + ',' + h / 2 + ')')
+            .selectAll('text')
+              .data(wordcloud.words)
+            .enter().append('text')
+              .style('font-size', function(d) { return d.size + 'px'; })
+              .style('font-family', 'Impact')
+              .attr('text-anchor', 'middle')
+              .attr('transform', function(d) {
+                return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')';
+              })
+              .text(function(d) { return d.text; });
+        },
+        handleEvent: function(ev) {
+          switch(ev.type) {
+          case 'load':
+            wordcloud.init();
+            break;
+          }
+        }
+      };
+      window.addEventListener('load', wordcloud);
+    }
   </script>
   <script type='text/javascript' src="//www.google.com/jsapi"></script>
   <script type='text/javascript'>
