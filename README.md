@@ -5,6 +5,7 @@ new-teamtemp
 [![Coverage Status](https://coveralls.io/repos/rloomans/new-teamtemp/badge.svg?branch=master&service=github)](https://coveralls.io/github/rloomans/new-teamtemp?branch=master)
 [![Codecov](https://img.shields.io/codecov/c/github/rloomans/new-teamtemp/master.svg?maxAge=2592000)](http://codecov.io/github/rloomans/new-teamtemp?branch=master)
 [![Code Climate](https://codeclimate.com/github/rloomans/new-teamtemp/badges/gpa.svg)](https://codeclimate.com/github/rloomans/new-teamtemp)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=rloomans/new-teamtemp)](https://dependabot.com)
 
 This application is designed to gather 'team temperature' - that is, a
 happiness score.
@@ -17,3 +18,22 @@ same browser.
 The results page are available to the creator using the same cookie mechanism,
 and also a password in case the cookie is lost.
 
+
+Heroku One-click Deploy
+-----------------------
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+After you successfully deploy your app to Heroku, make sure that you add the following to the Heroku Scheduler as a daily job:
+
+```
+python bin/archive_scores.py
+```
+
+Also, if you want to access the Django admin site, add a super user using the heroku CLI:
+
+```
+heroku run --app <Your Heroku app name here> python manage.py createsuperuser --username <admin user> --email <admin email address>
+```
+
+and then go to https://\<Your Heroku app name here>.herokuapp.com/djadmin/

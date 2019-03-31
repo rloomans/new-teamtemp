@@ -1,6 +1,5 @@
 from builtins import str
 import re
-from django.forms import ValidationError
 from django.test import TestCase
 
 from teamtemp.tests.factories import TeamTemperatureFactory, UserFactory
@@ -43,12 +42,12 @@ class TeamTemperatureTestCases(TestCase):
         self.assertEqual(user.team_temperatures.count(), 2)
 
     def test_duplicate_teamtemp_ids(self):
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(RuntimeError):
             TeamTemperatureFactory(id='bob')
             TeamTemperatureFactory(id='bob')
 
     def test_invalid_max_word_count(self):
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(RuntimeError):
             TeamTemperatureFactory(max_word_count=0)
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(RuntimeError):
             TeamTemperatureFactory(max_word_count=11)
