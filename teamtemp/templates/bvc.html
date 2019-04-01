@@ -34,14 +34,15 @@
         init: function() {
           wordcloud.chart = d3.select('.wordcloud-text');
           wordcloud.wordlist = wordcloud.chart.text().split(' ');
-          wordcloud.words = [];
+          wordcloud.wordmap = {};
           wordcloud.wordlist.forEach(function(d) {
-            if(wordcloud.words[d]) {
-              wordcloud.words[d] = { text: d, size: d.size + 1};
+            if(wordcloud.wordmap.hasOwnProperty(d)) {
+              wordcloud.wordmap[d].size++;
             } else {
-              wordcloud.words[d] = { text: d, size: 1 };
+              wordcloud.wordmap[d] = { text: d, size: 1 };
             }
           });
+          wordcloud.words = Object.values(wordcloud.wordmap);
           wordcloud.chart.selectAll().remove();
           wordcloud.layout = d3.layout.cloud()
             .size([400, 400])
@@ -54,7 +55,7 @@
           wordcloud.layout.start();
         },
         draw: function(words) {
-          console.log(wordcloud.words);
+          console.log(words);
           var w = wordcloud.layout.size()[0];
           var h = wordcloud.layout.size()[1];
           wordcloud.chart.append('svg')
@@ -63,9 +64,9 @@
             .append('g')
               .attr('transform', 'translate(' + w / 2 + ',' + h / 2 + ')')
             .selectAll('text')
-              .data(wordcloud.words)
+              .data(words)
             .enter().append('text')
-              .style('font-size', function(d) { return d.size + 'px'; })
+              .style('font-size', function(d) { return (10 + d.size * 20) + 'px'; })
               .style('font-family', 'Impact')
               .attr('text-anchor', 'middle')
               .attr('transform', function(d) {
