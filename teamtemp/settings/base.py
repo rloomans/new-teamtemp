@@ -232,3 +232,4 @@ if GOOGLE_ANALYTICS_PROPERTY_ID:
     CSP_SCRIPT_SRC += ("'unsafe-eval'", "'unsafe-inline'",
                        'www.google-analytics.com', 'data:',)
     CSP_IMG_SRC += ('www.google-analytics.com',)
+    CSP_CONNECT_SRC += ('www.google-analytics.com',)
