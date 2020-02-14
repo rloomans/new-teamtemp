@@ -187,6 +187,7 @@ TEMPLATES = [
 # Settings for django-bootstrap3
 BOOTSTRAP3 = {
     'javascript_in_head': True,
+    'jquery_url': 'https://code.jquery.com/jquery-3.4.1.min.js',
 }
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -195,16 +196,16 @@ SECURE_FRAME_DENY = True
 X_FRAME_OPTIONS = 'DENY'
 
 CSP_DEFAULT_SRC = ("'none'",)
-CSP_SCRIPT_SRC = ("'self'", 'code.jquery.com', 'maxcdn.bootstrapcdn.com',)
+CSP_SCRIPT_SRC = ("'self'", 'code.jquery.com', 'stackpath.bootstrapcdn.com',)
 CSP_CONNECT_SRC = ("'self'",)
 CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     'code.jquery.com',
-    'maxcdn.bootstrapcdn.com',
+    'stackpath.bootstrapcdn.com',
 )
 CSP_IMG_SRC = ("'self'", 'data:', 'blob:',)
-CSP_FONT_SRC = ("'self'", 'data:', 'maxcdn.bootstrapcdn.com',)
+CSP_FONT_SRC = ("'self'", 'data:', 'stackpath.bootstrapcdn.com', 'fonts.gstatic.com',)
 CSP_EXCLUDE_URL_PREFIXES = ("/djadmin",)
 CSP_REPORT_URI = reverse_lazy('report_csp')
 
@@ -215,7 +216,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'PAGE_SIZE': 10,
 }
 
 LOGIN_URL = "/djadmin/login/"
