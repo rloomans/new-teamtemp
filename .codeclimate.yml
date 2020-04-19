@@ -27,4 +27,5 @@ ratings:
   - "**.py"
 exclude_paths:
 - "teamtemp/responses/migrations/"
+- "teamtemp/static/wordcloud2.js"
 - "gviz_api.py"
