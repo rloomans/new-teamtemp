@@ -35,15 +35,14 @@ div.help-block {
 
 .wordcloud-text {
   font-size: large;
-  padding: 50px;
-  color: green;
-  border: 2px solid grey;
-  border-radius: 25px;
-  min-height: 400px;
-  background-color: #eee;
-  word-spacing: 10px;
-  line-height: 200%;
-  word-break: keep-all;
+  display: block;
+  position: relative;
+}
+
+#wordcloud-canvas {
+  display: block;
+  position: relative;
+  overflow: hidden;
 }
 
 #wordcloud-link::after {
@@ -65,6 +64,12 @@ div.help-block {
   page-break-after: always;
   page-break-inside: avoid;
   min-height: 400px;
+  overflow-x: auto;
+  overflow-y: visible;
+  position: relative;
+  padding: 50px;
+  border: 2px solid grey;
+  border-radius: 25px;
 }
 
 @media print {

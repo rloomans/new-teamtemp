@@ -6,9 +6,7 @@
 {% block title %}Results {{ survey.id }} {{ bvc_data.team_name }}{% endblock %}
 
 {% block form_extra_head %}
-  <script type='text/javascript' src="{% static "spin.min.js" %}"></script>
-  <script type='text/javascript' src="{% static "jquery.spin.min.js" %}"></script>
-  <script type='text/javascript' src="{% static "wordcloud2.js" %}">
+  <script type='text/javascript' src="{% static "spin.min.js" %}"></script><script type='text/javascript' src="{% static "jquery.spin.min.js" %}"></script><script type='text/javascript' src="{% static "wordcloud2.js" %}">
 {% endblock %}
 
 {% block bootstrap3_extra_script %}
@@ -21,17 +19,27 @@
       var wordmap = {};
       wordlist.forEach(function(d) {
         if (wordmap.hasOwnProperty(d)) {
-          wordcloud.wordmap[d].size++;
+          wordmap[d].size++;
         } else {
-          wordcloud.wordmap[d] = { text: d, size: 1 };
+          wordmap[d] = { text: d, size: 1 };
         }
       });
       var wordfreq = [];
       Object.keys(wordmap).forEach(function(k) {
-        wordfreq.push([k, wordmap[k].size])
+        wordfreq.push([k, wordmap[k].size]);
       });
+      console.log(wordfreq);
 
-      WordCloud($('.wordcloud-text'), { list: wordfreq } );
+      var options = {
+        weightFactor: 10,
+        gridSize: 8,
+
+        list: wordfreq
+      };
+
+      WordCloud([$('#wordcloud-canvas')[0], $('#wordcloud-text')[0]], options);
+
+      console.log(WordCloud.minFontSize);
 
       $('.wordcloud').spin(false);
     });
@@ -310,8 +318,11 @@
               <img src="{{ bvc_data.word_cloud_url }}" width="{{ bvc_data.word_cloud_width }}" height="{{ bvc_data.word_cloud_height }}" title="{{ bvc_data.word_list }}" id="wordcloud-image">
             </a>
           {% elif bvc_data.word_list %}
-            <div class="wordcloud-text">{{ bvc_data.word_list }}</div>
+            <canvas id="wordcloud-canvas"></canvas>
           {% endif %}
+        </div>
+        <div class="wordcloud">
+          <div class="wordcloud-text" id="wordcloud-text"> </div>
         </div>
       </div>
     </div>
