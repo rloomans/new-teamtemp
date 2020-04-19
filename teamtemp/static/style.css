@@ -41,8 +41,8 @@ div.help-block {
 
 #wordcloud-canvas {
   display: block;
-  position: relative;
   overflow: hidden;
+  position: relative;
 }
 
 #wordcloud-link::after {
