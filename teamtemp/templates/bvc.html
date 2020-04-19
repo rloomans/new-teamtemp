@@ -30,14 +30,20 @@
       Object.keys(wordmap).forEach(function(k) {
         wordfreq.push([k, wordmap[k].size]);
       });
+
       console.log(wordfreq);
 
       var options = {
         weightFactor: 10,
         gridSize: 8,
+        rotateRatio: 0.75,
+        rotationSteps: 8,
+        drawOutOfBound: true,
 
         list: wordfreq
       };
+
+      console.log(options);
 
       WordCloud([$('#wordcloud-canvas')[0], $('#wordcloud-text')[0]], options);
 
