@@ -31,6 +31,7 @@ urlpatterns = [
         name='about'),
     re_path(r'^user/?$', user_view, name='user'),
     re_path(r'^super/(?P<survey_id>[0-9a-zA-Z]{8})/?$', super_view, name='super'),
+    re_path(r'^super/(?P<survey_id>[0-9a-zA-Z]{8})(?P<redirect_to>/.+)$', super_view, name='super'),
     re_path(r'^admin/(?P<survey_id>[0-9a-zA-Z]{8})/?$', admin_view, name='admin'),
     re_path(r'^login/(?P<survey_id>[0-9a-zA-Z]{8})/?$', login_view, name='login'),
     re_path(r'^login/(?P<survey_id>[0-9a-zA-Z]{8})(?P<redirect_to>/.+)$', login_view, name='login'),

@@ -64,14 +64,8 @@ div.help-block {
   page-break-after: always;
   page-break-inside: avoid;
   min-height: 400px;
-  /*
-  overflow-x: auto;
-  overflow-y: visible;
-  */
-  position: relative;
-  padding: 50px;
-  border: 2px solid grey;
-  border-radius: 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 @media print {
