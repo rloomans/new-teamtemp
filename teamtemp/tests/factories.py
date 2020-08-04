@@ -13,6 +13,7 @@ from faker import Faker
 from teamtemp import utils
 from teamtemp.responses.models import TeamResponseHistory, Teams, \
     TeamTemperature, TemperatureResponse, User, WordCloudImage
+from teamtemp.views import DEFAULT_WORDCLOUD_HEIGHT, DEFAULT_WORDCLOUD_WIDTH
 
 fake = Faker()
 
@@ -88,6 +89,8 @@ class WordCloudImageFactory(CleanModelFactory):
         model = WordCloudImage
 
     word_list = ' '.join(fake.words(nb=random.randint(1, 25)))
+    width = DEFAULT_WORDCLOUD_WIDTH
+    height = DEFAULT_WORDCLOUD_HEIGHT
     image_url = "/%s/%s" % (fake.uri_path(), fake.file_name(category='image'))
     creation_date = factory.LazyFunction(timezone.now)
 

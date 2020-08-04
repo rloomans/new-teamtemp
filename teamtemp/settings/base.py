@@ -85,7 +85,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.gzip.GZipMiddleware',
+#    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -189,7 +189,7 @@ TEMPLATES = [
 BOOTSTRAP4 = {
     'javascript_in_head': True,
     'include_jquery': True,
-    'jquery_url': 'https://code.jquery.com/jquery-3.1.1.min.js',
+    'jquery_url': 'https://code.jquery.com/jquery-3.4.1.min.js',
 }
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -198,16 +198,17 @@ SECURE_FRAME_DENY = True
 X_FRAME_OPTIONS = 'DENY'
 
 CSP_DEFAULT_SRC = ("'none'",)
-CSP_SCRIPT_SRC = ("'self'", 'code.jquery.com', 'maxcdn.bootstrapcdn.com', 'cdnjs.cloudflare.com',)
+CSP_SCRIPT_SRC = ("'self'", 'code.jquery.com', 'maxcdn.bootstrapcdn.com', 'cdnjs.cloudflare.com', 'stackpath.bootstrapcdn.com', 'www.gstatic.com',)
 CSP_CONNECT_SRC = ("'self'",)
 CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     'code.jquery.com',
-    'maxcdn.bootstrapcdn.com',
+    'stackpath.bootstrapcdn.com',
+    'www.gstatic.com',
 )
 CSP_IMG_SRC = ("'self'", 'data:', 'blob:',)
-CSP_FONT_SRC = ("'self'", 'data:', 'maxcdn.bootstrapcdn.com',)
+CSP_FONT_SRC = ("'self'", 'data:', 'stackpath.bootstrapcdn.com', 'fonts.gstatic.com',)
 CSP_EXCLUDE_URL_PREFIXES = ("/djadmin",)
 CSP_REPORT_URI = reverse_lazy('report_csp')
 
@@ -218,14 +219,15 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'PAGE_SIZE': 10,
 }
 
 LOGIN_URL = "/djadmin/login/"
 LOGOUT_URL = "/djadmin/logout/"
 
 WORDCLOUD_HEIGHT = 400
-WORDCLOUD_WIDTH = 500
+WORDCLOUD_WIDTH = 400
 
 GOOGLE_ANALYTICS_PROPERTY_ID = os.environ.get(
     'GOOGLE_ANALYTICS_PROPERTY_ID', None)
@@ -235,3 +237,4 @@ if GOOGLE_ANALYTICS_PROPERTY_ID:
     CSP_SCRIPT_SRC += ("'unsafe-eval'", "'unsafe-inline'",
                        'www.google-analytics.com', 'data:',)
     CSP_IMG_SRC += ('www.google-analytics.com',)
+    CSP_CONNECT_SRC += ('www.google-analytics.com',)
