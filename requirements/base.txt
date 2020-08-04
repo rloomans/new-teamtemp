@@ -1,4 +1,4 @@
-Django==2.2.13
+Django==3.1
 django-bootstrap3==14.1.0
 dj-database-url==0.5.0
 dj-static==0.0.6
