@@ -23,6 +23,8 @@ class WordCloudImageSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'creation_date',
             'word_list',
+            'width',
+            'height',
             'word_hash',
             'image_url')
 

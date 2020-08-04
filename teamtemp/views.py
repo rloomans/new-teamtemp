@@ -7,10 +7,13 @@ from builtins import range, str
 from past.utils import old_div
 import errno
 import sys
+import time
+import string
+import random
 
 import gviz_api
 import os
-import requests
+from wordcloud import WordCloud
 
 from csp.decorators import csp_update, csp_exempt
 
@@ -19,7 +22,7 @@ from django.contrib import messages
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.static import serve as serve_static
@@ -36,6 +39,11 @@ from teamtemp.responses.models import *
 
 from urllib.parse import urlparse
 
+DEFAULT_WORDCLOUD_HEIGHT = 350
+DEFAULT_WORDCLOUD_WIDTH = 500
+MAX_WORDCLOUD_WIDTH = 1000
+MAX_WORDCLOUD_HEIGHT = 1000
+
 
 class WordCloudImageViewSet(viewsets.ModelViewSet):
     queryset = WordCloudImage.objects.all()
@@ -46,7 +54,7 @@ class WordCloudImageViewSet(viewsets.ModelViewSet):
         filters.OrderingFilter,
     )
     filter_fields = ('creation_date', 'word_hash', 'image_url',)
-    order_fields = ('id', 'creation_date', 'word_hash')
+    order_fields = ('id', 'creation_date', 'word_hash', 'width', 'height')
     search_fields = ('word_list', 'word_hash', 'image_url')
 
 
@@ -448,13 +456,14 @@ def user_view(request):
 
 @no_cache()
 @login_required
-def super_view(request, survey_id):
+def super_view(request, survey_id, redirect_to=None):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
     if not authenticated_user(request, survey):
         responses.add_admin_for_survey(request, survey.id)
 
-    redirect_to = request.get_full_path().replace('/super/', '/admin/')
+    if not redirect_to:
+        redirect_to = request.get_full_path().replace('/super/', '/admin/')
 
     return redirect('login', survey_id=survey_id, redirect_to=redirect_to)
 
@@ -488,7 +497,7 @@ def login_view(request, survey_id, redirect_to=None):
     if authenticated_user(request, survey):
         return redirect(redirect_to)
 
-    return render(request, 'password.html', {'form': form})
+    return render(request, 'password.html', {'form': form, 'survey_id': survey_id, 'redirect_to': redirect_to})
 
 
 @ie_edge()
@@ -534,43 +543,30 @@ def admin_view(request, survey_id, team_name=''):
                    })
 
 
-def generate_wordcloud(word_list, word_hash):
-    word_cloud_key = os.environ.get('XMASHAPEKEY')
-    if word_cloud_key is not None:
-        timeout = 25
-        word_list = word_list.lower()
-        fixed_asp = "FALSE"
-        rotate = "FALSE"
-        word_count = len(word_list.split())
-        if word_count < 20:
-            fixed_asp = "TRUE"
-            rotate = "TRUE"
-        print(
-            "Start Word Cloud Generation: [%s] %s" %
-            (word_hash, word_list), file=sys.stderr)
-        response = requests.post(
-            "https://www.teamtempapp.com/wordcloud/api/v1.0/generate_wc",
-            headers={
-                "Word-Cloud-Key": word_cloud_key},
-            json={
-                "textblock": word_list,
-                "height": settings.WORDCLOUD_HEIGHT,
-                "width": settings.WORDCLOUD_WIDTH,
-                "s_fit": "TRUE",
-                "fixed_asp": fixed_asp,
-                "rotate": rotate},
-            timeout=timeout,
-            verify=False)
-        if response.status_code == requests.codes.ok:
-            print(
-                "Finish Word Cloud Generation: [%s]" %
-                (word_hash), file=sys.stderr)
-            return save_url(response.json()['url'], word_hash)
-        else:
-            print("Failed Word Cloud Generation: [%s] status_code=%d response=%s" % (
-                word_hash, response.status_code, str(response.__dict__)), file=sys.stderr)
+def generate_wordcloud(word_list, word_hash, width=DEFAULT_WORDCLOUD_WIDTH, height=DEFAULT_WORDCLOUD_HEIGHT):
+    print("Start Word Cloud Generation: [%s] %s x %s '%s'" %
+          (word_hash, width, height, word_list), file=sys.stderr)
 
-    return None
+    wordcloud = WordCloud(
+        max_words=1000,
+        margin=20,
+        width=width,
+        height=height,
+        background_color="white",
+        prefer_horizontal=0.7,
+        regexp=r"[^\s]+",
+        relative_scaling=1,
+        normalize_plurals=False,
+    )
+
+    wordcloud.generate(word_list)
+
+    image = wordcloud.to_image()
+
+    print("Finish Word Cloud Generation: [%s]" %
+          (word_hash), file=sys.stderr)
+
+    return save_image(image, "%s_%dx%d_%d.png" % (word_hash, width, height, time.time())), width, height
 
 
 def require_dir(path):
@@ -605,27 +601,36 @@ def media_file(src, basename=None):
     return filename
 
 
-def save_url(url, basename):
-    return_url = media_url(url, basename)
-    filename = media_file(url, basename)
+def randomword(length):
+  letters = string.ascii_letters + string.digits
+  return ''.join(random.choice(letters) for i in range(length))
 
-    print("Saving Word Cloud: %s as %s" % (url, filename), file=sys.stderr)
 
-    if not os.path.exists(filename):
-        try:
-            r = requests.get(url, stream=True, verify=False)
-            if r.status_code != requests.codes.ok:
-                print("Failed Saving Word Cloud: [%s] status_code=%d response=%s" % (
-                    url, r.status_code, str(r.__dict__)), file=sys.stderr)
-                return None
-            with open(filename, 'wb') as f:
-                for chunk in r.iter_content(chunk_size=128):
-                    f.write(chunk)
-        except IOError as exc:
-            print("Failed Saving Word Cloud: IOError:%s %s as %s" %
-                  (str(exc), url, filename), file=sys.stderr)
-            return None
+def media_tempfile(src, basename=None):
+    image_name = media_filename(src, basename)
+    require_dir(settings.MEDIA_ROOT)
+    temp_image_name = ".%s.%s.tmp" % (image_name, randomword(8))
+    temp_filename = os.path.join(settings.MEDIA_ROOT, temp_image_name)
+    return temp_filename
 
+
+def save_image(image, basename):
+    return_url = media_url(basename)
+    filename = media_file(basename)
+    temp_filename = media_tempfile(basename)
+
+    print("Saving Word Cloud: %s as %s" % (basename, temp_filename), file=sys.stderr)
+
+    try:
+        image.save(temp_filename, format='png', optimize=True)
+        print("Renaming Word Cloud: %s to %s" % (temp_filename, filename), file=sys.stderr)
+        os.rename(temp_filename, filename)
+    except IOError as exc:
+        print("Failed Saving Word Cloud: IOError:%s %s as %s" %
+              (str(exc), return_url, filename), file=sys.stderr)
+        return None
+
+    print("Returning Word Cloud: %s url %s" % (basename, return_url), file=sys.stderr)
     return return_url
 
 
@@ -676,6 +681,7 @@ def prune_word_cloud_cache(_):
           utc_timestamp(), file=sys.stderr)
 
     rows_deleted = 0
+    rows_checked = 0
 
     yesterday = timezone.now() + timedelta(days=-1)
 
@@ -683,6 +689,7 @@ def prune_word_cloud_cache(_):
         modified_date__lte=yesterday)
 
     for word_cloud_image in old_word_cloud_images:
+        rows_checked += 1
         if word_cloud_image.image_url:
             fname = media_file(word_cloud_image.image_url)
             if os.path.isfile(fname):
@@ -695,14 +702,16 @@ def prune_word_cloud_cache(_):
     rows_deleted += rows
 
     for word_cloud_image in WordCloudImage.objects.all():
-        if word_cloud_image.image_url and not os.path.isfile(
-                media_file(word_cloud_image.image_url)):
-            rows, _ = word_cloud_image.delete()
-            rows_deleted += rows
+        rows_checked += 1
+        if word_cloud_image.image_url:
+            image_filename = media_file(word_cloud_image.image_url)
+            if not os.path.isfile(image_filename) or os.path.getsize(image_filename) == 0:
+                rows, _ = word_cloud_image.delete()
+                rows_deleted += rows
 
     print(
-        "prune_word_cloud_cache: %d rows deleted" %
-        rows_deleted,
+        "prune_word_cloud_cache: %d rows deleted, %d rows checked" %
+        (rows_deleted, rows_checked),
         file=sys.stderr)
     print("prune_word_cloud_cache: Stop at %s" %
           utc_timestamp(), file=sys.stderr)
@@ -1169,31 +1178,51 @@ def populate_bvc_data(
     return bvc_data
 
 
-def cached_word_cloud(word_list=None, word_hash=None, generate=True):
+def cached_word_cloud(word_list=None, word_hash=None, generate=True, width=None, height=None):
+    if not width:
+        width = DEFAULT_WORDCLOUD_WIDTH
+    if not height:
+        height= DEFAULT_WORDCLOUD_HEIGHT
+
     word_cloud_image = None
     if word_list:
         word_hash = hashlib.sha1(word_list.encode('utf-8')).hexdigest()
         word_cloud_image, _ = WordCloudImage.objects.get_or_create(
-            word_hash=word_hash, word_list=word_list)
+            word_hash=word_hash, width=width, height=height, word_list=word_list)
     elif word_hash:
         try:
-            word_cloud_image = WordCloudImage.objects.get(word_hash=word_hash)
+            word_cloud_image = WordCloudImage.objects.get(word_hash=word_hash, width=width, height=height)
             word_list = word_cloud_image.word_list
         except WordCloudImage.DoesNotExist:
-            return None
-    else:
+            pass
+
+        if not word_cloud_image:
+            try:
+                word_cloud_image_wrong_size = WordCloudImage.objects.filter(word_hash=word_hash)[0]
+                word_list = word_cloud_image_wrong_size.word_list
+            except IndexError:
+                pass
+
+            if word_list:
+                word_cloud_image, _ = WordCloudImage.objects.get_or_create(
+                    word_hash=word_hash, width=width, height=height, word_list=word_list)
+
+    if not word_cloud_image:
         return None
 
     if word_cloud_image.image_url:
         filename = media_file(word_cloud_image.image_url)
 
-        if os.path.isfile(filename):
+        if os.path.isfile(filename) and os.path.getsize(filename) > 0:
             return word_cloud_image
         else:
             word_cloud_image.image_url = None
 
     if generate and not word_cloud_image.image_url:
-        word_cloud_image.image_url = generate_wordcloud(word_list, word_hash)
+        word_cloud_image.image_url, word_cloud_image.width, word_cloud_image.height = generate_wordcloud(word_list,
+                                                                                                         word_hash,
+                                                                                                         width=width,
+                                                                                                         height=height)
 
     word_cloud_image.full_clean()
     word_cloud_image.save()
@@ -1278,13 +1307,32 @@ def calc_multi_iteration_average(
     return None
 
 
+def is_multiple_of_50(x):
+  if x == 0:
+    return False
+  return x % 50 == 0
+
+
 @no_cache()
 @csp_exempt
-def wordcloud_view(request, word_hash=''):
+def wordcloud_view(request, word_hash='', width=None, height=None):
+    if width:
+        width = int(width)
+        if not (0 < width <= MAX_WORDCLOUD_WIDTH and is_multiple_of_50(width)):
+            return HttpResponseBadRequest(reason="width out of range")
+    if height:
+        height = int(height)
+        if not (0 < height <= MAX_WORDCLOUD_HEIGHT and is_multiple_of_50(height)):
+            return HttpResponseBadRequest(reason="height out of range")
+
     # Cached word cloud
     if word_hash:
         word_cloud_image = cached_word_cloud(
-            word_hash=word_hash, generate=True)
+            word_hash=word_hash,
+            width=width,
+            height=height,
+            generate=True
+        )
 
         if word_cloud_image and word_cloud_image.image_url:
             return redirect(word_cloud_image.image_url)
@@ -1343,12 +1391,18 @@ def bvc_view(
     # Cached word cloud
     if bvc_data['word_list']:
         word_cloud_image = cached_word_cloud(
-            bvc_data['word_list'], generate=False)
-        if os.environ.get('XMASHAPEKEY'):
-            bvc_data['word_cloud_url'] = word_cloud_image.image_url or reverse(
-                'wordcloud', kwargs={'word_hash': word_cloud_image.word_hash})
-        bvc_data['word_cloud_width'] = settings.WORDCLOUD_WIDTH
-        bvc_data['word_cloud_height'] = settings.WORDCLOUD_HEIGHT
+          bvc_data['word_list'], width=DEFAULT_WORDCLOUD_WIDTH, height=DEFAULT_WORDCLOUD_HEIGHT, generate=False)
+
+        word_hash = word_cloud_image.word_hash
+
+        bvc_data['word_cloud_small_url'] = reverse('wordcloud',
+                                                   kwargs={'word_hash': word_hash, 'width': 300, 'height': 350})
+        bvc_data['word_cloud_medium_url'] = word_cloud_image.image_url or reverse('wordcloud',
+                                                    kwargs={'word_hash': word_hash,
+                                                            'width': DEFAULT_WORDCLOUD_WIDTH,
+                                                            'height': DEFAULT_WORDCLOUD_HEIGHT})
+        bvc_data['word_cloud_large_url'] = reverse('wordcloud',
+                                                   kwargs={'word_hash': word_hash, 'width': 750, 'height': 500})
 
     all_dept_names = set()
     all_region_names = set()

@@ -6,7 +6,7 @@ from teamtemp.tests.factories import WordCloudImageFactory
 
 class WordCloudImageTestCases(TestCase):
     def test_wordcloud(self):
-        wordcloud = WordCloudImageFactory()
+        wordcloud = WordCloudImageFactory(width=666, height=333)
         self.assertTrue(len(wordcloud.word_list) > 0)
         self.assertTrue(len(wordcloud.word_hash) > 0)
         self.assertTrue(len(wordcloud.image_url) > 0)
@@ -14,9 +14,11 @@ class WordCloudImageTestCases(TestCase):
         self.assertIsNotNone(wordcloud.modified_date)
         self.assertEqual(
             str(wordcloud),
-            "%s: %s %s %s %s" %
+            "%s: %s %s %s %s %s %s" %
             (wordcloud.id,
                 wordcloud.creation_date,
                 wordcloud.word_hash,
+                wordcloud.width,
+                wordcloud.height,
                 wordcloud.word_list,
                 wordcloud.image_url))

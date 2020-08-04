@@ -7,6 +7,17 @@
 
 {% block form_extra_head %}
   <script type='text/javascript' src="{% static "spin.min.js" %}"></script><script type='text/javascript' src="{% static "jquery.spin.min.js" %}"></script>
+  <style>
+    #wordcloud-image {
+      background-image: url("{{ bvc_data.word_cloud_small_url }}") !important;
+    }
+
+    @media only screen and (min-device-width: 768px) {
+      #wordcloud-image {
+        background-image: url("{{ bvc_data.word_cloud_medium_url }}") !important;
+      }
+    }
+  </style>
 {% endblock %}
 
 {% block bootstrap3_extra_script %}
@@ -46,7 +57,7 @@
       ]);
 
       var gauge_options = {
-        width: 400, height: 400,
+        width: 350, height: 350,
         redFrom: 0, redTo: 2.5,
         yellowFrom: 2.5, yellowTo: 5,
         greenFrom: 7.5, greenTo: 10,
@@ -284,12 +295,12 @@
       {% endif %}
       </div>
       <div class="col-md-6">
-        <h3 align="center">{{ bvc_data.stats.count }} Response{% if bvc_data.stats.count != 1 %}s{% endif %}:</h3>
+        <h2 align="center">{{ bvc_data.stats.count }} Response{% if bvc_data.stats.count != 1 %}s{% endif %}:</h3>
 
         <div class="wordcloud">
-          {% if bvc_data.word_cloud_url %}
-            <a href="{{ bvc_data.word_cloud_url }}" id="wordcloud-link">
-              <img src="{{ bvc_data.word_cloud_url }}" width="{{ bvc_data.word_cloud_width }}" height="{{ bvc_data.word_cloud_height }}" title="{{ bvc_data.word_list }}" id="wordcloud-image">
+          {% if bvc_data.word_cloud_medium_url %}
+            <a href="{{ bvc_data.word_cloud_medium_url }}" id="wordcloud-link">
+              <div title="{{ bvc_data.word_list }}" id="wordcloud-image"> </div>
             </a>
           {% elif bvc_data.word_list %}
             <div class="wordcloud-text">{{ bvc_data.word_list }}</div>
