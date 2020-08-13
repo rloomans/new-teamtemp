@@ -85,7 +85,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.gzip.GZipMiddleware',
+#    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -196,13 +196,14 @@ SECURE_FRAME_DENY = True
 X_FRAME_OPTIONS = 'DENY'
 
 CSP_DEFAULT_SRC = ("'none'",)
-CSP_SCRIPT_SRC = ("'self'", 'code.jquery.com', 'stackpath.bootstrapcdn.com',)
+CSP_SCRIPT_SRC = ("'self'", 'code.jquery.com', 'stackpath.bootstrapcdn.com', 'www.gstatic.com',)
 CSP_CONNECT_SRC = ("'self'",)
 CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     'code.jquery.com',
     'stackpath.bootstrapcdn.com',
+    'www.gstatic.com',
 )
 CSP_IMG_SRC = ("'self'", 'data:', 'blob:',)
 CSP_FONT_SRC = ("'self'", 'data:', 'stackpath.bootstrapcdn.com', 'fonts.gstatic.com',)
@@ -224,7 +225,7 @@ LOGIN_URL = "/djadmin/login/"
 LOGOUT_URL = "/djadmin/logout/"
 
 WORDCLOUD_HEIGHT = 400
-WORDCLOUD_WIDTH = 500
+WORDCLOUD_WIDTH = 400
 
 GOOGLE_ANALYTICS_PROPERTY_ID = os.environ.get(
     'GOOGLE_ANALYTICS_PROPERTY_ID', None)

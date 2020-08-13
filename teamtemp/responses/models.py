@@ -13,18 +13,25 @@ from django.utils.encoding import python_2_unicode_compatible
 
 @python_2_unicode_compatible
 class WordCloudImage(models.Model):
+    class Meta(object):
+      unique_together = ("word_hash", "width", "height")
+
     id = models.AutoField(primary_key=True)
-    word_hash = models.CharField(max_length=40, unique=True)
+    word_hash = models.CharField(max_length=40)
     word_list = models.CharField(max_length=5000)
+    width = models.PositiveSmallIntegerField(null=True, blank=True)
+    height = models.PositiveSmallIntegerField(null=True, blank=True)
     image_url = models.CharField(max_length=255, null=True, blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True, db_index=True)
 
     def __str__(self):
-        return "{}: {} {} {} {}".format(
+        return "{}: {} {} {} {} {} {}".format(
             self.id,
             self.creation_date,
             self.word_hash,
+            self.width,
+            self.height,
             self.word_list,
             self.image_url)
 

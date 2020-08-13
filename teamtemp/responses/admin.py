@@ -30,6 +30,8 @@ class WordCloudImageAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "word_hash",
+        "width",
+        "height",
         "image_url",
         "creation_date",
         "modified_date")
@@ -39,6 +41,8 @@ class WordCloudImageAdmin(admin.ModelAdmin):
         "creation_date",
         "modified_date",
         "word_list",
+        "width",
+        "height",
         "word_hash")
     search_fields = ("id", "word_hash", "word_list")
 
