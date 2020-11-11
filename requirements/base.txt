@@ -15,7 +15,7 @@ psycopg2-binary==2.8.6
 pytz==2020.1
 static==1.1.1
 whitenoise[brotli]==5.2.0
-urllib3[secure]==1.25.11
+urllib3[secure]==1.26.1
 future==0.18.2
 coreapi==2.3.3
 pygments==2.7.2
