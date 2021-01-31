@@ -4,7 +4,7 @@ dj-database-url==0.5.0
 dj-static==0.0.6
 django-csp==3.7
 django-csp-reports==1.4
-django-crispy-forms==1.10.0
+django-crispy-forms==1.11.0
 django-filter==2.4.0
 djangorestframework==3.12.2
 django-toolbelt==0.0.1
