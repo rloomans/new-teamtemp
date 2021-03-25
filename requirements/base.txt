@@ -6,7 +6,7 @@ django-csp==3.7
 django-csp-reports==1.4
 django-crispy-forms==1.11.1
 django-filter==2.4.0
-djangorestframework==3.12.2
+djangorestframework==3.12.3
 django-toolbelt==0.0.1
 gunicorn==20.0.4
 gviz_api==1.9.0
