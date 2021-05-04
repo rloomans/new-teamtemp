@@ -39,8 +39,8 @@ from teamtemp.responses.models import *
 
 from urllib.parse import urlparse
 
-DEFAULT_WORDCLOUD_HEIGHT = 350
 DEFAULT_WORDCLOUD_WIDTH = 500
+DEFAULT_WORDCLOUD_HEIGHT = 350
 MAX_WORDCLOUD_WIDTH = 1000
 MAX_WORDCLOUD_HEIGHT = 1000
 
