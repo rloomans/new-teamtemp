@@ -11,7 +11,7 @@ django-toolbelt==0.0.1
 gunicorn==20.1.0
 gviz_api==1.9.0
 py-bcrypt==0.4
-psycopg2-binary==2.8.6
+psycopg2-binary==2.9
 pytz==2021.1
 static==1.1.1
 whitenoise[brotli]==5.2.0
