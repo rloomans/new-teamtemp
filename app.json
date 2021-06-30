@@ -4,9 +4,12 @@
   "repository": "https://github.com/rloomans/new-teamtemp",
   "website": "https://github.com/rloomans/new-teamtemp",
   "logo": "https://raw.githubusercontent.com/rloomans/new-teamtemp/master/teamtemp/static/favicon.ico",
-  "keywords": ["team", "django", "metrics"],
-  "scripts": {
-  },
+  "keywords": [
+    "team",
+    "django",
+    "metrics"
+  ],
+  "scripts": {},
   "env": {
     "DJANGO_DEBUG": {
       "description": "Whether debuging should be on for Django. WARNING: should be turned off for production sites.",
@@ -35,8 +38,7 @@
       "required": false
     }
   },
-  "formation": {
-  },
+  "formation": {},
   "addons": [
     "heroku-postgresql",
     "scheduler"
