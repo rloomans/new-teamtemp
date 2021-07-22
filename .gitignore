@@ -25,6 +25,7 @@ coverage/
 
 # Virtual env
 venv*
+.venv*
 
 # project files
 staticfiles
