@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.hashers import make_password
 from django.urls import reverse
 
+from csvexport.actions import csvexport
+
 from teamtemp.responses.models import *
 
 
@@ -92,6 +94,7 @@ class TemperatureResponseAdmin(admin.ModelAdmin):
     readonly_fields = ("id",)
     raw_id_fields = ("responder", "request")
     search_fields = ("team_name", "request__id", "word")
+    actions = [csvexport]
 
     def view_on_site(self, obj):
         return reverse(
@@ -112,6 +115,7 @@ class TeamResponseHistoryAdmin(admin.ModelAdmin):
     readonly_fields = ("id",)
     raw_id_fields = ("request",)
     search_fields = ("team_name", "request__id")
+    actions = [csvexport]
 
     def view_on_site(self, obj):
         if obj.team_name == 'Average':

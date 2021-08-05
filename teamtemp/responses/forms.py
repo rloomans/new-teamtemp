@@ -6,7 +6,6 @@ from builtins import str
 from django import forms
 from django.forms.utils import ErrorList
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
@@ -62,7 +61,6 @@ def _check_passwords(obj, cleaned_data):
                           'New password and confirmation must match')
 
 
-@python_2_unicode_compatible
 class ErrorBox(ErrorList):
     def __str__(self):
         return mark_safe(self.as_box())

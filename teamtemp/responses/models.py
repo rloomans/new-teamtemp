@@ -8,10 +8,8 @@ from builtins import object
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 
 
-@python_2_unicode_compatible
 class WordCloudImage(models.Model):
     class Meta(object):
       unique_together = ("word_hash", "width", "height")
@@ -41,7 +39,6 @@ class WordCloudImage(models.Model):
             self.word_list.encode('utf-8')).hexdigest()
 
 
-@python_2_unicode_compatible
 class User(models.Model):
     id = models.CharField(max_length=32, primary_key=True)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -59,7 +56,6 @@ def _stats_for(query_set):
                     models.Count("id")).order_by()}, query_set
 
 
-@python_2_unicode_compatible
 class TeamTemperature(models.Model):
     TEAM_TEMP = 'TEAMTEMP'
     DEPT_REGION_SITE = 'DEPT-REGION-SITE'
@@ -177,7 +173,6 @@ class TeamTemperature(models.Model):
             self.default_tz)
 
 
-@python_2_unicode_compatible
 class TemperatureResponse(models.Model):
     # class Meta:
     #     unique_together = ("request", "responder", "team_name", "archive_date")
@@ -218,7 +213,6 @@ class TemperatureResponse(models.Model):
         self.word = self.word.lower().strip()
 
 
-@python_2_unicode_compatible
 class TeamResponseHistory(models.Model):
     class Meta(object):
         verbose_name_plural = "Team response histories"
@@ -263,7 +257,6 @@ class TeamResponseHistory(models.Model):
         self.word_list = self.word_list.lower().strip()
 
 
-@python_2_unicode_compatible
 class Teams(models.Model):
     class Meta(object):
         verbose_name = "Team"

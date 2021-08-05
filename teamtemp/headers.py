@@ -5,8 +5,6 @@
 
 from functools import wraps
 
-from django.utils.decorators import available_attrs
-
 
 def header(name, value):
     # View decorator that sets a response header.
@@ -21,7 +19,7 @@ def header(name, value):
     # def get(self, request, ...)
     #     ...
     def decorator(func):
-        @wraps(func, assigned=available_attrs(func))
+        @wraps(func)
         def inner(request, *args, **kwargs):
             response = func(request, *args, **kwargs)
             response[name] = value
