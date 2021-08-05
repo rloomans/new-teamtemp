@@ -38,4 +38,3 @@ heroku run --app <Your Heroku app name here> python manage.py createsuperuser --
 
 and then go to https://\<Your Heroku app name here>.herokuapp.com/djadmin/
 
-

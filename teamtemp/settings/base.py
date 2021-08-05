@@ -118,6 +118,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'crispy_forms',
     'cspreports',
+    'csvexport',
 )
 
 PASSWORD_HASHERS = (
@@ -211,6 +212,7 @@ CSP_IMG_SRC = ("'self'", 'data:', 'blob:',)
 CSP_FONT_SRC = ("'self'", 'data:', 'stackpath.bootstrapcdn.com', 'fonts.gstatic.com',)
 CSP_EXCLUDE_URL_PREFIXES = ("/djadmin",)
 CSP_REPORT_URI = reverse_lazy('report_csp')
+CSP_REPORTS_FILTER_FUNCTION = 'teamtemp.utils.filter_csp_report'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,

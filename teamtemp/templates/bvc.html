@@ -2,7 +2,7 @@
 
 {% load bootstrap4 %}
 {% load icons %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title %}Results {{ survey.id }} {{ bvc_data.team_name }}{% endblock %}
 
@@ -14,7 +14,7 @@
       background-image: url("{{ bvc_data.word_cloud_small_url }}") !important;
     }
 
-    @media only screen and (min-device-width: 768px) {
+    @media only screen and (min-device-width: 1280px) {
       #wordcloud-image {
         background-image: url("{{ bvc_data.word_cloud_medium_url }}") !important;
       }
@@ -296,12 +296,17 @@
         </div>
       {% endif %}
       </div>
+<<<<<<< HEAD
       <div class="col-lg-6">
         <h3 align="center">{{ bvc_data.stats.count }} Response{% if bvc_data.stats.count != 1 %}s{% endif %}:</h3>
+=======
+      <div class="col-md-6">
+        <h2 align="center">{{ bvc_data.stats.count }} Response{% if bvc_data.stats.count != 1 %}s{% endif %}:</h2>
+>>>>>>> master
 
         <div class="wordcloud">
-          {% if bvc_data.word_cloud_medium_url %}
-            <a href="{{ bvc_data.word_cloud_medium_url }}" id="wordcloud-link">
+          {% if bvc_data.word_cloud_large_url %}
+            <a href="{{ bvc_data.word_cloud_large_url }}" id="wordcloud-link">
               <div title="{{ bvc_data.word_list }}" id="wordcloud-image"> </div>
             </a>
           {% elif bvc_data.word_list %}
