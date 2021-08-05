@@ -199,7 +199,15 @@ SECURE_FRAME_DENY = True
 X_FRAME_OPTIONS = 'DENY'
 
 CSP_DEFAULT_SRC = ("'none'",)
-CSP_SCRIPT_SRC = ("'self'", 'code.jquery.com', 'maxcdn.bootstrapcdn.com', 'cdnjs.cloudflare.com', 'stackpath.bootstrapcdn.com', 'www.gstatic.com',)
+CSP_SCRIPT_SRC = (
+    "'self'",
+    'code.jquery.com',
+    'maxcdn.bootstrapcdn.com',
+    'cdnjs.cloudflare.com',
+    'stackpath.bootstrapcdn.com',
+    'www.gstatic.com',
+    'cdn.jsdelivr.net',
+)
 CSP_CONNECT_SRC = ("'self'",)
 CSP_STYLE_SRC = (
     "'self'",
@@ -207,6 +215,7 @@ CSP_STYLE_SRC = (
     'code.jquery.com',
     'stackpath.bootstrapcdn.com',
     'www.gstatic.com',
+    'cdn.jsdelivr.net',
 )
 CSP_IMG_SRC = ("'self'", 'data:', 'blob:',)
 CSP_FONT_SRC = ("'self'", 'data:', 'stackpath.bootstrapcdn.com', 'fonts.gstatic.com',)
