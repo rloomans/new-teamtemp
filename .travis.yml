@@ -18,6 +18,7 @@ install:
   - python manage.py collectstatic --no-input
 script:
   - coverage run manage.py test
+  - coverage xml
 after_success:
   - curl -Os https://uploader.codecov.io/latest/linux/codecov
   - chmod +x codecov
