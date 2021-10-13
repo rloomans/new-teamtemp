@@ -1,7 +1,7 @@
 new-teamtemp
 ============
 
-[![Build Status](https://app.travis-ci.com/rloomans/new-teamtemp.svg?branch=master)](https://travis-ci.com/rloomans/new-teamtemp)
+[![Build Status](https://app.travis-ci.com/rloomans/new-teamtemp.svg?branch=master)](https://app.travis-ci.com/rloomans/new-teamtemp)
 [![Coverage Status](https://coveralls.io/repos/rloomans/new-teamtemp/badge.svg?branch=master&service=github)](https://coveralls.io/github/rloomans/new-teamtemp?branch=master)
 [![codecov](https://codecov.io/gh/rloomans/new-teamtemp/branch/master/graph/badge.svg)](https://codecov.io/gh/rloomans/new-teamtemp)
 [![Code Climate](https://codeclimate.com/github/rloomans/new-teamtemp/badges/gpa.svg)](https://codeclimate.com/github/rloomans/new-teamtemp)
