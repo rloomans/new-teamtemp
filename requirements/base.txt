@@ -9,7 +9,7 @@ django-filter==21.1
 djangorestframework==3.12.4
 django-toolbelt==0.0.1
 gunicorn==20.1.0
-gviz_api==1.9.0
+gviz_api==1.10.0
 py-bcrypt==0.4
 psycopg2-binary==2.9.1
 pytz==2021.3
