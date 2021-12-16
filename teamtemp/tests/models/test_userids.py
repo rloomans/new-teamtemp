@@ -11,7 +11,7 @@ class UserIdTestCases(TestCase):
         self.request = RequestFactory().get('/test')
 
         """Annotate a request object with a session"""
-        middleware = SessionMiddleware()
+        middleware = SessionMiddleware(self.request)
         middleware.process_request(self.request)
         self.request.session.save()
 
