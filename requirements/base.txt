@@ -1,5 +1,5 @@
 Django==3.2.8
-django-bootstrap3==15.0.0
+django-bootstrap3==21.1
 dj-database-url==0.5.0
 dj-static==0.0.6
 django-csp==3.7
