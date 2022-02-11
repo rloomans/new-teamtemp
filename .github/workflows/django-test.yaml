@@ -40,6 +40,7 @@ jobs:
             coverage run manage.py test
             coverage xml
       - name: Upload test coverage
+        run: |
             curl -Os https://uploader.codecov.io/latest/linux/codecov
             chmod +x codecov
             ./codecov -t ${CODECOV_TOKEN}
