@@ -12,7 +12,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
-      python: ["3.8", "3.9", "3.10"]
+      matrix:
+        python: ["3.8", "3.9", "3.10"]
     env:
       DATABASE_URL: "sqlite:///:memory"
       DJANGO_SETTINGS_MODULE: teamtemp.settings.dev
