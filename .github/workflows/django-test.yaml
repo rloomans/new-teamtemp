@@ -40,6 +40,8 @@ jobs:
             coverage run manage.py test
             coverage xml
       - name: Upload test coverage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             curl -Os https://uploader.codecov.io/latest/linux/codecov
             chmod +x codecov
