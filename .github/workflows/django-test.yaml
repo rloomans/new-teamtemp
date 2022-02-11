@@ -1,4 +1,4 @@
-name: Django Test with PostgreSQL Example
+name: Django Test
 
 on:
     workflow_call:
