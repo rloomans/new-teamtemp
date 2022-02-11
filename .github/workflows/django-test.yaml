@@ -24,12 +24,6 @@ jobs:
            python-version: 3.8 # ["3.8", "3.9", "3.10"]
       - name: Install requirements
         run: |
-            pip install -U coveralls
-            pip install -U -r requirements/dev.txt
-            pip install -U codeclimate-test-reporter
-      - name: Install requirements
-        run: |
-            pip install -U coveralls
             pip install -U -r requirements/dev.txt
       - name: Setup
         run: |
