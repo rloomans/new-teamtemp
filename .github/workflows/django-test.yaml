@@ -1,0 +1,48 @@
+name: Django Test with PostgreSQL Example
+
+on:
+    workflow_call:
+    workflow_dispatch:
+    push:
+       branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+  simple_build:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: "sqlite:///:memory"
+      DJANGO_SETTINGS_MODULE: teamtemp.settings.dev
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+           python-version: 3.8 # ["3.8", "3.9", "3.10"]
+      - name: Install requirements
+        run: |
+            pip install -U coveralls
+            pip install -U -r requirements/dev.txt
+            pip install -U codeclimate-test-reporter
+      - name: Install requirements
+        run: |
+            pip install -U coveralls
+            pip install -U -r requirements/dev.txt
+      - name: Setup
+        run: |
+            python manage.py migrate --no-input
+            python manage.py collectstatic --no-input
+      - name: Run tests
+        run: |
+            coverage run manage.py test
+            coverage xml
+      - name: Upload test coverage
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            chmod +x codecov
+            ./codecov -t ${CODECOV_TOKEN}
+            coveralls
+            codeclimate-test-reporter
+
