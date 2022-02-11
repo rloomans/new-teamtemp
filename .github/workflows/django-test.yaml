@@ -9,7 +9,7 @@ on:
         branches: [master]
 
 jobs:
-  simple_build:
+  build:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: "sqlite:///:memory"
