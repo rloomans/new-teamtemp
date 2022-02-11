@@ -39,6 +39,7 @@ jobs:
         run: |
             coverage run manage.py test
             coverage xml
+            coverage lcov
       - name: Upload coverage to coveralls.io
         uses: coverallsapp/github-action@v1.1.2
         with:
