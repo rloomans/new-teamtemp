@@ -201,12 +201,15 @@ X_FRAME_OPTIONS = 'DENY'
 CSP_DEFAULT_SRC = ("'none'",)
 CSP_SCRIPT_SRC = (
     "'self'",
+    "'unsafe-inline'",
     'code.jquery.com',
     'maxcdn.bootstrapcdn.com',
+    'stackpath.bootstrapcdn.com',
     'cdnjs.cloudflare.com',
     'stackpath.bootstrapcdn.com',
     'www.gstatic.com',
     'cdn.jsdelivr.net',
+    'www.gstatic.com',
 )
 CSP_CONNECT_SRC = ("'self'",)
 CSP_STYLE_SRC = (
@@ -217,11 +220,11 @@ CSP_STYLE_SRC = (
     'www.gstatic.com',
     'cdn.jsdelivr.net',
 )
-CSP_IMG_SRC = ("'self'", 'data:', 'blob:',)
-CSP_FONT_SRC = ("'self'", 'data:', 'stackpath.bootstrapcdn.com', 'fonts.gstatic.com',)
+CSP_IMG_SRC = ("'self'", 'data:', 'blob:', 'www.gstatic.com',)
+CSP_FONT_SRC = ("'self'", 'data:', 'stackpath.bootstrapcdn.com', 'fonts.gstatic.com', 'fonts.googleapis.com',)
 CSP_EXCLUDE_URL_PREFIXES = ("/djadmin",)
 CSP_REPORT_URI = reverse_lazy('report_csp')
-CSP_REPORTS_FILTER_FUNCTION = 'teamtemp.utils.filter_csp_report'
+CSP_REPORTS_FILTER_FUNCTION = "cspreports.filters.filter_browser_extensions"
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -245,7 +248,6 @@ GOOGLE_ANALYTICS_PROPERTY_ID = os.environ.get(
 GOOGLE_ANALYTICS_DOMAIN = os.environ.get('GOOGLE_ANALYTICS_DOMAIN', 'auto')
 
 if GOOGLE_ANALYTICS_PROPERTY_ID:
-    CSP_SCRIPT_SRC += ("'unsafe-eval'", "'unsafe-inline'",
-                       'www.google-analytics.com', 'data:',)
+    CSP_SCRIPT_SRC += ("'unsafe-eval'", "'unsafe-inline'", 'www.google-analytics.com', 'data:', 'ssl.google-analytics.com',)
     CSP_IMG_SRC += ('www.google-analytics.com',)
     CSP_CONNECT_SRC += ('www.google-analytics.com',)

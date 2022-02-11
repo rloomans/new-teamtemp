@@ -4,6 +4,7 @@ source =
     teamtemp
 omit =
     venv/
+    .venv/
     teamtemp/responses/migrations/*
     teamtemp/tests/*
     teamtemp/settings/*.py

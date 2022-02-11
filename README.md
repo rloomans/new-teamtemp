@@ -1,11 +1,10 @@
 new-teamtemp
 ============
 
-[![Build Status](https://travis-ci.org/rloomans/new-teamtemp.svg)](https://travis-ci.org/rloomans/new-teamtemp)
+[![Django Test Status](https://github.com/rloomans/new-teamtemp/actions/workflows/django-test.yaml/badge.svg?branch=master)](https://github.com/rloomans/new-teamtemp/actions/workflows/django-test.yaml)
 [![Coverage Status](https://coveralls.io/repos/rloomans/new-teamtemp/badge.svg?branch=master&service=github)](https://coveralls.io/github/rloomans/new-teamtemp?branch=master)
 [![codecov](https://codecov.io/gh/rloomans/new-teamtemp/branch/master/graph/badge.svg)](https://codecov.io/gh/rloomans/new-teamtemp)
 [![Code Climate](https://codeclimate.com/github/rloomans/new-teamtemp/badges/gpa.svg)](https://codeclimate.com/github/rloomans/new-teamtemp)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=rloomans/new-teamtemp)](https://dependabot.com)
 
 This application is designed to gather 'team temperature' - that is, a
 happiness score.
