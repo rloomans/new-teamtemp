@@ -3,7 +3,7 @@ name: Deploy Legacy
 on:
   push:
     branches:
-      - dhango-2.0.9 # Changing the branch here would also work
+      - django-2.0.9 # Changing the branch here would also work
 
 jobs:
   build:
