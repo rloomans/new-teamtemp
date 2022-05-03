@@ -13,10 +13,14 @@ class BvcViewTestCases(TestCase):
         self.response = TemperatureResponseFactory(
             request=self.teamtemp, team_name=self.team.team_name)
 
-        TeamResponseHistoryFactory(
-            request=self.teamtemp,
-            team_name=self.team.team_name)
-        TeamResponseHistoryFactory(request=self.teamtemp, team_name='Average')
+        self.team_history = TeamResponseHistoryFactory(
+            request=self.teamtemp, team_name=self.team.team_name)
+
+        self.response = TemperatureResponseFactory(
+            request=self.teamtemp, team_name=self.team.team_name,
+            archived=True, archive_date=self.team_history.archive_date)
+
+        self.history = TeamResponseHistoryFactory(request=self.teamtemp, team_name='Average')
 
     def test_bvc_no_team_view(self):
         response = self.client.get(
@@ -37,26 +41,22 @@ class BvcViewTestCases(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_bvc_historical_no_team_view(self):
-        history = TeamResponseHistoryFactory(
-            request=self.teamtemp, team_name=self.team.team_name)
         response = self.client.get(
             reverse(
                 'bvc',
                 kwargs={
                     'survey_id': self.teamtemp.id,
-                    'archive_id': history.id}))
+                    'archive_id': self.history.id}))
         self.assertTemplateUsed(response, 'bvc.html')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_bvc_historical_team_view(self):
-        history = TeamResponseHistoryFactory(
-            request=self.teamtemp, team_name=self.team.team_name)
         response = self.client.get(
             reverse(
                 'bvc',
                 kwargs={
                     'survey_id': self.teamtemp.id,
                     'team_name': self.team.team_name,
-                    'archive_id': history.id}))
+                    'archive_id': self.team_history.id}))
         self.assertTemplateUsed(response, 'bvc.html')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
