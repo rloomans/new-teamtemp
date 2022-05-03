@@ -3,7 +3,7 @@
   "description": "Survey and summarise team happiness",
   "repository": "https://github.com/rloomans/new-teamtemp",
   "website": "https://github.com/rloomans/new-teamtemp",
-  "logo": "https://raw.githubusercontent.com/rloomans/new-teamtemp/master/teamtemp/static/favicon.ico",
+  "logo": "https://raw.githubusercontent.com/rloomans/new-teamtemp/main/teamtemp/static/favicon.ico",
   "keywords": ["team", "django", "metrics"],
   "scripts": {
   },

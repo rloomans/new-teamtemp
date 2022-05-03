@@ -3,7 +3,7 @@ name: Deploy E8
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
