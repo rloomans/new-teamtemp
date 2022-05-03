@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Legacy
 
 on:
   push:
