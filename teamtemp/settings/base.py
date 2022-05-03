@@ -211,6 +211,7 @@ CSP_STYLE_SRC = (
     'code.jquery.com',
     'stackpath.bootstrapcdn.com',
     'www.gstatic.com',
+    'fonts.googleapis.com',
 )
 CSP_IMG_SRC = ("'self'", 'data:', 'blob:', 'www.gstatic.com',)
 CSP_FONT_SRC = ("'self'", 'data:', 'stackpath.bootstrapcdn.com', 'fonts.gstatic.com', 'fonts.googleapis.com',)
