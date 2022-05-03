@@ -3,7 +3,7 @@ name: Deploy Legacy
 on:
   push:
     branches:
-      - dhango-2.0.9 # Changing the branch here would also work
+      - master
 
 jobs:
   build:
@@ -15,6 +15,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "teamtempapp" #Must be unique in Heroku
           heroku_email: "robert@loomans.org"
-          branch: "django-2.0.9"
           healthcheck: "https://teamtempapp.herokuapp.com/"
           delay: 5

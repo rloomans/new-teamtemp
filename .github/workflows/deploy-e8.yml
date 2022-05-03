@@ -3,7 +3,7 @@ name: Deploy E8
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - master
 
 jobs:
   build:
