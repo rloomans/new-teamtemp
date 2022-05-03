@@ -179,7 +179,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'teamtemp.context_processors.google_analytics',
             ],
         },
     },
@@ -213,8 +212,19 @@ CSP_STYLE_SRC = (
     'www.gstatic.com',
     'fonts.googleapis.com',
 )
-CSP_IMG_SRC = ("'self'", 'data:', 'blob:', 'www.gstatic.com',)
-CSP_FONT_SRC = ("'self'", 'data:', 'stackpath.bootstrapcdn.com', 'fonts.gstatic.com', 'fonts.googleapis.com',)
+CSP_IMG_SRC = (
+    "'self'",
+    'data:',
+    'blob:',
+    'www.gstatic.com',
+)
+CSP_FONT_SRC = (
+    "'self'",
+    'data:',
+    'stackpath.bootstrapcdn.com',
+    'fonts.gstatic.com',
+    'fonts.googleapis.com',
+)
 CSP_EXCLUDE_URL_PREFIXES = ("/djadmin",)
 CSP_REPORT_URI = reverse_lazy('report_csp')
 CSP_REPORTS_FILTER_FUNCTION = "cspreports.filters.filter_browser_extensions"
@@ -235,12 +245,3 @@ LOGOUT_URL = "/djadmin/logout/"
 
 WORDCLOUD_HEIGHT = 400
 WORDCLOUD_WIDTH = 400
-
-GOOGLE_ANALYTICS_PROPERTY_ID = os.environ.get(
-    'GOOGLE_ANALYTICS_PROPERTY_ID', None)
-GOOGLE_ANALYTICS_DOMAIN = os.environ.get('GOOGLE_ANALYTICS_DOMAIN', 'auto')
-
-if GOOGLE_ANALYTICS_PROPERTY_ID:
-    CSP_SCRIPT_SRC += ("'unsafe-eval'", "'unsafe-inline'", 'www.google-analytics.com', 'data:', 'ssl.google-analytics.com',)
-    CSP_IMG_SRC += ('www.google-analytics.com',)
-    CSP_CONNECT_SRC += ('www.google-analytics.com',)

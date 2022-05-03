@@ -29,10 +29,6 @@
     "TEAMTEMP_SECRET_KEY": {
       "description": "A secret key for verifying the integrity of signed cookies.",
       "generator": "secret"
-    },
-    "GOOGLE_ANALYTICS_PROPERTY_ID": {
-      "description": "The unique id for this site in your Google Analytics account",
-      "required": false
     }
   },
   "formation": {
