@@ -473,6 +473,10 @@ def super_view(request, survey_id, redirect_to=None):
 def login_view(request, survey_id, redirect_to=None):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
+    def _password_setter(password):
+        survey.password = make_password(password)
+        survey.save()
+
     timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
 
     if not redirect_to:
@@ -487,7 +491,7 @@ def login_view(request, survey_id, redirect_to=None):
         if form.is_valid():
             rpf = form.cleaned_data
             password = rpf['password'].encode('utf-8')
-            if check_password(password, survey.password):
+            if check_password(password, survey.password, setter=_password_setter):
                 responses.add_admin_for_survey(request, survey.id)
                 assert responses.is_admin_for_survey(request, survey_id)
                 return redirect(redirect_to)
