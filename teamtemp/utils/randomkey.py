@@ -2,5 +2,11 @@
 
 from django.utils.crypto import get_random_string
 
-chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
-print(get_random_string(50, chars))
+RANDOM_KEY_LEN = 50
+
+def randomkey():
+    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+    return get_random_string(RANDOM_KEY_LEN, chars)
+
+if __name__ == "__main__":
+    print(randomkey())
