@@ -12,6 +12,7 @@ class SurveySettingsFormTestCases(TestCase):
             'creator': self.survey.creator,
             'password': self.survey.password,
             'archive_schedule': self.survey.archive_schedule,
+            'next_archive_date': self.survey.next_archive_date,
             'survey_type': self.survey.survey_type,
             'default_tz': self.survey.default_tz,
             'max_word_count': self.survey.max_word_count,
@@ -35,5 +36,15 @@ class SurveySettingsFormTestCases(TestCase):
 
     def test_invalid_archive_schedule_survey_settings_form(self):
         self.form_data["archive_schedule"] = 99
+        form = SurveySettingsForm(data=self.form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_invalid_archive_date_survey_settings_form(self):
+        self.form_data["next_archive_date"] = "01/01/2000"
+        form = SurveySettingsForm(data=self.form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_invalid_survey_type_survey_settings_form(self):
+        self.form_data["survey_type"] = "TEST"
         form = SurveySettingsForm(data=self.form_data)
         self.assertFalse(form.is_valid())
