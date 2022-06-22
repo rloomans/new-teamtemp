@@ -1,18 +1,24 @@
 from django.test import TestCase
 
-from teamtemp.responses.forms import CreateSurveyForm
+from teamtemp.tests.factories import TeamTemperatureFactory
+from teamtemp.responses.forms import SurveySettingsForm
 
 
-class CreateSurveyFormTestCases(TestCase):
-    def test_empty_create_survey_form(self):
-        form_data = {}
-        form = CreateSurveyForm(data=form_data)
+class SurveySettingsFormTestCases(TestCase):
+    def test_empty_survey_settings_form(self):
+        form = SurveySettingsForm()
         self.assertFalse(form.is_valid())
 
-    def test_create_survey_form(self):
+    def test_existing_survey_settings_form(self):
+        survey = TeamTemperatureFactory()
         form_data = {
-            'new_password': 'test',
-            'confirm_password': 'test',
+            'id': survey.id,
+            'creator': survey.creator,
+            'password': survey.password,
+            'archive_schedule': survey.archive_schedule,
+            'survey_type': survey.survey_type,
+            'default_tz': survey.default_tz,
+            'max_word_count': survey.max_word_count
         }
-        form = CreateSurveyForm(data=form_data)
+        form = SurveySettingsForm(data=form_data)
         self.assertTrue(form.is_valid())
