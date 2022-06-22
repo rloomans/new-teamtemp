@@ -244,16 +244,18 @@ class SurveyResponseForm(forms.ModelForm):
         return score
 
     def clean_word(self):
-        word = self.cleaned_data['word']
-        _clean_value(word, r'[^A-Za-z0-9-]')
+        words = self.cleaned_data['word'].split()
 
-        word_count = len(word.split())
+        word_count = len(words)
         if word_count > self.max_word_count:
             error = 'Max {max_word_count} Words'.format(
                 max_word_count=escape(self.max_word_count))
             raise forms.ValidationError(error)
 
-        return word.lower()
+        for word in words:
+            _clean_value(word, r'[^A-Za-z0-9-]')
+
+        return " ".join(words).lower()
 
 
 class ResultsPasswordForm(forms.Form):
