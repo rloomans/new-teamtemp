@@ -255,7 +255,7 @@ class SurveyResponseForm(forms.ModelForm):
         for word in words:
             _clean_value(word, r'[^A-Za-z0-9-]')
 
-        return " ".join(words).word.lower()
+        return " ".join(words).lower()
 
 
 class ResultsPasswordForm(forms.Form):
