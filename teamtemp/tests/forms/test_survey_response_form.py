@@ -45,10 +45,5 @@ class SurveyResponseFormTestCases(TestCase):
 
     def test_too_many_words_survey_response_form(self):
         self.form_data['word'] = 'test one two three'
-        form = SurveyResponseForm(data=self.form_data, max_word_count=4)
-        self.assertTrue(form.is_valid())
-
-    def test_too_many_words_survey_response_form(self):
-        self.form_data['word'] = 'test one two three'
         form = SurveyResponseForm(data=self.form_data, max_word_count=2)
         self.assertFalse(form.is_valid())
