@@ -33,7 +33,12 @@ class SurveyResponseFormTestCases(TestCase):
         form = SurveyResponseForm(data=self.form_data, max_word_count=1)
         self.assertFalse(form.is_valid())
 
-    def test_invalid_score_survey_response_form(self):
+    def test_invalid_score_0_survey_response_form(self):
+        self.form_data['score'] = 0
+        form = SurveyResponseForm(data=self.form_data, max_word_count=1)
+        self.assertFalse(form.is_valid())
+
+    def test_invalid_score_11_survey_response_form(self):
         self.form_data['score'] = 11
         form = SurveyResponseForm(data=self.form_data, max_word_count=1)
         self.assertFalse(form.is_valid())
