@@ -24,6 +24,12 @@ class CreateSurveyFormTestCases(TestCase):
         form = CreateSurveyForm(data=self.form_data)
         self.assertTrue(form.is_valid())
 
+    def test_missing_confirm_password_survey_settings_form(self):
+        self.form_data["new_password"] = "one"
+        self.form_data["confirm_password"] = none
+        form = CreateSurveyForm(data=self.form_data)
+        self.assertFalse(form.is_valid())
+
     def test_password_mismatch_survey_settings_form(self):
         self.form_data["new_password"] = "one"
         self.form_data["confirm_password"] = "two"
