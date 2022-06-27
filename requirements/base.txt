@@ -16,5 +16,5 @@ whitenoise[brotli]==6.2.0
 future==0.18.2
 coreapi==2.3.3
 pygments==2.12.0
-wordcloud==1.8.1
+wordcloud==1.8.2.2
 django-admin-csvexport==1.11
