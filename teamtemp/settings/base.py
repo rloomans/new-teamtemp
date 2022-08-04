@@ -187,8 +187,6 @@ TEMPLATES = [
 # Settings for django-bootstrap5
 BOOTSTRAP5 = {
     'javascript_in_head': True,
-    'include_jquery': True,
-    'jquery_url': 'https://code.jquery.com/jquery-3.6.0.min.js',
 }
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -201,10 +199,7 @@ CSP_SCRIPT_SRC = (
     "'self'",
     "'unsafe-inline'",
     'code.jquery.com',
-    'maxcdn.bootstrapcdn.com',
-    'stackpath.bootstrapcdn.com',
     'cdnjs.cloudflare.com',
-    'stackpath.bootstrapcdn.com',
     'www.gstatic.com',
     'cdn.jsdelivr.net',
     'www.gstatic.com',
@@ -214,7 +209,6 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     'code.jquery.com',
-    'stackpath.bootstrapcdn.com',
     'www.gstatic.com',
     'cdn.jsdelivr.net',
     'fonts.googleapis.com',
@@ -228,7 +222,6 @@ CSP_IMG_SRC = (
 CSP_FONT_SRC = (
     "'self'",
     'data:',
-    'stackpath.bootstrapcdn.com',
     'fonts.gstatic.com',
     'fonts.googleapis.com',
 )
