@@ -18,3 +18,7 @@ coreapi==2.3.3
 pygments==2.12.0
 wordcloud==1.8.2.2
 django-admin-csvexport==1.11
+markdown==3.4.1
+Pygments==2.12.0
+PyYAML==6.0
+uritemplate==4.1.1
