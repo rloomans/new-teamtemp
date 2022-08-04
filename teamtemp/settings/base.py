@@ -258,6 +258,6 @@ WORDCLOUD_WIDTH = 400
 
 DJANGO_ICONS = {
     "ICONS": {
-        "filter": {"name": "far fa-filter"},
+        "filter": {"name": "fas fa-filter"},
     },
 }
