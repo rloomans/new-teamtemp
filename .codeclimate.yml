@@ -28,3 +28,4 @@ ratings:
 exclude_paths:
 - "teamtemp/responses/migrations/"
 - "gviz_api.py"
+- "teamtemp/static/font-awesome/"

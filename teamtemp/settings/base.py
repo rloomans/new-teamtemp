@@ -187,7 +187,7 @@ TEMPLATES = [
 # Settings for django-bootstrap3
 BOOTSTRAP3 = {
     'javascript_in_head': True,
-    'jquery_url': 'https://code.jquery.com/jquery-3.4.1.min.js',
+    'jquery_url': '/static/jquery-3.6.0.min.js',
 }
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -201,6 +201,9 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     'code.jquery.com',
     'stackpath.bootstrapcdn.com',
+    'cdnjs.cloudflare.com',
+    'www.gstatic.com',
+    'cdn.jsdelivr.net',
     'www.gstatic.com',
 )
 CSP_CONNECT_SRC = ("'self'",)
@@ -210,6 +213,7 @@ CSP_STYLE_SRC = (
     'code.jquery.com',
     'stackpath.bootstrapcdn.com',
     'www.gstatic.com',
+    'cdn.jsdelivr.net',
     'fonts.googleapis.com',
 )
 CSP_IMG_SRC = (

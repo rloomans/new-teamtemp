@@ -1,11 +1,5 @@
 {% extends "base.html" %}
 
-{% block form_extra_head %}
-  {{ form.media }}
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
-  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-{% endblock %}
-
 {% load bootstrap3 %}
 
 {% block title %}Settings {{ survey.id }}{% endblock %}
@@ -117,7 +111,7 @@
           </div>
 
           <br><br>
-          <input type="submit" value="Submit"/>
+          {% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
         </form>
       </div>
     </div>

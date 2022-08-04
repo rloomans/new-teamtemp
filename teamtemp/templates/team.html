@@ -9,6 +9,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
+        <div class="btn-group no-print" role="group" aria-label="nav">
+          <a href="{% url 'admin' survey_id=survey.id %}" class="btn btn-info" role="button">ADMIN</a>
+        </div>
+
         <h1>Enter the new team name</h1>
         <form method="post">
           {% csrf_token %}
