@@ -113,7 +113,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django_filters',
     'teamtemp.responses',
-    'bootstrap4',
+    'django_bootstrap5',
     'django_icons',
     'rest_framework',
     'crispy_forms',
@@ -185,11 +185,11 @@ TEMPLATES = [
     },
 ]
 
-# Settings for django-bootstrap4
+# Settings for django-bootstrap5
 BOOTSTRAP4 = {
     'javascript_in_head': True,
     'include_jquery': True,
-    'jquery_url': 'https://code.jquery.com/jquery-3.4.1.min.js',
+    'jquery_url': 'https://code.jquery.com/jquery-3.6.0.min.js',
 }
 
 SECURE_CONTENT_TYPE_NOSNIFF = True

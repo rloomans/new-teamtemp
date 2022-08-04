@@ -1,17 +1,17 @@
-{% extends 'bootstrap4/bootstrap4.html' %}
+{% extends 'django_bootstrap5/bootstrap5.html' %}
 
-{% load bootstrap4 %}
+{% load django_bootstrap5 %}
 {% load static %}
 
-{% block bootstrap4_extra_head %}
-    {% block title %}{% endblock %}
+{% block bootstrap5_title %}{% block title %}{% endblock %}{% endblock %}
+{% block bootstrap5_extra_head %}
     <link rel="stylesheet" href="{% static "style.css" %}">
     <link rel="shortcut icon" href="{% static "favicon.ico" %}" type="image/x-icon">
     <link rel="icon" href="{% static "favicon.ico" %}" type="image/x-icon">
     {% block form_extra_head %}{% endblock %}
 {% endblock %}
 
-{% block bootstrap4_content %}
+{% block bootstrap5_content %}
   {# Display django.contrib.messages as Bootstrap alerts #}
   {% autoescape off %}<div class="container">{% bootstrap_messages %}</div>{% endautoescape %}
   {% block body %}{% endblock %}

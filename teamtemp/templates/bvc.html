@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load bootstrap4 %}
+{% load django_bootstrap5 %}
 {% load icons %}
 {% load static %}
 
@@ -22,7 +22,7 @@
   </style>
 {% endblock %}
 
-{% block bootstrap4_extra_script %}
+{% block bootstrap5_extra_script %}
   <script type='text/javascript'>
     $('.wordcloud').spin();
     $('#gauge_average').spin();
@@ -176,13 +176,9 @@
                   {% endif %}
                 </td>
 
-                <td valign="top">
+                <td valign="middle">
                   {% if form.filter_site_names.value or form.filter_region_names.value or form.filter_dept_names.value %}
-                    {% buttons %}
-                      <button type="submit" class="btn btn-default">
-                        {% icon "filter" %} <b>FILTER BVC</b>
-                      </button>
-                    {% endbuttons %}
+                    {% bootstrap_button "FILTER BVC" button_type="submit" button_class="btn-primary" %}
                   {% endif %}
                 </td>
               </tr>

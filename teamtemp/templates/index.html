@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load bootstrap4 %}
+{% load django_bootstrap5 %}
 
 {% block title %}Create Team Temperature{% endblock %}
 
@@ -68,9 +68,7 @@
          {% endif %}<br>
 
           <div class="field">
-            {% buttons %}
-              {% bootstrap_button "Create" button_type="submit" button_class="btn-primary" %}
-            {% endbuttons %}
+            {% bootstrap_button "Create" button_type="submit" button_class="btn-primary" %}
           </div>
         </form>
       </div>
