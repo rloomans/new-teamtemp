@@ -186,10 +186,11 @@ TEMPLATES = [
 ]
 
 # Settings for django-bootstrap4
+
 BOOTSTRAP4 = {
     'javascript_in_head': True,
     'include_jquery': True,
-    'jquery_url': 'https://code.jquery.com/jquery-3.4.1.min.js',
+    'jquery_url': 'https://code.jquery.com/jquery-3.6.0.min.js',
 }
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -254,3 +255,9 @@ LOGOUT_URL = "/djadmin/logout/"
 
 WORDCLOUD_HEIGHT = 400
 WORDCLOUD_WIDTH = 400
+
+DJANGO_ICONS = {
+    "ICONS": {
+        "filter": {"name": "far fa-filter"},
+    },
+}

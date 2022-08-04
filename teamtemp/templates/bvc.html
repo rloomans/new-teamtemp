@@ -137,9 +137,12 @@
 
         </div>
       </div>
+    </div>
 
-      {% if bvc_data.team_name == '' and bvc_data.archive_id == '' and survey.survey_type == 'DEPT-REGION-SITE' %}
+    {% if bvc_data.team_name == '' and bvc_data.archive_id == '' and survey.survey_type == 'DEPT-REGION-SITE' %}
 
+    <div class="row">
+      <div class="col no-print">
         <!-- Filter BVC by Dept, Region, Site -->
 
         <form method="post">
@@ -176,22 +179,22 @@
                   {% endif %}
                 </td>
 
-                <td valign="top">
+                <td valign="middle">
                   {% if form.filter_site_names.value or form.filter_region_names.value or form.filter_dept_names.value %}
-                    {% buttons %}
-                      <button type="submit" class="btn btn-default">
+                      <button type="submit" class="btn btn-primary">
                         {% icon "filter" %} <b>FILTER BVC</b>
                       </button>
-                    {% endbuttons %}
                   {% endif %}
                 </td>
               </tr>
             </table>
           </div>
         </form>
-      {% endif %}
+      </div>
+    </div>
+    {% endif %}
 
-
+    <div class="row">
       {% if bvc_data.archived_dates.count > 0 %}
         <div class="no-print">
           <BR>
@@ -246,8 +249,11 @@
         </div>
       {% endif %}
     </div>
+
     <div class="row">
-      <h1 align="center">{{ bvc_data.pretty_team_name }} {{ bvc_data.survey_type_title }}</h1>
+      <div class="col">
+        <h1 align="center">{{ bvc_data.pretty_team_name }} {{ bvc_data.survey_type_title }}</h1>
+      </div>
     </div>
 
     <div class="row">

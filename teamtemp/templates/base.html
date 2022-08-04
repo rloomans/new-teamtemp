@@ -3,8 +3,8 @@
 {% load bootstrap4 %}
 {% load static %}
 
+{% block bootstrap4_title %}{% block title %}{% endblock %}{% endblock %}
 {% block bootstrap4_extra_head %}
-    {% block title %}{% endblock %}
     <link rel="stylesheet" href="{% static "style.css" %}">
     <link rel="shortcut icon" href="{% static "favicon.ico" %}" type="image/x-icon">
     <link rel="icon" href="{% static "favicon.ico" %}" type="image/x-icon">
