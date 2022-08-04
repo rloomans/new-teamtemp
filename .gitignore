@@ -5,6 +5,8 @@ __pycache__/
 # Unit test / coverage reports
 .coverage
 coverage/
+coverage.xml
+coverage.lcov
 
 # Django stuff:
 *.log
