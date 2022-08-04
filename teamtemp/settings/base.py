@@ -114,7 +114,6 @@ INSTALLED_APPS = (
     'django_filters',
     'teamtemp.responses',
     'django_bootstrap5',
-    'django_icons',
     'rest_framework',
     'crispy_forms',
     'cspreports',
@@ -254,9 +253,3 @@ LOGOUT_URL = "/djadmin/logout/"
 
 WORDCLOUD_HEIGHT = 400
 WORDCLOUD_WIDTH = 400
-
-DJANGO_ICONS = {
-    "ICONS": {
-        "filter": {"name": "fa-solid fa-filter"},
-    },
-}

@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 
 {% load django_bootstrap5 %}
-{% load icons %}
 {% load static %}
 
 {% block title %}Results {{ survey.id }} {{ bvc_data.team_name }}{% endblock %}
 
 {% block form_extra_head %}
   <script type='text/javascript' src="{% static "spin.min.js" %}"></script><script type='text/javascript' src="{% static "jquery.spin.min.js" %}"></script>
-  <link rel="stylesheet" href="{% static "font-awesome/css/font-awesome.min.css" %}">
   <style>
     #wordcloud-image {
       background-image: url("{{ bvc_data.word_cloud_small_url }}") !important;
