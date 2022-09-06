@@ -187,6 +187,7 @@ TEMPLATES = [
 # Settings for django-bootstrap5
 BOOTSTRAP5 = {
     'javascript_in_head': True,
+    'jquery_url': '/static/jquery-3.6.0.min.js',
 }
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -199,6 +200,7 @@ CSP_SCRIPT_SRC = (
     "'self'",
     "'unsafe-inline'",
     'code.jquery.com',
+    'stackpath.bootstrapcdn.com',
     'cdnjs.cloudflare.com',
     'www.gstatic.com',
     'cdn.jsdelivr.net',
