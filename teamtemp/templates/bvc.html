@@ -7,7 +7,8 @@
 {% block title %}Results {{ survey.id }} {{ bvc_data.team_name }}{% endblock %}
 
 {% block form_extra_head %}
-  <script type='text/javascript' src="{% static "spin.min.js" %}"></script><script type='text/javascript' src="{% static "jquery.spin.min.js" %}"></script>
+  <script type='text/javascript' src="{% static "spin.min.js" %}"></script>
+  <script type='text/javascript' src="{% static "jquery.spin.min.js" %}"></script>
   <link rel="stylesheet" href="{% static "font-awesome/css/font-awesome.min.css" %}">
   <style>
     #wordcloud-image {
@@ -181,8 +182,9 @@
 
                 <td valign="middle">
                   {% if form.filter_site_names.value or form.filter_region_names.value or form.filter_dept_names.value %}
+                    {% buttons %}
                       <button type="submit" class="btn btn-primary">
-                        {% icon "filter" %} <b>FILTER BVC</b>
+                        {% bootstrap_icon "glyphicon glyphicon-filter" %} <b>FILTER BVC</b>
                       </button>
                   {% endif %}
                 </td>

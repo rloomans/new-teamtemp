@@ -190,7 +190,7 @@ TEMPLATES = [
 BOOTSTRAP4 = {
     'javascript_in_head': True,
     'include_jquery': True,
-    'jquery_url': 'https://code.jquery.com/jquery-3.6.0.min.js',
+    'jquery_url': '/static/jquery-3.6.0.min.js',
 }
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
