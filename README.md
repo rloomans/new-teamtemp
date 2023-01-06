@@ -35,5 +35,5 @@ Also, if you want to access the Django admin site, add a super user using the he
 heroku run --app <Your Heroku app name here> python manage.py createsuperuser --username <admin user> --email <admin email address>
 ```
 
-and then go to https://\<Your Heroku app name here>.herokuapp.com/djadmin/
+and then go to `https://<Your Heroku app name here>.herokuapp.com/djadmin/`
 
