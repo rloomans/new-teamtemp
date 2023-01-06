@@ -4,7 +4,6 @@ import itertools
 from builtins import str
 
 from django.test import TestCase
-from past.utils import old_div
 
 from teamtemp.tests.factories import TeamTemperatureFactory, TemperatureResponseFactory, UserFactory
 
@@ -58,12 +57,8 @@ class TemperatureResponseTestCases(TestCase):
         self.assertEqual(stats['count'], 3)
         self.assertEqual(
             stats['average']['score__avg'],
-            old_div(
-                float(
-                    response1.score +
-                    response2.score +
-                    response3.score),
-                3))
+            (response1.score + response2.score + response3.score) / 3
+        )
 
         words = [[x['word']] * x['id__count'] for x in stats['words']]
         flat_words = sorted(itertools.chain(*words))
