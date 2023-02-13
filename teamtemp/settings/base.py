@@ -213,6 +213,7 @@ CSP_SCRIPT_SRC_ELEM = (
     'www.gstatic.com',
     'ssl.gstatic.com',
     'www.google.com',
+    'stackpath.bootstrapcdn.com',
 )
 CSP_CONNECT_SRC = (
     "'self'",
