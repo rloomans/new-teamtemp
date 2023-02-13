@@ -233,6 +233,7 @@ CSP_STYLE_SRC_ELEM = (
     "'self'",
     "'unsafe-inline'",
     'www.gstatic.com',
+    'stackpath.bootstrapcdn.com',
 )
 CSP_IMG_SRC = (
     "'self'",
