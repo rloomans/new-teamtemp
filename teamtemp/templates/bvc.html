@@ -184,8 +184,9 @@
                   {% if form.filter_site_names.value or form.filter_region_names.value or form.filter_dept_names.value %}
                     {% buttons %}
                       <button type="submit" class="btn btn-primary">
-                        {% bootstrap_icon "glyphicon glyphicon-filter" %} <b>FILTER BVC</b>
+                        {% icon "glyphicon glyphicon-filter" %} <b>FILTER BVC</b>
                       </button>
+                    {% endbuttons %}
                   {% endif %}
                 </td>
               </tr>
