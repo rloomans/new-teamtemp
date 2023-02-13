@@ -1,10 +1,6 @@
 from __future__ import division, print_function
 
-from future import standard_library
-standard_library.install_aliases()
-
 from builtins import range, str
-from past.utils import old_div
 import errno
 import sys
 import time
@@ -808,12 +804,7 @@ def archive_survey(_, survey, archive_date=timezone.now()):
     if average_count > 0:
         history = TeamResponseHistory(
             request=survey,
-            average_score=(
-                "%.5f" %
-                float(
-                    old_div(
-                        average_total,
-                        float(average_count)))),
+            average_score=("%.5f" % (average_total / average_count)),
             minimum_score=average_minimum,
             maximum_score=average_maximum,
             word_list=average_word_list.strip(),
@@ -974,7 +965,7 @@ def populate_chart_data_structures(
             elif row['archive_date'] != archive_date:
                 # TODO can it recalculate the average here for adhoc filtering
                 if num_scores > 0:
-                    average_score = float(old_div(score_sum, num_scores))
+                    average_score = score_sum / num_scores
                     row['Average'] = (
                         average_score,
                         "%.2f (%s%d Response%s)" %
@@ -1015,7 +1006,7 @@ def populate_chart_data_structures(
                                                                          responder_count,
                                                                          's' if responder_count > 1 else ''))
 
-    average_score = float(old_div(score_sum, num_scores))
+    average_score = score_sum / num_scores
     row['Average'] = (
         average_score,
         "%.2f (%s%d Response%s)" %

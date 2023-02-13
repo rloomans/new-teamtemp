@@ -203,29 +203,50 @@ CSP_SCRIPT_SRC = (
     'stackpath.bootstrapcdn.com',
     'cdnjs.cloudflare.com',
     'www.gstatic.com',
+    'ssl.gstatic.com',
     'cdn.jsdelivr.net',
-    'www.gstatic.com',
 )
-CSP_CONNECT_SRC = ("'self'",)
+CSP_SCRIPT_SRC_ELEM = (
+    "'self'",
+    "'unsafe-inline'",
+    'code.jquery.com',
+    'www.gstatic.com',
+    'ssl.gstatic.com',
+    'www.google.com',
+    'stackpath.bootstrapcdn.com',
+)
+CSP_CONNECT_SRC = (
+    "'self'",
+    'stackpath.bootstrapcdn.com',
+)
 CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     'code.jquery.com',
     'www.gstatic.com',
+    'ssl.gstatic.com',
     'cdn.jsdelivr.net',
     'fonts.googleapis.com',
+)
+CSP_STYLE_SRC_ELEM = (
+    "'self'",
+    "'unsafe-inline'",
+    'www.gstatic.com',
+    'stackpath.bootstrapcdn.com',
 )
 CSP_IMG_SRC = (
     "'self'",
     'data:',
     'blob:',
     'www.gstatic.com',
+    'ssl.gstatic.com',
 )
 CSP_FONT_SRC = (
     "'self'",
     'data:',
     'fonts.gstatic.com',
     'fonts.googleapis.com',
+    'cdnjs.cloudflare.com',
 )
 CSP_EXCLUDE_URL_PREFIXES = ("/djadmin",)
 CSP_REPORT_URI = reverse_lazy('report_csp')

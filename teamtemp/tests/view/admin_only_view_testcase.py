@@ -1,6 +1,3 @@
-from future import standard_library
-standard_library.install_aliases()
-
 from django.urls import reverse
 from django.test import TestCase
 from rest_framework import status
