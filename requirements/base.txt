@@ -18,7 +18,7 @@ coreapi==2.3.3
 pygments==2.14.0
 wordcloud==1.8.2.2
 django-admin-csvexport==2.1
-markdown==3.4.1
+markdown==3.4.3
 PyYAML==6.0
 uritemplate==4.1.1
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
