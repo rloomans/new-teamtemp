@@ -10,7 +10,7 @@ django-filter==23.1
 djangorestframework==3.14.0
 gunicorn==20.1.0
 gviz_api==1.10.0
-psycopg2-binary==2.9.5
+psycopg2-binary==2.9.6
 pytz==2023.3
 static==1.1.1
 whitenoise[brotli]==6.4.0
