@@ -15,7 +15,7 @@ pytz==2023.3
 static==1.1.1
 whitenoise[brotli]==6.4.0
 coreapi==2.3.3
-pygments==2.14.0
+pygments==2.15.0
 wordcloud==1.8.2.2
 django-admin-csvexport==2.1
 markdown==3.4.3
