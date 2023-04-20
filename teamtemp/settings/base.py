@@ -116,6 +116,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'rest_framework',
     'crispy_forms',
+    'crispy_bootstrap3',
     'cspreports',
     'csvexport',
 )
@@ -271,3 +272,7 @@ LOGOUT_URL = "/djadmin/logout/"
 
 WORDCLOUD_HEIGHT = 400
 WORDCLOUD_WIDTH = 400
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap3"
+
+CRISPY_TEMPLATE_PACK = "bootstrap3"
