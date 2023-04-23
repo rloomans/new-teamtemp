@@ -39,7 +39,7 @@ jobs:
             coverage xml
             coverage lcov
       - name: Upload coverage to coveralls.io
-        uses: rloomans/coverallsapp-github-action@master
+        uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ github.token }}
           path-to-lcov: coverage.lcov
