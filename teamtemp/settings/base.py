@@ -116,6 +116,7 @@ INSTALLED_APPS = (
     'django_bootstrap5',
     'rest_framework',
     'crispy_forms',
+    'crispy_bootstrap5',
     'cspreports',
     'csvexport',
 )
@@ -187,7 +188,7 @@ TEMPLATES = [
 # Settings for django-bootstrap5
 BOOTSTRAP5 = {
     'javascript_in_head': True,
-    'jquery_url': '/static/jquery-3.6.0.min.js',
+    'jquery_url': '/static/jquery-3.6.3.min.js',
 }
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -269,3 +270,7 @@ LOGOUT_URL = "/djadmin/logout/"
 
 WORDCLOUD_HEIGHT = 400
 WORDCLOUD_WIDTH = 400
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

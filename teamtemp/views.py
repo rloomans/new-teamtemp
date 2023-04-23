@@ -49,7 +49,7 @@ class WordCloudImageViewSet(viewsets.ModelViewSet):
         filters.SearchFilter,
         filters.OrderingFilter,
     )
-    filter_fields = ('creation_date', 'word_hash', 'image_url',)
+    filterset_fields = ('creation_date', 'word_hash', 'image_url',)
     order_fields = ('id', 'creation_date', 'word_hash', 'width', 'height')
     search_fields = ('word_list', 'word_hash', 'image_url')
 
@@ -58,7 +58,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter,)
-    filter_fields = ('creation_date',)
+    filterset_fields = ('creation_date',)
     order_fields = ('id', 'creation_date')
 
 
@@ -66,7 +66,7 @@ class TeamTemperatureViewSet(viewsets.ModelViewSet):
     queryset = TeamTemperature.objects.all()
     serializer_class = TeamTemperatureSerializer
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter,)
-    filter_fields = (
+    filterset_fields = (
         'creator',
         'survey_type',
         'creation_date',
@@ -78,8 +78,9 @@ class TemperatureResponseViewSet(viewsets.ModelViewSet):
     queryset = TemperatureResponse.objects.all()
     serializer_class = TemperatureResponseSerializer
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter,)
-    filter_fields = (
+    filterset_fields = (
         'team_name',
+        'word',
         'request',
         'archived',
         'response_date',
@@ -100,7 +101,7 @@ class TeamResponseHistoryViewSet(viewsets.ModelViewSet):
         filters.SearchFilter,
         filters.OrderingFilter,
     )
-    filter_fields = ('request', 'word_list', 'team_name', 'archive_date')
+    filterset_fields = ('request', 'word_list', 'team_name', 'archive_date')
     order_fields = ('archive_date', 'team_name')
     search_fields = ('word_list',)
 
@@ -109,7 +110,7 @@ class TeamsViewSet(viewsets.ModelViewSet):
     queryset = Teams.objects.all()
     serializer_class = TeamSerializer
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter,)
-    filter_fields = (
+    filterset_fields = (
         'request',
         'team_name',
         'dept_name',
