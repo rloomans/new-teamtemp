@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'django_icons',
     'rest_framework',
     'crispy_forms',
+    'crispy_bootstrap4',
     'cspreports',
     'csvexport',
 )
@@ -190,7 +191,7 @@ TEMPLATES = [
 BOOTSTRAP4 = {
     'javascript_in_head': True,
     'include_jquery': True,
-    'jquery_url': '/static/jquery-3.6.0.min.js',
+    'jquery_url': '/static/jquery-3.6.3.min.js',
 }
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -282,3 +283,7 @@ DJANGO_ICONS = {
         "filter": {"name": "fas fa-filter"},
     },
 }
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
