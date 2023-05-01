@@ -9,13 +9,14 @@ crispy-bootstrap3==2022.1
 django-crispy-forms==2.0
 django-filter==23.2
 djangorestframework==3.14.0
+drf-spectacular==0.26.2
+drf-spectacular-sidecar==2023.5.1
 gunicorn==20.1.0
 gviz_api==1.10.0
 psycopg2-binary==2.9.6
 pytz==2023.3
 static==1.1.1
 whitenoise[brotli]==6.4.0
-coreapi==2.3.3
 pygments==2.15.1
 wordcloud==1.9.1.1
 django-admin-csvexport==2.2
