@@ -1,13 +1,12 @@
 import cspreports.urls
 from django.conf import settings
-from django.urls import include, re_path
+from django.urls import include, path, re_path
 from django.contrib import admin as djadmin
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.views.generic import TemplateView
-from django.views.generic.base import RedirectView
+from django.views.generic import TemplateView, RedirectView
 from django.views.static import serve as serve_static
 from rest_framework import routers
-from rest_framework.documentation import include_docs_urls
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 
 from teamtemp.views import TeamResponseHistoryViewSet, TeamTemperatureViewSet, TeamsViewSet, TemperatureResponseViewSet, \
@@ -24,10 +23,10 @@ router.register(r'team_response_histories', TeamResponseHistoryViewSet)
 router.register(r'teams', TeamsViewSet)
 
 urlpatterns = [
-    re_path(r'^cs$', home_view, {'survey_type': 'CUSTOMERFEEDBACK'}),
-    re_path(r'^drs$', home_view, {'survey_type': 'DEPT-REGION-SITE'}),
+    re_path(r'^cs/?$', home_view, {'survey_type': 'CUSTOMERFEEDBACK'}),
+    re_path(r'^drs/?$', home_view, {'survey_type': 'DEPT-REGION-SITE'}),
     re_path(r'^$', home_view, name='home'),
-    re_path(r'^about$', TemplateView.as_view(template_name='about.html'),
+    re_path(r'^about/?$', TemplateView.as_view(template_name='about.html'),
         name='about'),
     re_path(r'^user/?$', user_view, name='user'),
     re_path(r'^super/(?P<survey_id>[0-9a-zA-Z]{8})/?$', super_view, name='super'),
@@ -77,11 +76,14 @@ urlpatterns = [
     re_path(r'^static/(.*)$', serve_static, {'document_root': settings.STATIC_ROOT}, name='static'),
     re_path(r'^media/(.*)$', media_view, {'document_root': settings.MEDIA_ROOT}, name='media'),
     re_path(r'^healthcheck/?$', health_check_view, name='healthcheck'),
-    re_path(r'^robots\.txt', robots_txt_view, name='robots_txt'),
-    re_path(r'^favicon\.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico')), name='favicon'),
+    path('robots.txt', robots_txt_view, name='robots_txt'),
+    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico'), permanent=True), name='favicon'),
     re_path(r'^djadmin/', djadmin.site.urls),
     re_path(r'^api/', include(router.urls)),
     re_path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    re_path(r'^docs/', include_docs_urls(title='Team Temperature API')),
+    re_path(r'^docs/', RedirectView.as_view(url='/api/schema/swagger-ui', permanent=False), name='docs'),
     re_path(r'^csp/', include('cspreports.urls')),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
