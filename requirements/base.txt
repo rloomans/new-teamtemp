@@ -1,4 +1,4 @@
-Django[bcrypt]==4.2
+Django[bcrypt]==4.2.3
 django-bootstrap4==22.3
 dj-database-url==2.0.0
 dj-static==0.0.6
@@ -7,21 +7,23 @@ django-csp==3.7
 django-csp-reports==1.8.1
 crispy-bootstrap4==2022.1
 django-crispy-forms==2.0
-django-filter==23.1
-django-icons==22.1
+django-filter==23.2
+django-icons==23.3
 djangorestframework==3.14.0
-gunicorn==20.1.0
+drf-spectacular==0.26.4
+drf-spectacular-sidecar==2023.7.1
+gunicorn==21.2.0
 gviz_api==1.10.0
 psycopg2-binary==2.9.6
 pytz==2023.3
 static==1.1.1
-whitenoise[brotli]==6.4.0
-coreapi==2.3.3
+whitenoise[brotli]==6.5.0
 pygments==2.15.1
-wordcloud==1.9.1.1
+wordcloud==1.9.2
 django-admin-csvexport==2.2
-markdown==3.4.3
-PyYAML==6.0
+markdown==3.4.4
+PyYAML==6.0.1
 uritemplate==4.1.1
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
 numpy>=1.22.2 # not directly required, pinned by Snyk to avoid a vulnerability
+requests==2.31.0

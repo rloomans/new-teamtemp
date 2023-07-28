@@ -120,6 +120,8 @@ INSTALLED_APPS = (
     'crispy_bootstrap4',
     'cspreports',
     'csvexport',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
 )
 
 PASSWORD_HASHERS = (
@@ -256,6 +258,10 @@ CSP_FONT_SRC = (
     'fonts.googleapis.com',
     'cdnjs.cloudflare.com',
 )
+CSP_WORKER_SRC = (
+    "'self'",
+    'blob:',
+)
 CSP_EXCLUDE_URL_PREFIXES = ("/djadmin",)
 CSP_REPORT_URI = reverse_lazy('report_csp')
 CSP_REPORTS_FILTER_FUNCTION = "cspreports.filters.filter_browser_extensions"
@@ -267,7 +273,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'PAGE_SIZE': 25,
 }
@@ -287,3 +293,14 @@ DJANGO_ICONS = {
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Team Temperature API',
+    'DESCRIPTION': 'Team Temperature API',
+    'VERSION': '0.0.1',
+    'SERVE_INCLUDE_SCHEMA': True,
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+}
+
