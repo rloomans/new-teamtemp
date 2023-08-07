@@ -17,7 +17,7 @@ psycopg2-binary==2.9.6
 pytz==2023.3
 static==1.1.1
 whitenoise[brotli]==6.5.0
-pygments==2.15.1
+pygments==2.16.1
 wordcloud==1.9.2
 django-admin-csvexport==2.2
 markdown==3.4.4
