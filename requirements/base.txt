@@ -14,7 +14,7 @@ drf-spectacular-sidecar==2023.9.1
 gunicorn==21.2.0
 gviz_api==1.10.0
 psycopg2-binary==2.9.7
-pytz==2023.3
+pytz==2023.3.post1
 static==1.1.1
 whitenoise[brotli]==6.5.0
 pygments==2.16.1
