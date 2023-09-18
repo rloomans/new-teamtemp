@@ -1,4 +1,4 @@
-Django[bcrypt]==4.2.4
+Django[bcrypt]==4.2.5
 django-bootstrap4==22.3
 dj-database-url==2.1.0
 dj-static==0.0.6
@@ -7,7 +7,7 @@ django-csp==3.7
 django-csp-reports==1.8.1
 crispy-bootstrap4==2022.1
 django-crispy-forms==2.0
-django-filter==23.2
+django-filter==23.3
 django-icons==23.3
 djangorestframework==3.14.0
 drf-spectacular==0.26.4
@@ -15,7 +15,7 @@ drf-spectacular-sidecar==2023.9.1
 gunicorn==21.2.0
 gviz_api==1.10.0
 psycopg2-binary==2.9.7
-pytz==2023.3
+pytz==2023.3.post1
 static==1.1.1
 whitenoise[brotli]==6.5.0
 pygments==2.16.1
