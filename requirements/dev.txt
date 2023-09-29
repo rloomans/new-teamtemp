@@ -1,4 +1,4 @@
--r base.txt
+-r ../requirements.txt
 
 coverage>=4.3.1
 db-sqlite3>=0.0.1
