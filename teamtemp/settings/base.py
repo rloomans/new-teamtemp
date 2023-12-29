@@ -258,7 +258,7 @@ CSP_WORKER_SRC = (
     'blob:',
 )
 CSP_EXCLUDE_URL_PREFIXES = ("/djadmin",)
-CSP_REPORT_URI = reverse_lazy('report_csp')
+#CSP_REPORT_URI = reverse_lazy('report_csp')
 #CSP_REPORTS_FILTER_FUNCTION = "cspreports.filters.filter_browser_extensions"
 
 REST_FRAMEWORK = {
