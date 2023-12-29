@@ -113,10 +113,10 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django_filters',
     'teamtemp.responses',
-    'bootstrap3',
+    'django_bootstrap5',
     'rest_framework',
     'crispy_forms',
-    'crispy_bootstrap3',
+    'crispy_bootstrap5',
     #'cspreports',
     'csvexport',
     'drf_spectacular',
@@ -187,8 +187,8 @@ TEMPLATES = [
     },
 ]
 
-# Settings for django-bootstrap3
-BOOTSTRAP3 = {
+# Settings for django-bootstrap5
+BOOTSTRAP5 = {
     'javascript_in_head': True,
     'jquery_url': '/static/jquery-3.6.3.min.js',
 }
@@ -226,7 +226,6 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     'code.jquery.com',
-    'stackpath.bootstrapcdn.com',
     'www.gstatic.com',
     'ssl.gstatic.com',
     'cdn.jsdelivr.net',
@@ -248,7 +247,6 @@ CSP_IMG_SRC = (
 CSP_FONT_SRC = (
     "'self'",
     'data:',
-    'stackpath.bootstrapcdn.com',
     'fonts.gstatic.com',
     'fonts.googleapis.com',
     'cdnjs.cloudflare.com',
@@ -279,9 +277,9 @@ LOGOUT_URL = "/djadmin/logout/"
 WORDCLOUD_HEIGHT = 400
 WORDCLOUD_WIDTH = 400
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap3"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
-CRISPY_TEMPLATE_PACK = "bootstrap3"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Team Temperature API',
@@ -292,4 +290,3 @@ SPECTACULAR_SETTINGS = {
     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
     'REDOC_DIST': 'SIDECAR',
 }
-

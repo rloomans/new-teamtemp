@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% load bootstrap3 %}
+{% load django_bootstrap5 %}
 
 {% block title %}Create Team Temperature{% endblock %}
 
 {% block body %}
 
   <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-md-offset-3"><br>
 
         <h1>Create a Team Temperature Survey</h1>
 
@@ -68,9 +68,7 @@
          {% endif %}<br>
 
           <div class="field">
-            {% buttons %}
-              {% bootstrap_button "Create" button_type="submit" button_class="btn-primary" %}
-            {% endbuttons %}
+            {% bootstrap_button "Create" button_type="submit" button_class="btn-primary" %}
           </div>
         </form>
       </div>

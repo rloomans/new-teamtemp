@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="{% static "tablesort.css" %}">
 {% endblock %}
 
-{% block bootstrap3_extra_script %}
+{% block bootstrap5_extra_script %}
   <script type='text/javascript'>
     new Tablesort(document.getElementById('results-table'));
     new Tablesort(document.getElementById('teams-table'));
@@ -20,7 +20,7 @@
 {% block body %}
 
   <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
       <div class="col-md-6 col-md-offset-3"><br>
         <div>
           <div class="btn-group" role="group" aria-label="nav">
