@@ -113,10 +113,11 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django_filters',
     'teamtemp.responses',
-    'bootstrap3',
+    'bootstrap4',
+    'django_icons',
     'rest_framework',
     'crispy_forms',
-    'crispy_bootstrap3',
+    'crispy_bootstrap4',
     #'cspreports',
     'csvexport',
     'drf_spectacular',
@@ -187,9 +188,11 @@ TEMPLATES = [
     },
 ]
 
-# Settings for django-bootstrap3
-BOOTSTRAP3 = {
+# Settings for django-bootstrap4
+
+BOOTSTRAP4 = {
     'javascript_in_head': True,
+    'include_jquery': True,
     'jquery_url': '/static/jquery-3.6.3.min.js',
 }
 
@@ -203,8 +206,10 @@ CSP_SCRIPT_SRC = (
     "'self'",
     "'unsafe-inline'",
     'code.jquery.com',
+    'maxcdn.bootstrapcdn.com',
     'stackpath.bootstrapcdn.com',
     'cdnjs.cloudflare.com',
+    'stackpath.bootstrapcdn.com',
     'www.gstatic.com',
     'ssl.gstatic.com',
     'cdn.jsdelivr.net',
@@ -279,9 +284,15 @@ LOGOUT_URL = "/djadmin/logout/"
 WORDCLOUD_HEIGHT = 400
 WORDCLOUD_WIDTH = 400
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap3"
+DJANGO_ICONS = {
+    "ICONS": {
+        "filter": {"name": "fas fa-filter"},
+    },
+}
 
-CRISPY_TEMPLATE_PACK = "bootstrap3"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Team Temperature API',

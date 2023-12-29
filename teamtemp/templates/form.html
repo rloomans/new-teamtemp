@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
 {% block title %}{{ pretty_team_name }} {{ survey_type_title }}{% endblock %}
 
@@ -8,7 +8,7 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-6 col-md-offset-3">
+      <div class="col-lg-6 col-lg-offset-3">
         <br>
         <!--[if !IE]> -->
         <a href="{% url 'bvc' survey_id=id team_name=team_name %}" class="btn btn-primary">BVC</a>
@@ -27,14 +27,14 @@
 
           {{ temp_question_title }}
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6">
               {% bootstrap_field form.score layout='vertical' size='sm' show_label=False %}
             </div>
           </div>
 
           {{ word_question_title }}
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6">
               {% bootstrap_field form.word layout='vertical' size='sm' show_label=False %}
             </div>
           </div>
