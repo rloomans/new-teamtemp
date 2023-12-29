@@ -1,5 +1,5 @@
 Django[bcrypt]==5.0
-django-bootstrap5==22.2
+django-bootstrap5==23.4
 dj-database-url==2.1.0
 dj-static==0.0.6
 django-admin-csvexport==2.2
