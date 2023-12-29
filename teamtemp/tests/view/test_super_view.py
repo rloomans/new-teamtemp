@@ -3,7 +3,6 @@ import datetime
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.test import TestCase
-from datetime.timezone import utc
 from rest_framework import status
 
 from teamtemp.tests.view.admin_only_view_testcase import AdminOnlyViewTestCase
@@ -22,7 +21,7 @@ class SuperViewTestCases(AdminOnlyViewTestCase):
                 13,
                 20,
                 10,
-                tzinfo=utc),
+                tzinfo=datetime.timezone.utc),
             is_superuser=True,
             username='super',
             first_name='Super',
@@ -37,7 +36,7 @@ class SuperViewTestCases(AdminOnlyViewTestCase):
                 13,
                 20,
                 10,
-                tzinfo=utc))
+                tzinfo=datetime.timezone.utc))
 
     def test_super_view(self):
         self.client.force_login(self.superuser)

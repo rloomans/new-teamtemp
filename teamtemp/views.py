@@ -6,6 +6,7 @@ import sys
 import time
 import string
 import random
+import datetime
 
 import gviz_api
 import os
@@ -35,7 +36,6 @@ from teamtemp.responses.models import *
 
 from urllib.parse import urlparse
 
-from datetime.timezone import utc
 
 DEFAULT_WORDCLOUD_WIDTH = 500
 DEFAULT_WORDCLOUD_HEIGHT = 350
@@ -145,13 +145,13 @@ def utc_timestamp():
     return "[%s UTC]" % str(
         timezone.localtime(
             timezone.now(),
-            timezone=utc))
+            timezone=datetime.timezone.utc))
 
 
 @ie_edge()
 @csp_update(SCRIPT_SRC=["'unsafe-inline'", ])
 def home_view(request, survey_type='TEAMTEMP'):
-    timezone.activate(utc)
+    timezone.activate(datetime.timezone.utc)
 
     if request.method == 'POST':
         form = CreateSurveyForm(request.POST, error_class=ErrorBox)
@@ -681,7 +681,7 @@ def cron_view(request, pin):
 
 
 def prune_word_cloud_cache(_):
-    timezone.activate(utc)
+    timezone.activate(datetime.timezone.utc)
     print("prune_word_cloud_cache: Start at %s" %
           utc_timestamp(), file=sys.stderr)
 
@@ -723,7 +723,7 @@ def prune_word_cloud_cache(_):
 
 
 def auto_archive_surveys(request):
-    timezone.activate(utc)
+    timezone.activate(datetime.timezone.utc)
     print("auto_archive_surveys: Start at " + utc_timestamp(), file=sys.stderr)
 
     team_temperatures = TeamTemperature.objects.filter(archive_schedule__gt=0)
