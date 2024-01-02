@@ -1,4 +1,4 @@
-Django[bcrypt]==5.0
+Django[bcrypt]==5.0.1
 django-bootstrap3==23.6
 dj-database-url==2.1.0
 dj-static==0.0.6
