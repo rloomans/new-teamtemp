@@ -8,3 +8,4 @@ factory-djoy>=2.2.2
 pydot>=1.4.2
 sqlparse>=0.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
 zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
+django>=4.2.14 # not directly required, pinned by Snyk to avoid a vulnerability
