@@ -7,7 +7,7 @@ django-csp==3.8
 #django-csp-reports==1.9.0
 crispy-bootstrap3==2024.1
 django-crispy-forms==2.2
-django-filter==24.2
+django-filter==24.3
 djangorestframework==3.15.2
 drf-spectacular==0.27.2
 drf-spectacular-sidecar==2024.7.1
