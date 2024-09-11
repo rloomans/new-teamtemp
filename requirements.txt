@@ -20,7 +20,7 @@ whitenoise[brotli]==6.7.0
 pygments==2.18.0
 wordcloud==1.9.3
 django-admin-csvexport==2.2
-markdown==3.6
+markdown==3.7
 PyYAML==6.0.2
 uritemplate==4.1.1
 setuptools>=70.0.0 # not directly required, pinned by Snyk to avoid a vulnerability
