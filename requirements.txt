@@ -13,7 +13,7 @@ drf-spectacular==0.27.2
 drf-spectacular-sidecar==2024.7.1
 gunicorn==23.0.0
 gviz_api==1.10.0
-psycopg2-binary==2.9.9
+psycopg2-binary==2.9.10
 pytz==2024.2
 static==1.1.1
 whitenoise[brotli]==6.7.0
