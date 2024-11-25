@@ -10,7 +10,7 @@ django-crispy-forms==2.3
 django-filter==24.3
 djangorestframework==3.15.2
 drf-spectacular==0.27.2
-drf-spectacular-sidecar==2024.7.1
+drf-spectacular-sidecar==2024.11.1
 gunicorn==23.0.0
 gviz_api==1.10.0
 psycopg2-binary==2.9.10
@@ -18,7 +18,7 @@ pytz==2024.2
 static==1.1.1
 whitenoise[brotli]==6.8.2
 pygments==2.18.0
-wordcloud==1.9.3
+wordcloud==1.9.4
 django-admin-csvexport==2.3
 markdown==3.7
 PyYAML==6.0.2
