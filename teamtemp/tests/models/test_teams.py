@@ -10,7 +10,7 @@ class TeamTestCases(TestCase):
         self.assertTrue(len(team.team_name) > 0)
         self.assertIsNotNone(team.creation_date)
         self.assertIsNotNone(team.modified_date)
-        self.assertRegexpMatches(
+        self.assertRegexp(
             str(team), "^%d: %s %s " %
             (team.id, team.request.id, team.team_name))
 

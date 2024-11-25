@@ -12,7 +12,7 @@ class TeamTemperatureTestCases(TestCase):
         self.assertIsNotNone(teamtemp.creation_date)
         self.assertIsNotNone(teamtemp.modified_date)
         self.assertEqual(teamtemp.survey_type, 'TEAMTEMP')
-        self.assertRegexpMatches(str(teamtemp), "%s: %s %s " % (
+        self.assertRegexp(str(teamtemp), "%s: %s %s " % (
             teamtemp.id, teamtemp.creator.id, re.escape(str(teamtemp.creation_date))))
 
         stats, query_set = teamtemp.stats()
