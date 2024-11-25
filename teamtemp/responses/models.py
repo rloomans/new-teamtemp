@@ -87,7 +87,7 @@ class TeamTemperature(models.Model):
     region_names = models.CharField(blank=True, null=True, max_length=64)
     site_names = models.CharField(blank=True, null=True, max_length=64)
     default_tz = models.CharField(
-        default='Australia/Queensland',
+        default='Australia/Brisbane',
         choices=TIMEZONE_CHOICES,
         max_length=64)
     max_word_count = models.PositiveSmallIntegerField(
