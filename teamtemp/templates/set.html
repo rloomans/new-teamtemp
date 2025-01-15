@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
-{% load bootstrap3 %}
+{% block form_extra_head %}
+  {{ form.media }}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+{% endblock %}
+
+{% load bootstrap4 %}
 
 {% block title %}Settings {{ survey.id }}{% endblock %}
 

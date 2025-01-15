@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
-{% load bootstrap3 %}
+{% load bootstrap4 %}
+{% load icons %}
 {% load static %}
 
 {% block title %}Results {{ survey.id }} {{ bvc_data.team_name }}{% endblock %}
@@ -8,6 +9,7 @@
 {% block form_extra_head %}
   <script type='text/javascript' src="{% static "spin.min.js" %}"></script>
   <script type='text/javascript' src="{% static "jquery.spin.min.js" %}"></script>
+  <link rel="stylesheet" href="{% static "font-awesome/css/font-awesome.min.css" %}">
   <style>
     #wordcloud-image {
       background-image: url("{{ bvc_data.word_cloud_small_url }}") !important;
@@ -21,7 +23,7 @@
   </style>
 {% endblock %}
 
-{% block bootstrap3_extra_script %}
+{% block bootstrap4_extra_script %}
   <script type='text/javascript'>
     $('.wordcloud').spin();
     $('#gauge_average').spin();
@@ -182,7 +184,7 @@
                   {% if form.filter_site_names.value or form.filter_region_names.value or form.filter_dept_names.value %}
                     {% buttons %}
                       <button type="submit" class="btn btn-primary">
-                        {% bootstrap_icon "glyphicon glyphicon-filter" %} <b>FILTER BVC</b>
+                        {% icon "glyphicon glyphicon-filter" %} <b>FILTER BVC</b>
                       </button>
                     {% endbuttons %}
                   {% endif %}
@@ -258,7 +260,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-lg-6">
         {% if bvc_data.archived %}
           <h2 align="center">{{ bvc_data.archive_date|date:"M. d, Y" }}</h2>
         {% else %}
@@ -291,20 +293,20 @@
         <div class="centregauge" id='gauge_average'> </div>
         {% if bvc_data.stats.minimum %}
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-lg-4">
             <div class="min-max">Min{% if survey.survey_type != 'CUSTOMERFEEDBACK' %} temperature{% endif %}: {{ bvc_data.stats.minimum }}</div>
           </div>
-          <div class="col-md-4">
+          <div class="col-lg-4">
             <div class="min-max">Avg{% if survey.survey_type != 'CUSTOMERFEEDBACK' %} temperature{% endif %}: {{ bvc_data.stats.average|floatformat:"-2" }}</div>
           </div>
-          <div class="col-md-4">
+          <div class="col-lg-4">
             <div class="min-max">Max{% if survey.survey_type != 'CUSTOMERFEEDBACK' %} temperature{% endif %}: {{ bvc_data.stats.maximum }}</div>
           </div>
         </div>
       {% endif %}
       </div>
-      <div class="col-md-6">
-        <h2 align="center">{{ bvc_data.stats.count }} Response{% if bvc_data.stats.count != 1 %}s{% endif %}:</h2>
+      <div class="col-lg-6">
+        <h3 align="center">{{ bvc_data.stats.count }} Response{% if bvc_data.stats.count != 1 %}s{% endif %}:</h3>
 
         <div class="wordcloud">
           {% if bvc_data.word_cloud_large_url %}
