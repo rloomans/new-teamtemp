@@ -16,7 +16,7 @@ class TeamResponseHistoryTestCases(TestCase):
         self.assertTrue(len(response_history.team_name) > 0)
         self.assertIsNotNone(response_history.archive_date)
         self.assertIsNotNone(response_history.request)
-        self.assertRegexpMatches(
+        self.assertRegex(
             str(response_history), "^%d: %s " %
             (response_history.id, response_history.request.id))
 
