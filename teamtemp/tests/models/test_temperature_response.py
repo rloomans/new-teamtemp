@@ -17,7 +17,7 @@ class TemperatureResponseTestCases(TestCase):
         self.assertTrue(len(response.team_name) > 0)
         self.assertIsNotNone(response.response_date)
         self.assertIsNotNone(response.request)
-        self.assertRegexpMatches(
+        self.assertRegex(
             str(response),
             "^%d: %s %s %d %s %s " %
             (response.id,

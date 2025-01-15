@@ -13,16 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: ["3.9", "3.10", "3.11"]
+        python-version:
+          - "3.11"
+          - "3.12"
+          - "3.13"
     env:
       DATABASE_URL: "sqlite:///:memory"
       DJANGO_SETTINGS_MODULE: teamtemp.settings.dev
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
            python-version: ${{ matrix.python-version }}
       - name: Install requirements
