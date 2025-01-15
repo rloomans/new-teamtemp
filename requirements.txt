@@ -1,10 +1,11 @@
 Django[bcrypt]==5.1.5
-django-bootstrap3==24.3
+django-bootstrap5==23.4
 dj-database-url==2.3.0
 dj-static==0.0.6
 django-admin-csvexport==2.3
 django-csp==3.8
 #django-csp-reports==1.9.0
+crispy-bootstrap5==2023.10
 crispy-bootstrap3==2024.1
 django-crispy-forms==2.3
 django-filter==24.3

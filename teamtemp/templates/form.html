@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% load bootstrap3 %}
+{% load django_bootstrap5 %}
 
 {% block title %}{{ pretty_team_name }} {{ survey_type_title }}{% endblock %}
 
 {% block body %}
 
   <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-lg-offset-3">
         <br>
         <!--[if !IE]> -->
         <a href="{% url 'bvc' survey_id=id team_name=team_name %}" class="btn btn-primary">BVC</a>
@@ -27,21 +27,19 @@
 
           {{ temp_question_title }}
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6">
               {% bootstrap_field form.score layout='vertical' size='sm' show_label=False %}
             </div>
           </div>
 
           {{ word_question_title }}
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6">
               {% bootstrap_field form.word layout='vertical' size='sm' show_label=False %}
             </div>
           </div>
 
-          {% buttons %}
-            {% bootstrap_button "Submit" button_type="submit" button_class="btn-primary" %}
-          {% endbuttons %}
+          {% bootstrap_button "Submit" button_type="submit" button_class="btn-primary" %}
         </form>
       </div>
     </div>
