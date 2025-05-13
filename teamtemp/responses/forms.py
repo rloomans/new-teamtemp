@@ -1,6 +1,6 @@
 import re
+import zoneinfo
 
-import pytz
 from builtins import object
 from builtins import str
 from django import forms
@@ -306,7 +306,7 @@ class SurveySettingsForm(forms.ModelForm):
         max_length=64,
         required=False)
     default_tz = forms.ChoiceField(
-        choices=[(x, x) for x in pytz.all_timezones], required=False)
+        choices=[(x, x) for x in zoneinfo.available_timezones()], required=False)
     next_archive_date = forms.DateField(widget=forms.DateInput(
         attrs={
             'type': 'date',

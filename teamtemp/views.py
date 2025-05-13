@@ -2,12 +2,13 @@ from __future__ import division, print_function
 
 from builtins import range, str
 import errno
+import hashlib
 import sys
 import time
 import string
 import random
 import datetime
-
+import zoneinfo
 import gviz_api
 import os
 from wordcloud import WordCloud
@@ -24,17 +25,41 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.static import serve as serve_static
 from django_filters.rest_framework import DjangoFilterBackend
+from django.utils import timezone
 
 from rest_framework import filters, viewsets
 
-from .responses.forms import AddTeamForm, CreateSurveyForm, ErrorBox, FilteredBvcForm, ResultsPasswordForm, \
-    SurveyResponseForm, SurveySettingsForm
-from .responses.serializers import *
 from teamtemp import responses, utils
 from teamtemp.headers import cache_control, no_cache, ie_edge
-from teamtemp.responses.models import *
 
 from urllib.parse import urlparse
+
+from teamtemp.responses.models import (
+    TeamResponseHistory,
+    Teams,
+    TeamTemperature,
+    TemperatureResponse,
+    User,
+    WordCloudImage,
+)
+
+from .responses.forms import (
+    AddTeamForm,
+    CreateSurveyForm,
+    ErrorBox,
+    FilteredBvcForm,
+    ResultsPasswordForm,
+    SurveyResponseForm,
+    SurveySettingsForm,
+)
+from .responses.serializers import (
+    TeamResponseHistorySerializer,
+    TeamSerializer,
+    TeamTemperatureSerializer,
+    TemperatureResponseSerializer,
+    UserSerializer,
+    WordCloudImageSerializer,
+)
 
 
 DEFAULT_WORDCLOUD_WIDTH = 500
@@ -212,7 +237,7 @@ def authenticated_user(request, survey):
 def set_view(request, survey_id):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
-    timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
+    timezone.activate(zoneinfo.ZoneInfo(survey.default_tz or 'UTC'))
 
     if not authenticated_user(request, survey):
         return redirect(
@@ -477,8 +502,6 @@ def login_view(request, survey_id, redirect_to=None):
         survey.password = make_password(password)
         survey.save()
 
-    timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
-
     if not redirect_to:
         redirect_to = request.GET.get(
             'redirect_to', reverse(
@@ -510,7 +533,7 @@ def login_view(request, survey_id, redirect_to=None):
 def admin_view(request, survey_id, team_name=''):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
-    timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
+    timezone.activate(zoneinfo.ZoneInfo(survey.default_tz or 'UTC'))
 
     if not authenticated_user(request, survey):
         return redirect(
@@ -644,7 +667,7 @@ def save_image(image, basename):
 def reset_view(request, survey_id):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
-    timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
+    timezone.activate(zoneinfo.ZoneInfo(survey.default_tz or 'UTC'))
 
     if authenticated_user(request, survey):
         if archive_survey(request, survey):
@@ -670,14 +693,12 @@ def cron_view(request, pin):
         auto_archive_surveys(request)
         prune_word_cloud_cache(request)
         return HttpResponse("ok\n", content_type='text/plain')
-    else:
-        print(
-            "Cron 404: pin = " +
-            pin +
-            " expected = " +
-            cron_pin,
-            file=sys.stderr)
-        raise Http404
+
+    print(
+        f"Cron 404: pin = {pin} expected = {cron_pin}",
+        cron_pin,
+        file=sys.stderr)
+    raise Http404
 
 
 def prune_word_cloud_cache(_):
@@ -688,7 +709,7 @@ def prune_word_cloud_cache(_):
     rows_deleted = 0
     rows_checked = 0
 
-    yesterday = timezone.now() + timedelta(days=-1)
+    yesterday = timezone.now() + datetime.timedelta(days=-1)
 
     old_word_cloud_images = WordCloudImage.objects.filter(
         modified_date__lte=yesterday)
@@ -731,7 +752,7 @@ def auto_archive_surveys(request):
     for team_temp in team_temperatures:
         now = timezone.now()
         now_date = timezone.localtime(
-            now, timezone=pytz.timezone(
+            now, timezone=zoneinfo.ZoneInfo(
                 team_temp.default_tz)).date()
 
         team_temp.fill_next_archive_date()
@@ -755,7 +776,7 @@ def auto_archive_surveys(request):
 
 @transaction.atomic
 def archive_survey(_, survey, archive_date=timezone.now()):
-    timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
+    timezone.activate(zoneinfo.ZoneInfo(survey.default_tz or 'UTC'))
 
     print("Archiving %s: Archive Date %s UTC" %
           (survey.id, str(archive_date)), file=sys.stderr)
@@ -935,7 +956,7 @@ def populate_chart_data_structures(
     #    historical_options
     #    json_history_chart_table
     #
-    timezone.activate(pytz.timezone(tz))
+    timezone.activate(zoneinfo.ZoneInfo(tz))
     team_index = 0
     history_chart_schema = {"archive_date": ("datetime", "Archive_Date")}
     history_chart_columns = ('archive_date',)
@@ -1277,7 +1298,7 @@ def calc_multi_iteration_average(
         survey,
         num_iterations=2,
         tz='UTC'):
-    timezone.activate(pytz.timezone(tz))
+    timezone.activate(zoneinfo.ZoneInfo(tz))
     if num_iterations <= 0:
         return None
 
@@ -1367,7 +1388,7 @@ def bvc_view(
         dept_names=''):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
-    timezone.activate(pytz.timezone(survey.default_tz or 'UTC'))
+    timezone.activate(zoneinfo.ZoneInfo(survey.default_tz or 'UTC'))
 
     # ensure team exists
     team = get_object_or_404(

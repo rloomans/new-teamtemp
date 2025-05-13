@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 import hashlib
 from datetime import timedelta
 
-import pytz
 from builtins import object
+import zoneinfo
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
@@ -66,7 +66,7 @@ class TeamTemperature(models.Model):
         (CUSTOMER_FEEDBACK, 'Customer Feedback'),
     )
 
-    TIMEZONE_CHOICES = [(tz, tz) for tz in pytz.all_timezones]
+    TIMEZONE_CHOICES = [(tz, tz) for tz in zoneinfo.available_timezones()]
 
     id = models.CharField(max_length=8, primary_key=True)
     creator = models.ForeignKey(
@@ -139,7 +139,7 @@ class TeamTemperature(models.Model):
                             days=self.archive_schedule)).date()
                 else:
                     self.next_archive_date = timezone.localtime(
-                        timezone.now(), timezone=pytz.timezone(self.default_tz)).date()
+                        timezone.now(), timezone=zoneinfo.ZoneInfo(self.default_tz)).date()
 
         return self.next_archive_date
 
@@ -149,7 +149,7 @@ class TeamTemperature(models.Model):
         if self.archive_schedule > 0:
             if not now_date:
                 now_date = timezone.localtime(
-                    timezone.now(), timezone=pytz.timezone(
+                    timezone.now(), timezone=zoneinfo.ZoneInfo(
                         self.default_tz)).date()
 
             while self.next_archive_date <= now_date:
