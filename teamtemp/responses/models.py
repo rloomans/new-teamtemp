@@ -15,7 +15,7 @@ class WordCloudImage(models.Model):
       unique_together = ("word_hash", "width", "height")
 
     id = models.AutoField(primary_key=True)
-    word_hash = models.CharField(max_length=40)
+    word_hash = models.CharField(max_length=64)
     word_list = models.CharField(max_length=5000)
     width = models.PositiveSmallIntegerField(null=True, blank=True)
     height = models.PositiveSmallIntegerField(null=True, blank=True)
@@ -35,8 +35,7 @@ class WordCloudImage(models.Model):
 
     def clean(self):
         self.word_list = self.word_list.lower().strip()
-        self.word_hash = hashlib.sha1(
-            self.word_list.encode('utf-8')).hexdigest()
+        self.word_hash = hashlib.sha256(self.word_list.encode('utf-8')).hexdigest()
 
 
 class User(models.Model):

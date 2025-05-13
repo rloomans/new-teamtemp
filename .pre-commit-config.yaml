@@ -1,6 +1,25 @@
 repos:
--   repo: https://github.com/adamchainz/djade-pre-commit
+  - repo: https://github.com/adamchainz/djade-pre-commit
     rev: "1.4.0"
     hooks:
-    -   id: djade
-        args: [--target-version, "5.2"]  # Replace with Django version
+      - id: djade
+        args: [--target-version, "5.2"] # Replace with Django version
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  # - repo: https://github.com/psf/black
+  #   rev: 25.1.0
+  #   hooks:
+  #     - id: black
+  # - repo: https://github.com/astral-sh/ruff-pre-commit
+  #   # Ruff version.
+  #   rev: v0.11.9
+  #   hooks:
+  #     # Run the linter.
+  #     - id: ruff
+  #       #args: [--fix]
+  #     # Run the formatter.
+  #     #- id: ruff-format

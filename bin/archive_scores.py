@@ -10,9 +10,9 @@ if __name__ == "__main__":
     url = os.environ.get('TEAM_TEMP_CRON_URL', 'http://127.0.0.1:8000/cron/')
     pin = os.environ.get('TEAM_TEMP_CRON_PIN', '0000')
 
-    r = requests.get(url + pin)
+    r = requests.get(url + pin, timeout=30)
 
-    if (r.status_code == 200):
+    if r.status_code == 200:
         sys.exit(0)
 
     print(r)

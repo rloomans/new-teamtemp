@@ -1186,7 +1186,7 @@ def cached_word_cloud(word_list=None, word_hash=None, generate=True, width=None,
 
     word_cloud_image = None
     if word_list:
-        word_hash = hashlib.sha1(word_list.encode('utf-8')).hexdigest()
+        word_hash = hashlib.sha256(word_list.encode('utf-8')).hexdigest()
         word_cloud_image, _ = WordCloudImage.objects.get_or_create(
             word_hash=word_hash, width=width, height=height, word_list=word_list)
     elif word_hash:

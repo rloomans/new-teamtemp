@@ -107,4 +107,3 @@ class WordcloudViewTestCases(TestCase):
         self.assertEqual(response['Content-Type'], 'image/png')
         self.assertEqual(response['Cache-Control'], 'public, max-age=315360000')
         self.assertGreater(len(response.getvalue()), 0)
-

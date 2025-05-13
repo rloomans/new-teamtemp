@@ -1,5 +1,4 @@
-new-teamtemp
-============
+# new-teamtemp
 
 [![Django Test Status](https://github.com/rloomans/new-teamtemp/actions/workflows/django-test.yaml/badge.svg?branch=main)](https://github.com/rloomans/new-teamtemp/actions/workflows/django-test.yaml)
 [![Coverage Status](https://coveralls.io/repos/rloomans/new-teamtemp/badge.svg?branch=main&service=github)](https://coveralls.io/github/rloomans/new-teamtemp?branch=main)
@@ -16,9 +15,7 @@ same browser.
 The results page are available to the creator using the same cookie mechanism,
 and also a password in case the cookie is lost.
 
-
-Heroku One-click Deploy
------------------------
+## Heroku One-click Deploy
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
@@ -35,4 +32,3 @@ heroku run --app <Your Heroku app name here> python manage.py createsuperuser --
 ```
 
 and then go to `https://<Your Heroku app name here>.herokuapp.com/djadmin/`
-
