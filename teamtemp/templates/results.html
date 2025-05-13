@@ -8,14 +8,14 @@
   <script type='text/javascript' src="{% static "tablesort.min.js" %}"></script>
   <script type='text/javascript' src="{% static "tablesort.number.js" %}"></script>
   <link rel="stylesheet" href="{% static "tablesort.css" %}">
-{% endblock %}
+{% endblock form_extra_head %}
 
 {% block bootstrap3_extra_script %}
   <script type='text/javascript'>
     new Tablesort(document.getElementById('results-table'));
     new Tablesort(document.getElementById('teams-table'));
   </script>
-{% endblock %}
+{% endblock bootstrap3_extra_script %}
 
 {% block body %}
 
@@ -148,4 +148,4 @@
     </div>
   </div>
 
-{% endblock %}
+{% endblock body %}

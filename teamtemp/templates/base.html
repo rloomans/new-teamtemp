@@ -1,15 +1,15 @@
 {% extends 'bootstrap3/bootstrap3.html' %}
 
-{% load bootstrap3 %}
-{% load static %}
+{% load bootstrap3 static %}
 
 {% block bootstrap3_title %}{% block title %}{% endblock %}{% endblock %}
+
 {% block bootstrap3_extra_head %}
     <link rel="stylesheet" href="{% static "style.css" %}">
     <link rel="shortcut icon" href="{% static "favicon.ico" %}" type="image/x-icon">
     <link rel="icon" href="{% static "favicon.ico" %}" type="image/x-icon">
     {% block form_extra_head %}{% endblock %}
-{% endblock %}
+{% endblock bootstrap3_extra_head %}
 
 {% block bootstrap3_content %}
   {# Display django.contrib.messages as Bootstrap alerts #}
@@ -17,5 +17,5 @@
   {% block body %}{% endblock %}
   {% block footer %}
     <div class="footer no-print"><p><br><br><a href="{% url "about" %}">About this site</a> <a href="/djadmin/">•</a> <a href="{% url "user" %}">Current user</a></p></div><br><br><br>
-  {% endblock %}
-{% endblock %}
+  {% endblock footer %}
+{% endblock bootstrap3_content %}

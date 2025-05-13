@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
-{% load bootstrap3 %}
-{% load static %}
+{% load bootstrap3 static %}
 
 {% block title %}Results {{ survey.id }} {{ bvc_data.team_name }}{% endblock %}
 
@@ -19,7 +18,7 @@
       }
     }
   </style>
-{% endblock %}
+{% endblock form_extra_head %}
 
 {% block bootstrap3_extra_script %}
   <script type='text/javascript'>
@@ -48,7 +47,7 @@
       var avg = 0;
       var minimum = null;
       var maximum = null;
-      if ( {{bvc_data.stats.count}} > 0 ) {
+      if ( {{ bvc_data.stats.count }} > 0 ) {
         avg = {{ bvc_data.stats.average|floatformat:"-2" }}
       }
 
@@ -100,7 +99,7 @@
       {% endif %}
     }
   </script>
-{% endblock %}
+{% endblock bootstrap3_extra_script %}
 
 {% block body %}
 
@@ -226,17 +225,17 @@
                 {% if bvc_data.dept_names != '' or bvc_data.region_names != '' or bvc_data.site_names != '' %}
                   <option
                     value="{% url 'bvc' survey_id=survey.id archive_id=date.id dept_names=bvc_data.dept_names region_names=bvc_data.region_names site_names=bvc_data.site_names %}"
-                    {% if date.id|slugify == bvc_data.archive_id  %}selected{% endif %}>
+                    {% if date.id|slugify == bvc_data.archive_id %}selected{% endif %}>
                     {{ date.archive_date|date:"M. d, Y" }}</option>
                 {% else %}
                   <option value="{% url 'bvc' survey_id=survey.id archive_id=date.id %}"
-                    {% if date.id|slugify == bvc_data.archive_id  %}selected{% endif %}>
+                    {% if date.id|slugify == bvc_data.archive_id %}selected{% endif %}>
                     {{ date.archive_date|date:"M. d, Y" }}</option>
                 {% endif %}
               {% else %}
                 <option
                   value="{% url 'bvc' survey_id=survey.id team_name=bvc_data.team_name archive_id=date.id %}"
-                  {% if date.id|slugify == bvc_data.archive_id  %}selected{% endif %}>
+                  {% if date.id|slugify == bvc_data.archive_id %}selected{% endif %}>
                   {{ date.archive_date|date:"M. d, Y" }}</option>
               {% endif %}
             {% endfor %}
@@ -332,4 +331,4 @@
     </div>
     {% endif %}
   </div>
-{% endblock %}
+{% endblock body %}
