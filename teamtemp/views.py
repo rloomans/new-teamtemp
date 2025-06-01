@@ -1,39 +1,36 @@
 from __future__ import division, print_function
 
-from builtins import range, str
+import datetime
 import errno
 import hashlib
+import os
+import random
+import string
 import sys
 import time
-import string
-import random
-import datetime
 import zoneinfo
+from builtins import range, str
+from urllib.parse import urlparse
+
 import gviz_api
-import os
-from wordcloud import WordCloud
-
-from csp.decorators import csp_update, csp_exempt
-
+from csp.constants import SELF, UNSAFE_EVAL, UNSAFE_INLINE
+from csp.decorators import csp_exempt, csp_update
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password, make_password
 from django.db import transaction
 from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils import timezone
 from django.views.static import serve as serve_static
 from django_filters.rest_framework import DjangoFilterBackend
-from django.utils import timezone
-
 from rest_framework import filters, viewsets
+from wordcloud import WordCloud
 
 from teamtemp import responses, utils
-from teamtemp.headers import cache_control, no_cache, ie_edge
-
-from urllib.parse import urlparse
-
+from teamtemp.headers import cache_control, ie_edge, no_cache
 from teamtemp.responses.models import (
     TeamResponseHistory,
     Teams,
@@ -147,13 +144,13 @@ class TeamsViewSet(viewsets.ModelViewSet):
 
 
 @no_cache()
-@csp_exempt
+@csp_exempt()
 def health_check_view(_):
     return HttpResponse('ok', content_type='text/plain')
 
 
 @cache_control('public, max-age=86400')
-@csp_exempt
+@csp_exempt()
 def robots_txt_view(_):
     return HttpResponse(
         'User-agent: *\r\nDisallow:\r\n',
@@ -161,7 +158,7 @@ def robots_txt_view(_):
 
 
 @cache_control('public, max-age=315360000')
-@csp_exempt
+@csp_exempt()
 def media_view(request, *args, **kwargs):
     return serve_static(request, *args, **kwargs)
 
@@ -174,7 +171,13 @@ def utc_timestamp():
 
 
 @ie_edge()
-@csp_update(SCRIPT_SRC=["'unsafe-inline'", ])
+@csp_update(
+    {
+        "script-src": [
+            UNSAFE_INLINE,
+        ]
+    }
+)
 def home_view(request, survey_type='TEAMTEMP'):
     timezone.activate(datetime.timezone.utc)
 
@@ -232,8 +235,19 @@ def authenticated_user(request, survey):
 
 
 @ie_edge()
-@csp_update(SCRIPT_SRC=["'unsafe-inline'", ],
-            IMG_SRC=["'self'", 'data:', 'blob:', 'code.jquery.com', ],)
+@csp_update(
+    {
+        "script-src": [
+            UNSAFE_INLINE,
+        ],
+        "img-src": [
+            SELF,
+            'data:',
+            'blob:',
+            'code.jquery.com',
+        ],
+    }
+)
 def set_view(request, survey_id):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
@@ -529,7 +543,13 @@ def login_view(request, survey_id, redirect_to=None):
 
 
 @ie_edge()
-@csp_update(SCRIPT_SRC=["'unsafe-inline'", ],)
+@csp_update(
+    {
+        "script-src": [
+            UNSAFE_INLINE,
+        ],
+    }
+)
 def admin_view(request, survey_id, team_name=''):
     survey = get_object_or_404(TeamTemperature, pk=survey_id)
 
@@ -1335,7 +1355,7 @@ def is_multiple_of_50(x):
 
 
 @no_cache()
-@csp_exempt
+@csp_exempt()
 def wordcloud_view(request, word_hash='', width=None, height=None):
     if width:
         width = int(width)
@@ -1363,20 +1383,23 @@ def wordcloud_view(request, word_hash='', width=None, height=None):
 
 @ie_edge()
 @csp_update(
-    SCRIPT_SRC=[
-        '*.google.com',
-        '*.googleapis.com',
-        "'unsafe-eval'",
-        "'unsafe-inline'",
-    ],
-    STYLE_SRC=[
-        '*.google.com',
-        '*.googleapis.com',
-    ],
-    IMG_SRC=[
-        'blob:',
-        'gg.google.com',
-    ])
+    {
+        "script-src": [
+            UNSAFE_INLINE,
+            UNSAFE_EVAL,
+            '*.google.com',
+            '*.googleapis.com',
+        ],
+        "style-src": [
+            '*.google.com',
+            '*.googleapis.com',
+        ],
+        "img-src": [
+            'blob:',
+            'gg.google.com',
+        ],
+    }
+)
 def bvc_view(
         request,
         survey_id,

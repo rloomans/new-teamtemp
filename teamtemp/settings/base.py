@@ -1,6 +1,7 @@
 # Django settings for teamtemp project.
 import os
 
+from csp.constants import SELF, UNSAFE_INLINE
 from django.urls import reverse_lazy
 
 DEBUG = os.environ.get('DJANGO_DEBUG', False)
@@ -117,7 +118,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'crispy_forms',
     'crispy_bootstrap3',
-    #'cspreports',
+    'csp',
     'csvexport',
     'drf_spectacular',
     'drf_spectacular_sidecar',
@@ -198,68 +199,58 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_FRAME_DENY = True
 X_FRAME_OPTIONS = 'DENY'
 
-CSP_DEFAULT_SRC = ("'none'",)
-CSP_SCRIPT_SRC = (
-    "'self'",
-    "'unsafe-inline'",
-    'code.jquery.com',
-    'stackpath.bootstrapcdn.com',
-    'cdnjs.cloudflare.com',
-    'www.gstatic.com',
-    'ssl.gstatic.com',
-    'cdn.jsdelivr.net',
-)
-CSP_SCRIPT_SRC_ELEM = (
-    "'self'",
-    "'unsafe-inline'",
-    'code.jquery.com',
-    'www.gstatic.com',
-    'ssl.gstatic.com',
-    'www.google.com',
-    'stackpath.bootstrapcdn.com',
-)
-CSP_CONNECT_SRC = (
-    "'self'",
-    'stackpath.bootstrapcdn.com',
-)
-CSP_STYLE_SRC = (
-    "'self'",
-    "'unsafe-inline'",
-    'code.jquery.com',
-    'stackpath.bootstrapcdn.com',
-    'www.gstatic.com',
-    'ssl.gstatic.com',
-    'cdn.jsdelivr.net',
-    'fonts.googleapis.com',
-)
-CSP_STYLE_SRC_ELEM = (
-    "'self'",
-    "'unsafe-inline'",
-    'www.gstatic.com',
-    'stackpath.bootstrapcdn.com',
-)
-CSP_IMG_SRC = (
-    "'self'",
-    'data:',
-    'blob:',
-    'www.gstatic.com',
-    'ssl.gstatic.com',
-)
-CSP_FONT_SRC = (
-    "'self'",
-    'data:',
-    'stackpath.bootstrapcdn.com',
-    'fonts.gstatic.com',
-    'fonts.googleapis.com',
-    'cdnjs.cloudflare.com',
-)
-CSP_WORKER_SRC = (
-    "'self'",
-    'blob:',
-)
-CSP_EXCLUDE_URL_PREFIXES = ("/djadmin",)
-#CSP_REPORT_URI = reverse_lazy('report_csp')
-#CSP_REPORTS_FILTER_FUNCTION = "cspreports.filters.filter_browser_extensions"
+CONTENT_SECURITY_POLICY = {
+    "EXCLUDE_URL_PREFIXES": ["/djadmin"],
+    "DIRECTIVES": {
+        "default-src": [SELF],
+        "script-src": [
+            SELF,
+            UNSAFE_INLINE,
+            'code.jquery.com',
+            'stackpath.bootstrapcdn.com',
+            'cdnjs.cloudflare.com',
+            'www.gstatic.com',
+            'ssl.gstatic.com',
+            'cdn.jsdelivr.net',
+        ],
+        "script-src-elmm": [
+            SELF,
+            UNSAFE_INLINE,
+            'code.jquery.com',
+            'www.gstatic.com',
+            'ssl.gstatic.com',
+            'www.google.com',
+            'stackpath.bootstrapcdn.com',
+        ],
+        "connect-src": [SELF, 'stackpath.bootstrapcdn.com'],
+        "style-src": [
+            SELF,
+            UNSAFE_INLINE,
+            'code.jquery.com',
+            'stackpath.bootstrapcdn.com',
+            'www.gstatic.com',
+            'ssl.gstatic.com',
+            'cdn.jsdelivr.net',
+            'fonts.googleapis.com',
+        ],
+        "style-src-elem": [
+            SELF,
+            UNSAFE_INLINE,
+            'www.gstatic.com',
+            'stackpath.bootstrapcdn.com',
+        ],
+        "img-src": [SELF, "data:", 'blob:', 'www.gstatic.com', 'ssl.gstatic.com'],
+        "font-src": [
+            SELF,
+            "data:",
+            'stackpath.bootstrapcdn.com',
+            'fonts.gstatic.com',
+            'fonts.googleapis.com',
+            'cdnjs.cloudflare.com',
+        ],
+        "worker-src": [SELF, 'blob:'],
+    },
+}
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
