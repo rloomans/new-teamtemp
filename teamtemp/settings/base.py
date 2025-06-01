@@ -202,6 +202,7 @@ X_FRAME_OPTIONS = 'DENY'
 CONTENT_SECURITY_POLICY = {
     "EXCLUDE_URL_PREFIXES": ["/djadmin"],
     "DIRECTIVES": {
+        "report-uri": 'https://1s0c2tfx-subdomain.uriports.com/reports/report',
         "default-src": [SELF],
         "script-src": [
             SELF,
