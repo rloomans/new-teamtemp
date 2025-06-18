@@ -20,7 +20,7 @@ name: Snyk Security
 
 on:
   push:
-    branches: ["main", "django-2.0.9"]
+    branches: ["main"]
   pull_request:
     branches: ["main"]
 
