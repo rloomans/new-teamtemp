@@ -1,12 +1,15 @@
 name: Django Test
 
+permissions:
+  contents: read
+
 on:
-    workflow_call:
-    workflow_dispatch:
-    push:
-       branches: [main]
-    pull_request:
-        branches: [main]
+  workflow_call:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
