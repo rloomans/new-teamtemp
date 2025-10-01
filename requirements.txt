@@ -20,7 +20,7 @@ pygments==2.19.2
 wordcloud==1.9.4
 django-admin-csvexport==2.3
 markdown==3.9
-PyYAML==6.0.2
+PyYAML==6.0.3
 uritemplate==4.2.0
 setuptools>=70.0.0 # not directly required, pinned by Snyk to avoid a vulnerability
 numpy>=1.22.2 # not directly required, pinned by Snyk to avoid a vulnerability
