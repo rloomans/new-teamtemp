@@ -240,12 +240,12 @@ class TeamResponseHistory(models.Model):
     archive_date = models.DateTimeField(db_index=True)
 
     def pretty_team_name(self):
-        return self.team_name.replace('_', ' ')
+        return str(self.team_name).replace('_', ' ')
 
     def __str__(self):
         return "{}: {} {} {} {} {} {}".format(
             self.id,
-            self.request.id,
+            self.request.id if self.request else None,
             self.average_score,
             self.word_list,
             self.responder_count,
@@ -287,7 +287,7 @@ class Teams(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
 
     def pretty_team_name(self):
-        return self.team_name.replace('_', ' ')
+        return str(self.team_name).replace('_', ' ')
 
     def __str__(self):
         return "{}: {} {} {} {} {}".format(

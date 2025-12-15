@@ -16,6 +16,9 @@
   "python.analysis.autoFormatStrings": true,
   "python.analysis.typeCheckingMode": "basic",
   "black-formatter.importStrategy": "fromEnvironment",
-  "python.analysis.exclude": [" teamtemp/responses/migrations/*.py"],
+  "python.analysis.exclude": [
+    " teamtemp/responses/migrations/*.py",
+    ".venv"
+  ],
   "ruff.exclude": [" teamtemp/responses/migrations/*.py"]
 }

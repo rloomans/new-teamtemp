@@ -81,7 +81,7 @@ class TeamResponseHistoryFactory(CleanModelFactory):
 
     @factory.lazy_attribute
     def word_list(self):
-        return fake.words(nb=self.responder_count)
+        return fake.words(nb=int(self.responder_count))
 
 
 class WordCloudImageFactory(CleanModelFactory):

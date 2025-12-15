@@ -71,7 +71,7 @@ class ErrorBox(ErrorList):
         return u'<br/><div class="error box">%s</div>' % self.as_lines()
 
     def as_lines(self):
-        return "<br/>".join(e for e in self)
+        return "<br/>".join(str(e) for e in self)
 
 
 class CreateSurveyForm(forms.Form):
