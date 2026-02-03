@@ -11,7 +11,7 @@ django-filter==25.2
 djangorestframework==3.16.1
 drf-spectacular==0.29.0
 drf-spectacular-sidecar==2025.12.1
-gunicorn==23.0.0
+gunicorn==25.0.1
 gviz_api==1.10.0
 psycopg2-binary==2.9.11
 static==1.1.1
