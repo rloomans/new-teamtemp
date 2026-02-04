@@ -30,3 +30,4 @@ fonttools>=4.61.0 # not directly required, pinned by Snyk to avoid a vulnerabili
 sqlparse>=0.5.4 # not directly required, pinned by Snyk to avoid a vulnerability
 zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
 tzdata==2025.3
+urllib3>=2.6.3
