@@ -15,6 +15,26 @@ same browser.
 The results page are available to the creator using the same cookie mechanism,
 and also a password in case the cookie is lost.
 
+## Development Setup
+
+This project uses [Poetry](https://python-poetry.org/) for dependency management.
+
+To set up the development environment:
+
+1. Install Poetry if you haven't already.
+2. Clone the repository.
+3. Run `poetry install` to install dependencies.
+4. Run `poetry run python manage.py migrate` to set up the database.
+5. Run `poetry run python manage.py runserver` to start the development server.
+
+### Running Tests
+
+Tests can be run using Poetry:
+
+```bash
+poetry run python manage.py test
+```
+
 ## Heroku One-click Deploy
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
