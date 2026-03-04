@@ -27,23 +27,40 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-           python-version: ${{ matrix.python-version }}
-      - name: Install requirements
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install poetry
         run: |
-            pip install -U pip wheel setuptools
-            pip install -U -r requirements/dev.txt
+          pip install poetry>=2.3.2
+
+      - name: Configure poetry
+        run: |
+          poetry config virtualenvs.in-project true
+
+      - name: Cache the virtualenv
+        uses: actions/cache@v2
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        run: |
+          poetry install --no-interaction
+
       - name: Setup
         run: |
-            python manage.py migrate --no-input
-            python manage.py collectstatic --no-input
+          poetry run python manage.py migrate --no-input
+          poetry run python manage.py collectstatic --no-input
+
       - name: Run tests
         run: |
-            coverage run manage.py test
-            coverage xml
-            coverage lcov
+          poetry run coverage run manage.py test
+          poetry run coverage xml
+          poetry run coverage lcov
       #- name: Upload coverage to coveralls.io
       #  uses: coverallsapp/github-action@v2
       #  with:
