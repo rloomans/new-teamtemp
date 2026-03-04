@@ -1349,9 +1349,9 @@ def calc_multi_iteration_average(
 
 
 def is_multiple_of_50(x):
-  if x == 0:
-    return False
-  return x % 50 == 0
+    if x == 0:
+        return False
+    return x % 50 == 0
 
 
 @no_cache()

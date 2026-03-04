@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='teamtemperature',
             name='survey_type',
-            field=models.CharField(choices=[(b'TEAMTEMP', b'Team Temperature'), (b'DEPT-REGION-SITE', b'Department-Region-Site Temperature'), (b'CUSTOMERFEEDBACK', b'Customer Feedback')], db_index=True, default=b'TEAMTEMP', max_length=20),
+            field=models.CharField(choices=[('TEAMTEMP', 'Team Temperature'), ('DEPT-REGION-SITE', 'Department-Region-Site Temperature'), ('CUSTOMERFEEDBACK', 'Customer Feedback')], db_index=True, default='TEAMTEMP', max_length=20),
         ),
         migrations.AlterField(
             model_name='temperatureresponse',

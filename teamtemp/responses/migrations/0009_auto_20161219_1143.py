@@ -15,16 +15,16 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='teamtemperature',
             name='dept_names',
-            field=models.CharField(blank=True, default=b'DEPT,DEPT2', max_length=64),
+            field=models.CharField(blank=True, default='DEPT,DEPT2', max_length=64),
         ),
         migrations.AlterField(
             model_name='teamtemperature',
             name='region_names',
-            field=models.CharField(blank=True, default=b'REGION,REGION2', max_length=64),
+            field=models.CharField(blank=True, default='REGION,REGION2', max_length=64),
         ),
         migrations.AlterField(
             model_name='teamtemperature',
             name='site_names',
-            field=models.CharField(blank=True, default=b'SITE,SITE2', max_length=64),
+            field=models.CharField(blank=True, default='SITE,SITE2', max_length=64),
         ),
     ]

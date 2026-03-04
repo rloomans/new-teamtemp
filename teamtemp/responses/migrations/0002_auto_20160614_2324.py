@@ -30,12 +30,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='teamtemperature',
             name='default_tz',
-            field=models.CharField(default=b'Australia/Queensland', max_length=64),
+            field=models.CharField(default='Australia/Queensland', max_length=64),
         ),
         migrations.AddField(
             model_name='teamtemperature',
             name='dept_names',
-            field=models.CharField(default=b'DEPT,DEPT2', max_length=64),
+            field=models.CharField(default='DEPT,DEPT2', max_length=64),
         ),
         migrations.AddField(
             model_name='teamtemperature',
@@ -45,11 +45,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='teamtemperature',
             name='region_names',
-            field=models.CharField(default=b'REGION,REGION2', max_length=64),
+            field=models.CharField(default='REGION,REGION2', max_length=64),
         ),
         migrations.AddField(
             model_name='teamtemperature',
             name='site_names',
-            field=models.CharField(default=b'SITE,SITE2', max_length=64),
+            field=models.CharField(default='SITE,SITE2', max_length=64),
         ),
     ]
