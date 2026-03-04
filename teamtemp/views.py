@@ -625,15 +625,32 @@ def require_dir(path):
             raise
 
 
+def sanitize_filename(name):
+    """
+    Sanitize a filename to remove potentially unsafe characters and
+    ensure it does not contain any directory components.
+    """
+    # Ensure we only keep the final path component
+    name = os.path.basename(str(name))
+    # Allow only a safe subset of characters
+    allowed_chars = string.ascii_letters + string.digits + "._-"
+    sanitized = "".join(c if c in allowed_chars else "_" for c in name)
+    # Avoid empty filenames
+    if not sanitized:
+        sanitized = "file"
+    return sanitized
+
+
 def media_filename(src, basename=None):
     name = urlparse(src).path.split('/')[-1]
     if basename:
         ext = name.split('.')[-1]
         if ext:
-            return '.'.join([basename, ext])
+            filename = '.'.join([basename, ext])
         else:
-            return basename
-    return name
+            filename = basename
+        return sanitize_filename(filename)
+    return sanitize_filename(name)
 
 
 def media_url(src, basename=None):
