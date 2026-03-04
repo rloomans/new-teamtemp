@@ -15,6 +15,42 @@ same browser.
 The results page are available to the creator using the same cookie mechanism,
 and also a password in case the cookie is lost.
 
+## Local Development
+
+### Prerequisites
+
+- Python 3.13+
+- uv package manager
+
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/rloomans/new-teamtemp.git
+   cd new-teamtemp
+   ```
+
+2. Create and activate virtual environment:
+   ```bash
+   uv venv
+   source .venv/bin/activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   uv sync --extra dev
+   ```
+
+4. Run migrations:
+   ```bash
+   python manage.py migrate
+   ```
+
+5. Start the development server:
+   ```bash
+   python manage.py runserver
+   ```
+
 ## Heroku One-click Deploy
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)

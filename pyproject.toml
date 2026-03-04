@@ -1,3 +1,51 @@
+[project]
+name = "new-teamtemp"
+version = "0.1.0"
+description = "Survey and summarise team happiness"
+dependencies = [
+    "Django[bcrypt]==6.0.3",
+    "django-bootstrap3==26.1",
+    "dj-database-url==3.1.2",
+    "dj-static==0.0.6",
+    "django-admin-csvexport==2.4.1",
+    "django-csp==4.0",
+    "crispy-bootstrap3==2024.1",
+    "django-crispy-forms==2.6",
+    "django-filter==25.2",
+    "djangorestframework==3.16.1",
+    "drf-spectacular==0.29.0",
+    "drf-spectacular-sidecar==2026.3.1",
+    "gunicorn==25.1.0",
+    "gviz_api==1.10.0",
+    "psycopg2-binary==2.9.11",
+    "static==1.1.1",
+    "whitenoise[brotli]==6.12.0",
+    "pygments==2.19.2",
+    "wordcloud==1.9.6",
+    "markdown==3.10.2",
+    "PyYAML==6.0.3",
+    "uritemplate==4.2.0",
+    "setuptools>=70.0.0",
+    "numpy>=1.22.2",
+    "requests==2.32.5",
+    "pillow>=10.3.0",
+    "fonttools>=4.61.0",
+    "sqlparse>=0.5.4",
+    "zipp>=3.19.1",
+    "tzdata==2025.3",
+    "urllib3>=2.6.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "coverage>=7.3.1",
+    "db-sqlite3>=0.0.1",
+    "django-extensions>=3.2.3",
+    "factory-boy>=3.3.0",
+    "factory-djoy>=2.2.2",
+    "pydot>=1.4.2",
+]
+
 [tool.black]
 line-length = 88
 target-version = ['py312']
