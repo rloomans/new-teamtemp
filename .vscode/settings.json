@@ -4,10 +4,10 @@
     "**/.ruff_cache": true,
     "**/__pycache__": true
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "ms-python.black-formatter",
   // "editor.formatOnSave": true,
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.defaultFormatter": "ms-python.black-formatter"
     // "editor.codeActionsOnSave": {
     //   "source.fixAll": "explicit",
     //   "source.organizeImports": "explicit"
@@ -17,8 +17,13 @@
   "python.analysis.typeCheckingMode": "basic",
   "black-formatter.importStrategy": "fromEnvironment",
   "python.analysis.exclude": [
-    " teamtemp/responses/migrations/*.py",
-    ".venv"
+    "teamtemp/responses/migrations/*.py",
+    ".venv",
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.*"
   ],
-  "ruff.exclude": [" teamtemp/responses/migrations/*.py"]
+  "ruff.exclude": [
+    "teamtemp/responses/migrations/*.py"
+  ]
 }
