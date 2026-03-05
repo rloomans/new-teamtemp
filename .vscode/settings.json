@@ -27,18 +27,13 @@
     "teamtemp/responses/migrations/*.py"
   ],
   "python.defaultInterpreterPath": "./.venv/bin/python",
-  "python.testing.unittestEnabled": true,
   "python.testing.django": true,
   "python.testing.djangoSettingsModule": "teamtemp.settings.dev",
   "python.testing.cwd": "${workspaceFolder}",
-  "python.testing.unittestArgs": [
-    "-v",
-    "-s",
-    ".",
-    "-p",
-    "*test*.py"
-  ],
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
-  }
+  },
+  "python-envs.defaultEnvManager": "ms-python.python:poetry",
+  "python-envs.defaultPackageManager": "ms-python.python:poetry",
+  "python.testing.pytestEnabled": true
 }
