@@ -502,7 +502,13 @@ def super_view(request, survey_id, redirect_to=None):
     if not authenticated_user(request, survey):
         responses.add_admin_for_survey(request, survey.id)
 
+    # Build a default internal redirect target based on the current path,
+    # and ensure it is a safe, relative in-site URL.
     default_redirect = request.get_full_path().replace('/super/', '/admin/')
+    parsed_default = urlparse(default_redirect)
+    if parsed_default.scheme or parsed_default.netloc:
+        # Fall back to a known-safe internal path if something unexpected is present.
+        default_redirect = reverse('user_view')
 
     if not redirect_to:
         redirect_to = default_redirect
