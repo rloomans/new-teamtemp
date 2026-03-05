@@ -243,7 +243,15 @@
 
           <script>
             document.getElementById("ArchivedBVCSelector").onchange = function () {
-              window.location.href = this.value;
+              var selected = this.value || "";
+              try {
+                var url = new URL(selected, window.location.origin);
+                if (url.origin === window.location.origin) {
+                  window.location.href = url.toString();
+                }
+              } catch (e) {
+                // Ignore invalid URLs
+              }
             };
           </script>
         </div>
