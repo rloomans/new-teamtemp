@@ -28,6 +28,7 @@ from django.views.static import serve as serve_static
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, viewsets
 from wordcloud import WordCloud
+from werkzeug.utils import secure_filename
 
 from teamtemp import responses, utils
 from teamtemp.headers import cache_control, ie_edge, no_cache
@@ -630,10 +631,9 @@ def media_filename(src, basename=None):
     if basename:
         ext = name.split('.')[-1]
         if ext:
-            return '.'.join([basename, ext])
-        else:
-            return basename
-    return name
+            return werkzeug.secure_filename('.'.join([basename, ext]))
+        return werkzeug.secure_filename(basename)
+    return werkzeug.secure_filename(name)
 
 
 def media_url(src, basename=None):
@@ -657,7 +657,7 @@ def randomword(length):
 def media_tempfile(src, basename=None):
     image_name = media_filename(src, basename)
     require_dir(settings.MEDIA_ROOT)
-    temp_image_name = ".%s.%s.tmp" % (image_name, randomword(8))
+    temp_image_name = werkzeug.secure_filename(".%s.%s.tmp" % (image_name, randomword(8)))
     temp_filename = os.path.join(settings.MEDIA_ROOT, temp_image_name)
     return temp_filename
 

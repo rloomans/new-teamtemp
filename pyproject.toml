@@ -39,6 +39,7 @@ sqlparse = ">=0.5.4"
 zipp = ">=3.19.1"
 tzdata = "2025.3"
 urllib3 = ">=2.6.3"
+werkzeug = "^3.1.6"
 
 [tool.poetry.group.dev.dependencies]
 coverage = ">=7.3.1"
