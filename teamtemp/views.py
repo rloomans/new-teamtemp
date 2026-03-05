@@ -24,6 +24,7 @@ from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.static import serve as serve_static
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, viewsets
@@ -501,8 +502,17 @@ def super_view(request, survey_id, redirect_to=None):
     if not authenticated_user(request, survey):
         responses.add_admin_for_survey(request, survey.id)
 
+    default_redirect = request.get_full_path().replace('/super/', '/admin/')
+
     if not redirect_to:
-        redirect_to = request.get_full_path().replace('/super/', '/admin/')
+        redirect_to = default_redirect
+    else:
+        # Ensure that any provided redirect_to only points to a safe in-site URL.
+        if not url_has_allowed_host_and_scheme(
+                redirect_to,
+                allowed_hosts={request.get_host()},
+                require_https=request.is_secure()):
+            redirect_to = default_redirect
 
     return redirect('login', survey_id=survey_id, redirect_to=redirect_to)
 
