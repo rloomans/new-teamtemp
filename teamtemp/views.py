@@ -641,9 +641,9 @@ def media_filename(src, basename=None):
     if basename:
         ext = name.split('.')[-1]
         if ext:
-            return werkzeug.secure_filename('.'.join([basename, ext]))
-        return werkzeug.secure_filename(basename)
-    return werkzeug.secure_filename(name)
+            return secure_filename('.'.join([basename, ext]))
+        return secure_filename(basename)
+    return secure_filename(name)
 
 
 def media_url(src, basename=None):
@@ -660,14 +660,14 @@ def media_file(src, basename=None):
 
 
 def randomword(length):
-  letters = string.ascii_letters + string.digits
-  return ''.join(random.choice(letters) for i in range(length))
+    letters = string.ascii_letters + string.digits
+    return ''.join(random.choice(letters) for i in range(length))
 
 
 def media_tempfile(src, basename=None):
     image_name = media_filename(src, basename)
     require_dir(settings.MEDIA_ROOT)
-    temp_image_name = werkzeug.secure_filename(".%s.%s.tmp" % (image_name, randomword(8)))
+    temp_image_name = secure_filename(".%s.%s.tmp" % (image_name, randomword(8)))
     temp_filename = os.path.join(settings.MEDIA_ROOT, temp_image_name)
     return temp_filename
 
