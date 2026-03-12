@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -42,7 +42,7 @@ jobs:
           poetry config virtualenvs.in-project true
 
       - name: Cache the virtualenv
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ./.venv
           key: ${{ runner.os }}-python${{ matrix.python-version }}-venv-${{ hashFiles('**/poetry.lock') }}
@@ -67,7 +67,7 @@ jobs:
       #    github-token: ${{ github.token }}
       #    path-to-lcov: coverage.lcov
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           #token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage.xml
