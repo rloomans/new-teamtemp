@@ -8,7 +8,7 @@ packages = [{include = "teamtemp"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
-Django = {extras = ["bcrypt"], version = "6.0.3"}
+Django = {extras = ["bcrypt"], version = "6.0.4"}
 django-bootstrap3 = "26.1"
 dj-database-url = "3.1.2"
 dj-static = "0.0.6"
