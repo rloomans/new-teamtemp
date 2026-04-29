@@ -66,7 +66,7 @@ class TeamTemperature(models.Model):
         (CUSTOMER_FEEDBACK, 'Customer Feedback'),
     )
 
-    TIMEZONE_CHOICES = [(tz, tz) for tz in zoneinfo.available_timezones()]
+    TIMEZONE_CHOICES = [(tz, tz) for tz in sorted(zoneinfo.available_timezones())]
 
     id = models.CharField(max_length=8, primary_key=True)
     creator = models.ForeignKey(
