@@ -639,14 +639,14 @@ static3 = "*"
 
 [[package]]
 name = "django"
-version = "6.0.6"
+version = "6.0.7"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 optional = false
 python-versions = ">=3.12"
 groups = ["main", "dev"]
 files = [
-    {file = "django-6.0.6-py3-none-any.whl", hash = "sha256:25148b1194c47c2e685e5f5e9c5d59c78b075dfd282cb9618861ba6c1708f4d2"},
-    {file = "django-6.0.6.tar.gz", hash = "sha256:ad03916ba59523d781ae5c3f631960c23d69a9d9c43cecda52fc23b47e953713"},
+    {file = "django-6.0.7-py3-none-any.whl", hash = "sha256:a037427c2288443a8c02a1b02295a31c239663aa682bc50b1976afb7cf6a769e"},
+    {file = "django-6.0.7.tar.gz", hash = "sha256:2998503fc083124fb58037084bfa00de323c7c743f05f1b4284e77bff0ab8890"},
 ]
 
 [package.dependencies]
@@ -2212,4 +2212,4 @@ type = ["pytest-mypy (>=1.0.1) ; platform_python_implementation != \"PyPy\""]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "32b4fd36a426a6da963ce1592180d3bf2eae3b092be7abc7183cbc2e6a9d7e03"
+content-hash = "7da5c31b8ee7cdbf512f1d19ba71acb536bced756d66c3d8a219187212442f74"
