@@ -37,7 +37,7 @@ pillow = ">=12.1.1"
 fonttools = ">=4.61.0"
 sqlparse = ">=0.5.4"
 zipp = ">=3.19.1"
-tzdata = "2026.2"
+tzdata = "2026.3"
 urllib3 = ">=2.6.3"
 werkzeug = "^3.1.8"
 
