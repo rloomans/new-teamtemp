@@ -707,18 +707,18 @@ django-modeltree = ">=0.9"
 
 [[package]]
 name = "django-bootstrap3"
-version = "26.1"
+version = "26.2"
 description = "Bootstrap 3 for Django"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "django_bootstrap3-26.1-py3-none-any.whl", hash = "sha256:657201127b6c09f69d0ca60e944a32593fb6132923a9d1293bc6bfaacdb1a4ba"},
-    {file = "django_bootstrap3-26.1.tar.gz", hash = "sha256:c437ec3bf19d9ef0b7554664b4dbea27c73fbd9927f8c7aa20559c68d38e8eea"},
+    {file = "django_bootstrap3-26.2-py3-none-any.whl", hash = "sha256:7b86df95f2c10d2d94f0e1d327b7b32c4f3a4022d20804180f396e165f9aab4e"},
+    {file = "django_bootstrap3-26.2.tar.gz", hash = "sha256:e9be75b7bbf63c14a4c5955cf77546eb1d36eb80c135943ae094aa4d5b2f7d4e"},
 ]
 
 [package.dependencies]
-django = ">=4.2"
+django = ">=5.2"
 
 [[package]]
 name = "django-crispy-forms"
@@ -2264,4 +2264,4 @@ type = ["pytest-mypy (>=1.0.1) ; platform_python_implementation != \"PyPy\""]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "741d6f13c1a8aef6c9a4428c10ae81c627a6df8fd3a8a8171c7e4bb32d27ac4d"
+content-hash = "8e0c6e9065ced1d91e341ebe18744ea95c79bf001a182b9b2dfc3fc9d89d6d7a"
