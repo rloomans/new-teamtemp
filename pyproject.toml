@@ -27,7 +27,7 @@ static = "1.1.1"
 whitenoise = {extras = ["brotli"], version = "6.12.0"}
 pygments = "^2.20.0"
 wordcloud = "1.9.6"
-markdown = "3.10.2"
+markdown = "3.10.3"
 PyYAML = "6.0.3"
 uritemplate = "4.2.0"
 setuptools = ">=70.0.0"
