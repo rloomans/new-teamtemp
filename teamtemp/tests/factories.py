@@ -42,10 +42,7 @@ class TeamFactory(CleanModelFactory):
         django_get_or_create = ('team_name',)
 
     request = factory.SubFactory(TeamTemperatureFactory)
-    team_name = FuzzyText(
-        length=random.randint(
-            1, 64), chars=(
-            utils.chars + '_-'))
+    team_name = factory.Sequence(lambda n: f'team_{n}')
 
 
 class TemperatureResponseFactory(CleanModelFactory):
