@@ -47,14 +47,14 @@ jobs:
 
       - name: Setup
         run: |
-          uv run --locked python manage.py migrate --no-input
-          uv run --locked python manage.py collectstatic --no-input
+          uv run --locked --python ${{ matrix.python-version }} python manage.py migrate --no-input
+          uv run --locked --python ${{ matrix.python-version }} python manage.py collectstatic --no-input
 
       - name: Run tests
         run: |
-          uv run --locked coverage run manage.py test
-          uv run --locked coverage xml
-          uv run --locked coverage lcov
+          uv run --locked --python ${{ matrix.python-version }} coverage run manage.py test
+          uv run --locked --python ${{ matrix.python-version }} coverage xml
+          uv run --locked --python ${{ matrix.python-version }} coverage lcov
       #- name: Upload coverage to coveralls.io
       #  uses: coverallsapp/github-action@v2
       #  with:
