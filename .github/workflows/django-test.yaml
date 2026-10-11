@@ -35,34 +35,26 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install poetry
-        run: |
-          pip install poetry>=2.3.2
-
-      - name: Configure poetry
-        run: |
-          poetry config virtualenvs.in-project true
-
-      - name: Cache the virtualenv
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
         with:
-          path: ./.venv
-          key: ${{ runner.os }}-python${{ matrix.python-version }}-venv-${{ hashFiles('**/poetry.lock') }}
+          enable-cache: true
+          cache-dependency-glob: uv.lock
 
       - name: Install dependencies
         run: |
-          poetry install --no-interaction
+          uv sync --locked --all-groups --python ${{ matrix.python-version }}
 
       - name: Setup
         run: |
-          poetry run python manage.py migrate --no-input
-          poetry run python manage.py collectstatic --no-input
+          uv run --locked python manage.py migrate --no-input
+          uv run --locked python manage.py collectstatic --no-input
 
       - name: Run tests
         run: |
-          poetry run coverage run manage.py test
-          poetry run coverage xml
-          poetry run coverage lcov
+          uv run --locked coverage run manage.py test
+          uv run --locked coverage xml
+          uv run --locked coverage lcov
       #- name: Upload coverage to coveralls.io
       #  uses: coverallsapp/github-action@v2
       #  with:
